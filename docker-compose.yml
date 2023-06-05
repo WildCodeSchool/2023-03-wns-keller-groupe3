@@ -6,7 +6,7 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - ./server/src:/app/src
+      - ./server/src/:/app/src/
 
   client:
     build: ./client
@@ -18,16 +18,11 @@ services:
   db:
     image: postgres
     restart: always
-    env_file:
-      - vars.env
-    volumes:
-      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: example
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
-
-volumes:
-  postgres:

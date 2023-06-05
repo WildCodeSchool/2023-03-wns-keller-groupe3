@@ -1,17 +1,18 @@
-FROM node:lts-alpine
-
 # Pour Argon
 # RUN apk add make g++ python3 git
 # RUN npm i -g node-pre-gyp
 
+FROM node:lts-alpine
+
 WORKDIR /app
 
-COPY src ./
-COPY package.json ./
+COPY package.json package.json
+COPY package-lock.json package-lock.json
 
-RUN npm install
+RUN npm install 
 
-COPY package-lock.json ./
-COPY tsconfig.json ./
+COPY tsconfig.json tsconfig.json
+
+COPY src src
 
 CMD npm start
