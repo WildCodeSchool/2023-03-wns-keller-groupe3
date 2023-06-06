@@ -6,7 +6,7 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - ./server/src:/app/src
+      - ./server/src/:/app/src/
 
   client:
     build: ./client
