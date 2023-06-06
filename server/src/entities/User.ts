@@ -4,15 +4,14 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @ObjectType()
 @Entity()
 export class User {
-    @Field()
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Field()
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Field()
-    @Column()
-    email: string;
+  @Field()
+  @Column({ unique: true })
+  email: string;
 
-    @Field()
-    @Column()
-    password: string;
+  @Column()
+  password: string;
 }
