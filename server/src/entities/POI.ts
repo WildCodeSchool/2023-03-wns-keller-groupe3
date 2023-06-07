@@ -50,7 +50,7 @@ export class User {
   @Field()
   @Column(
     "int",
-    // { limit: 5 }
+    // TODO how to set rating between 0 and 5 : { limit: 5 }
     )
   rating: number;
 
