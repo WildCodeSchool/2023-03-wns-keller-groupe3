@@ -3,12 +3,16 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @ObjectType()
 @Entity()
-export class User {
+export class Category {
   @Field()
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Field()
-  @Column({ unique: true })
+  @Column({
+    type: "varchar",
+    length: 255,
+    unique: true
+  })
   name: string;
 }

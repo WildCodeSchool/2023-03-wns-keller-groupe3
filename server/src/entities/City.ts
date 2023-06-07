@@ -1,5 +1,7 @@
 import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { POI } from "./POI";
+import { User } from "./User";
 
 @ObjectType()
 @Entity()
@@ -9,10 +11,25 @@ export class City {
   id: string;
 
   @Field()
-  @Column({ unique: true })
+  @Column({
+    type: "varchar",
+    length: 54,
+    unique: true
+  })
   name: string;
 
   @Field()
-  @Column()
+  @Column({
+    type: "varchar",
+    length: 255
+  })
   picture: string;
+  
+  @Field(() => POI)
+  @OneToMany(() => POI, (pointOfInterest) => pointOfInterest.city)
+  pointsOfInterest: POI[]
+
+  @Field(() => User)
+  @OneToMany(() => User, (user) => user.city)
+  users: User[]
 }

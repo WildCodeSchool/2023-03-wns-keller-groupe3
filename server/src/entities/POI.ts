@@ -1,5 +1,7 @@
 import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Category } from "./Category";
+import { City } from "./City";
 
 export enum GpsPin {
     // TODO insert paths to different images for GPS pin
@@ -8,7 +10,7 @@ export enum GpsPin {
 
 @ObjectType()
 @Entity()
-export class User {
+export class POI {
   @Field()
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -26,15 +28,17 @@ export class User {
   gps_pin: GpsPin;
 
   @Field()
-  @Column(
-    "varchar",
-    { length: 255 })
+  @Column({
+    type: "varchar",
+    length: 255
+  })
   adress: string;
 
   @Field()
-  @Column(
-    "varchar",
-    { length: 100 })
+  @Column({
+    type: "varchar",
+    length: 100
+  })
   name: string;
 
   @Field()
@@ -42,9 +46,10 @@ export class User {
   description: string;
 
   @Field()
-  @Column(
-    "varchar",
-    { length: 255 })
+  @Column({
+    type: "varchar",
+    length: 255
+  })
   picture: string;
 
   @Field()
@@ -55,12 +60,18 @@ export class User {
   rating: number;
 
   @Field()
-  @Column(
-    "varchar",
-    { length: 500 })
+  @Column({
+    type: "varchar",
+    length: 500,
+    nullable: true,
+    })
   comments: string;
 
-  @Field()
-  @Column("int")
-  city_id: number;
+  @Field(() => City)
+  @ManyToOne(() => City, (city) => city.pointsOfInterest)
+  city: City
+
+  @ManyToMany(() => Category)
+  @JoinTable()
+  categories: Category[]
 }
