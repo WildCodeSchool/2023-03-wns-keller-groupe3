@@ -9,7 +9,6 @@ export class UserResolver {
     const users = await dataSource.getRepository(User).find();
     return users;
   }
-  
   @Mutation(() => User)
   async createUser(
     @Arg("email") email: string,
