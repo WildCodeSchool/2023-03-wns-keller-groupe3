@@ -1,11 +1,18 @@
 import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Category } from "./Category";
 import { City } from "./City";
 
 export enum GpsPin {
-    // TODO insert paths to different images for GPS pin
-    DEFAULT = 'default',
+  // TODO insert paths to different images for GPS pin
+  DEFAULT = "default",
 }
 
 @ObjectType()
@@ -15,29 +22,37 @@ export class POI {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  // @Field()
+  // @Column({ unique: true })
+  // gps_coordinates: number;
+
   @Field()
-  @Column({ unique: true })
-  gps_coordinates: number;
+  @Column("double precision")
+  latitude: number;
+
+  @Field()
+  @Column("double precision")
+  longitude: number;
 
   @Field()
   @Column({
-    type: 'enum',
+    type: "enum",
     enum: GpsPin,
-    default: GpsPin.DEFAULT
+    default: GpsPin.DEFAULT,
   })
   gps_pin: GpsPin;
 
   @Field()
   @Column({
     type: "varchar",
-    length: 255
+    length: 255,
   })
-  adress: string;
+  address: string;
 
   @Field()
   @Column({
     type: "varchar",
-    length: 100
+    length: 100,
   })
   name: string;
 
@@ -48,15 +63,15 @@ export class POI {
   @Field()
   @Column({
     type: "varchar",
-    length: 255
+    length: 255,
   })
   picture: string;
 
   @Field()
   @Column(
-    "int",
+    "int"
     // TODO how to set rating between 0 and 5 : { limit: 5 }
-    )
+  )
   rating: number;
 
   @Field()
@@ -64,14 +79,14 @@ export class POI {
     type: "varchar",
     length: 500,
     nullable: true,
-    })
+  })
   comments: string;
 
   @Field(() => City)
   @ManyToOne(() => City, (city) => city.pointsOfInterest)
-  city: City
+  city: City;
 
-  @ManyToMany(() => Category)
+  @ManyToMany(() => Category, (category) => category.pois)
   @JoinTable()
-  categories: Category[]
+  categories: Category[];
 }
