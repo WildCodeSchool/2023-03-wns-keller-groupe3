@@ -14,22 +14,22 @@ export class City {
   @Column({
     type: "varchar",
     length: 54,
-    unique: true
+    unique: true,
   })
   name: string;
 
   @Field()
   @Column({
     type: "varchar",
-    length: 255
+    length: 255,
   })
   picture: string;
-  
-  @Field(() => POI)
-  @OneToMany(() => POI, (pointOfInterest) => pointOfInterest.city)
-  pointsOfInterest: POI[]
 
-  @Field(() => User)
+  @Field(() => [POI])
+  @OneToMany(() => POI, (pointOfInterest) => pointOfInterest.city)
+  pointsOfInterest: POI[];
+
+  @Field(() => [User])
   @OneToMany(() => User, (user) => user.city)
-  users: User[]
+  users: User[];
 }
