@@ -16,7 +16,7 @@ services:
       - ./client/src:/app/src
 
   db:
-    image: postgres
+    image: postgis/postgis
     restart: always
     env_file:
       - vars.env

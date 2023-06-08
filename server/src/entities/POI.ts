@@ -22,9 +22,17 @@ export class POI {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  // @Field()
+  // @Column({ unique: true })
+  // gps_coordinates: number;
+
   @Field()
-  @Column({ unique: true })
-  gps_coordinates: number;
+  @Column("double precision")
+  latitude: number;
+
+  @Field()
+  @Column("double precision")
+  longitude: number;
 
   @Field()
   @Column({
@@ -39,7 +47,7 @@ export class POI {
     type: "varchar",
     length: 255,
   })
-  adress: string;
+  address: string;
 
   @Field()
   @Column({
@@ -78,7 +86,7 @@ export class POI {
   @ManyToOne(() => City, (city) => city.pointsOfInterest)
   city: City;
 
-  @ManyToMany(() => Category)
+  @ManyToMany(() => Category, (category) => category.pois)
   @JoinTable()
   categories: Category[];
 }

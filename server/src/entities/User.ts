@@ -3,10 +3,10 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { City } from "./City";
 
 export enum Role {
-  USER = 'user',
-  SUPERUSER = 'superuser',
-  ADMIN = 'admin',
-  SUPERADMIN = 'superadmin',
+  USER = "user",
+  SUPERUSER = "superuser",
+  ADMIN = "admin",
+  SUPERADMIN = "superadmin",
 }
 
 @ObjectType()
@@ -19,16 +19,15 @@ export class User {
   @Field()
   @Column({
     type: "varchar",
-    length: 40
+    length: 40,
   })
   name: string;
-
 
   @Field()
   @Column({
     type: "varchar",
     length: 100,
-    unique: true
+    unique: true,
   })
   email: string;
 
@@ -40,13 +39,13 @@ export class User {
 
   @Field()
   @Column({
-    type: 'enum',
+    type: "enum",
     enum: Role,
-    default: Role.USER
+    default: Role.USER,
   })
   role: Role;
 
   @Field(() => City)
   @ManyToOne(() => City, (city) => city.users)
-  city: City
+  city: City;
 }
