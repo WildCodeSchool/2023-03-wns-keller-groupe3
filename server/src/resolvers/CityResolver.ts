@@ -1,22 +1,31 @@
 import { Arg, Mutation, Resolver, Query } from "type-graphql";
 import { City } from "../entities/City";
 import dataSource from "../utils";
+import { CityService } from "../service/CityService";
+
+const city = new CityService();
 
 @Resolver(City)
 export class CityResolver {
   @Query(() => [City])
   async getAllCities(): Promise<City[]> {
-    const cities = await dataSource.getRepository(City).find();
-    return cities;
+    return await dataSource.getRepository(City).find();
   }
 
   @Query(() => City)
-  async getOneCity(@Arg("name", () => String) name: string): Promise<City> {
-    const Onecity = await dataSource
+  async getCityById(@Arg("id", () => String) id: string): Promise<City> {
+    return await dataSource
       .getRepository(City)
-      .findOneOrFail({ where: { name } });
-    return Onecity;
+      .findOneOrFail({ where: { id } });
   }
+
+  // @Query(() => [City])
+  // async getAllPOIsByCity(): Promise<City[]> {
+  //   const AllPOIsByCity = await dataSource
+  //     .getRepository(City)
+  //     .find({ relations: { pointsOfInterest: {} } });
+  //   return AllPOIsByCity;
+  // }
 
   @Mutation(() => City)
   async createCity(
@@ -31,36 +40,33 @@ export class CityResolver {
     return cityFromDB;
   }
 
-  @Mutation(() => City, { nullable: true })
-  async deleteToCity(@Arg("name") name: string): Promise<City | null> {
-    const cityRepository = dataSource.getRepository(City);
-    const deleteToCity = await cityRepository.findOne({ where: { name } });
-
-    if (deleteToCity !== null && deleteToCity !== undefined) {
-      await cityRepository.remove(deleteToCity);
-      return deleteToCity;
+  @Mutation(() => String)
+  async deleteToCity(@Arg("id") id: string): Promise<string> {
+    try {
+      await dataSource.getRepository(City).delete({ id });
+      return `City has been successfully deleted`;
+    } catch (err) {
+      return `Error while deleting city`;
     }
-
-    return null;
   }
 
-  // @Mutation(() => City)
-  // async EditCity(
-  //   @Arg("name") name: string,
-  //   @Arg("picture") picture: string
-  // ): Promise<City> {
-  //   const newCity = new City();
-  //   newCity.name = name;
-  //   newCity.picture = picture;
+  @Mutation(() => City)
+  async UpdateToCity(
+    @Arg("id") id: string,
+    @Arg("name") name: string,
+    @Arg("picture") picture: string
+  ): Promise<City> {
+    const cityRepository = dataSource.getRepository(City);
+    const cityToUpdate = await cityRepository.findOne({ where: { id } });
 
-  //   const cityFromDB = await dataSource.manager.save(City, newCity);
-  //   return cityFromDB;
-  // }
+    if (cityToUpdate === null) {
+      throw new Error("City not found");
+    }
 
-  //     // ! DO NOT FORGET
-  //     // TODO hash password in database
-  //     const userFromDB = await dataSource.manager.save(User, newUser);
-  //     console.log(userFromDB);
-  //     return userFromDB;
-  //   }
+    cityToUpdate.name = name;
+    cityToUpdate.picture = picture;
+
+    const updatedCity = await cityRepository.save(cityToUpdate);
+    return updatedCity;
+  }
 }
