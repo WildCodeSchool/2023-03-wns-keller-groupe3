@@ -148,7 +148,7 @@ const start = async (): Promise<void> => {
     name: "Victor",
     city: colmar,
     email: "victor@cityguide.fr",
-    password: "mySecretPassword",
+    hashedPassword: "mySecretHashedPassword",
   });
 
   const users = await dataSource

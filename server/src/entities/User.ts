@@ -35,7 +35,7 @@ export class User {
     type: "varchar",
     length: 255,
   })
-  password: string;
+  hashedPassword: string;
 
   @Field()
   @Column({
