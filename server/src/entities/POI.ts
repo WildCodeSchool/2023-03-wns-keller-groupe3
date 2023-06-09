@@ -74,7 +74,7 @@ export class POI {
   )
   rating: number;
 
-  @Field()
+  @Field({nullable: true})
   @Column({
     type: "varchar",
     length: 500,
@@ -86,6 +86,7 @@ export class POI {
   @ManyToOne(() => City, (city) => city.pointsOfInterest)
   city: City;
 
+  @Field(() => [Category])
   @ManyToMany(() => Category, (category) => category.pois)
   @JoinTable()
   categories: Category[];
