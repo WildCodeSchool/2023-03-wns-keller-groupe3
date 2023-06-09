@@ -14,9 +14,7 @@ export class CityResolver {
 
   @Query(() => City)
   async getCityById(@Arg("id", () => String) id: string): Promise<City> {
-    return await dataSource
-      .getRepository(City)
-      .findOneOrFail({ where: { id } });
+    return await city.getCityById(id);
   }
 
   // @Query(() => [City])
@@ -32,19 +30,14 @@ export class CityResolver {
     @Arg("name") name: string,
     @Arg("picture") picture: string
   ): Promise<City> {
-    const newCity = new City();
-    newCity.name = name;
-    newCity.picture = picture;
-
-    const cityFromDB = await dataSource.manager.save(City, newCity);
-    return cityFromDB;
+    return await city.createCity(name, picture);
   }
 
   @Mutation(() => String)
   async deleteToCity(@Arg("id") id: string): Promise<string> {
     try {
       await dataSource.getRepository(City).delete({ id });
-      return `City has been successfully deleted`;
+      return await city.DeleteCity(id);
     } catch (err) {
       return `Error while deleting city`;
     }
@@ -56,17 +49,20 @@ export class CityResolver {
     @Arg("name") name: string,
     @Arg("picture") picture: string
   ): Promise<City> {
-    const cityRepository = dataSource.getRepository(City);
-    const cityToUpdate = await cityRepository.findOne({ where: { id } });
+    return await city.updatedCity(id, name, picture);
+    // const updatedCity = await this.cityService.updateCity(id, name, picture);
+    // return updatedCity;
+    // const cityRepository = dataSource.getRepository(City);
+    // const cityToUpdate = await cityRepository.findOne({ where: { id } });
 
-    if (cityToUpdate === null) {
-      throw new Error("City not found");
-    }
+    // if (cityToUpdate === null) {
+    //   throw new Error("City not found");
+    // }
 
-    cityToUpdate.name = name;
-    cityToUpdate.picture = picture;
+    // cityToUpdate.name = name;
+    // cityToUpdate.picture = picture;
 
-    const updatedCity = await cityRepository.save(cityToUpdate);
-    return updatedCity;
+    // const updatedCity = await cityRepository.save(cityToUpdate);
+    // return updatedCity;
   }
 }
