@@ -46,7 +46,7 @@ export class CategoryResolver {
       .getRepository(POI)
       .findBy({ categories: categoryToDelete });
 
-    if (poisRelated !== null) {
+    if (poisRelated.length > 0) {
       return `This category contains points of interest. Please remove the category from these points before and try again.`;
     }
 
