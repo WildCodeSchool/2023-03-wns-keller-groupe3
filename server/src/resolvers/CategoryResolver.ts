@@ -2,6 +2,7 @@ import { Arg, Mutation, Resolver, Query } from "type-graphql";
 import { Category } from "../entities/Category";
 import dataSource from "../utils";
 import { CategoryService } from "../services/CategoryService";
+import { POI } from "../entities/POI";
 
 const category = new CategoryService();
 
@@ -19,22 +20,42 @@ export class CategoryResolver {
 
   @Mutation(() => Category)
   async createCategory(@Arg("name") name: string): Promise<Category> {
-    const newCategory = new Category();
-    newCategory.name = name;
+    return await category.createCategory(name);
+  }
 
-    const categoryFromDB = await dataSource.manager.save(Category, newCategory);
-    console.log(categoryFromDB);
-    return categoryFromDB;
+  @Mutation(() => String)
+  async updateCategory(
+    @Arg("id") id: string,
+    @Arg("name") name: string
+  ): Promise<string> {
+    try {
+      await category.updateCategory(id, name);
+      return `Category with id: ${id} has been successfully updated`;
+    } catch (err) {
+      console.log(err);
+      return `Error while updating category with id: ${id}`;
+    }
   }
 
   @Mutation(() => String)
   async deleteCategory(@Arg("id") id: string): Promise<string> {
+    const categoryToDelete = await dataSource
+      .getRepository(Category)
+      .findOneByOrFail({ id });
+    const poisRelated = await dataSource
+      .getRepository(POI)
+      .findBy({ categories: categoryToDelete });
+
+    if (poisRelated !== null) {
+      return `This category contains points of interest. Please remove the category from these points before and try again.`;
+    }
+
     try {
-      await dataSource.getRepository(Category).delete({ id });
-      return `Category has been successfully deleted`;
+      await category.deleteCategory(id);
+      return `Category with id: ${id} has been successfully deleted`;
     } catch (err) {
       console.log(err);
-      return `Error while deleting category`;
+      return `Error while deleting category with id: ${id}`;
     }
   }
 }
