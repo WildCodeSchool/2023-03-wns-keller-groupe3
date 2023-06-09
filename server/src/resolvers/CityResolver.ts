@@ -5,19 +5,57 @@ import dataSource from "../utils";
 @Resolver(City)
 export class CityResolver {
   @Query(() => [City])
-  async cities(): Promise<City[]> {
-    const Allcities = await dataSource.getRepository(City).find();
-    return Allcities;
+  async getAllCities(): Promise<City[]> {
+    const cities = await dataSource.getRepository(City).find();
+    return cities;
   }
 
-  //   @Mutation(() => City)
-  //   async createUser(
-  //     @Arg("email") email: string,
-  //     @Arg("password") password: string
-  //   ): Promise<City> {
-  //     const newUser = new City();
-  //     newUser.email = email;
-  //     newUser.password = password;
+  @Query(() => City)
+  async getOneCity(@Arg("name", () => String) name: string): Promise<City> {
+    const Onecity = await dataSource
+      .getRepository(City)
+      .findOneOrFail({ where: { name } });
+    return Onecity;
+  }
+
+  @Mutation(() => City)
+  async createCity(
+    @Arg("name") name: string,
+    @Arg("picture") picture: string
+  ): Promise<City> {
+    const newCity = new City();
+    newCity.name = name;
+    newCity.picture = picture;
+
+    const cityFromDB = await dataSource.manager.save(City, newCity);
+    return cityFromDB;
+  }
+
+  @Mutation(() => City, { nullable: true })
+  async deleteToCity(@Arg("name") name: string): Promise<City | null> {
+    const cityRepository = dataSource.getRepository(City);
+    const deleteToCity = await cityRepository.findOne({ where: { name } });
+
+    if (deleteToCity !== null && deleteToCity !== undefined) {
+      await cityRepository.remove(deleteToCity);
+      return deleteToCity;
+    }
+
+    return null;
+  }
+
+  // @Mutation(() => City)
+  // async EditCity(
+  //   @Arg("name") name: string,
+  //   @Arg("picture") picture: string
+  // ): Promise<City> {
+  //   const newCity = new City();
+  //   newCity.name = name;
+  //   newCity.picture = picture;
+
+  //   const cityFromDB = await dataSource.manager.save(City, newCity);
+  //   return cityFromDB;
+  // }
 
   //     // ! DO NOT FORGET
   //     // TODO hash password in database
