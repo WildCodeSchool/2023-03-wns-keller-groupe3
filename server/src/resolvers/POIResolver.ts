@@ -4,8 +4,6 @@ import { GpsPin, POI } from "../entities/POI";
 import { POIService } from "../services/POIService";
 import { Category } from "../entities/Category";
 import { City } from "../entities/City";
-// import { Category } from "../entities/Category";
-// import { City } from "../entities/City";
 
 const pointOfInterest = new POIService();
 
@@ -42,8 +40,8 @@ export class POIResolver {
     @Arg("description") description: string,
     @Arg("picture") picture: string,
     @Arg("rating") rating: number,
-    @Arg("categories") categories: Category[],
-    @Arg("city") city: City,
+    @Arg("categories", type => [Category]) categories: Category[],
+    @Arg("city", type => City) city: City,
   ): Promise<POI> {
     return await pointOfInterest.createPOI({latitude, longitude, gpsPin, address, description, picture, rating, categories, city})
   }

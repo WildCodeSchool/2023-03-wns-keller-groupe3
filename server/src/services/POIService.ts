@@ -5,6 +5,7 @@ import dataSource from "../utils";
 import { Category } from "../entities/Category";
 import { City } from "../entities/City";
 
+// check => https://typegraphql.com/docs/validation.html
 interface pointOfInterestArgs {
     latitude: number,
     longitude: number,
