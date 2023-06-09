@@ -1,28 +1,36 @@
 import { Arg, Mutation, Resolver, Query } from "type-graphql";
 import { User } from "../entities/User";
-import * as argon2 from "argon2";
-import dataSource from "../utils";
+import { UserService } from "../services/UserService";
+
+const user = new UserService();
 
 @Resolver(User)
 export class UserResolver {
+  @Query(() => User)
+  async user(@Arg("id") id: string): Promise<User> {
+    return await user.getUser(id);
+  }
+
   @Query(() => [User])
   async users(): Promise<User[]> {
-    const users = await dataSource.getRepository(User).find();
-    return users;
+    return await user.getUsers();
   }
 
   @Mutation(() => User)
-  async createUser(
+  async signup(
     @Arg("email") email: string,
     @Arg("name") name: string,
     @Arg("password") password: string
   ): Promise<User> {
-    const newUser = new User();
-    newUser.email = email;
-    newUser.name = name;
-    newUser.hashedPassword = await argon2.hash(password);
-    const userFromDB = await dataSource.manager.save(User, newUser);
-    console.log(userFromDB);
-    return userFromDB;
+    if (password.trim() === "") {
+      throw new Error("Password can't be empty");
+    }
+    return await user.createUser(email, name, password);
+  }
+
+  @Mutation(() => String)
+  async delete(@Arg("id") id: string): Promise<string> {
+    await user.deleteUser(id);
+    return `User with ${id} deleted`;
   }
 }
