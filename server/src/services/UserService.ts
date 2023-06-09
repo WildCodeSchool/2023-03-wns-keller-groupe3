@@ -1,3 +1,4 @@
+import { DeleteResult } from "typeorm";
 import { User } from "../entities/User";
 import dataSource from "../utils";
 import * as argon2 from "argon2";
@@ -31,12 +32,7 @@ export class UserService {
     return await dataSource.getRepository(User).save({ id, name, email });
   }
 
-  async delete(id: string): Promise<User> {
-    const user = await dataSource.getRepository(User).findOneBy({ id });
-    if (user == null) {
-      throw new Error(`User with ID: ${id} not found`);
-    }
-    await dataSource.getRepository(User).remove(user);
-    return user;
+  async delete(id: string): Promise<DeleteResult> {
+    return await dataSource.getRepository(User).delete({ id });
   }
 }

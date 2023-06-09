@@ -41,19 +41,6 @@ export class UserResolver {
     }
   }
 
-  @Mutation(() => User)
-  async signup(
-    @Arg("email") email: string,
-    @Arg("name") name: string,
-    @Arg("password") password: string
-  ): Promise<User> {
-    if (password.trim() === "") {
-      console.error(`Password can't be empty`);
-      throw new Error("Password can't be empty");
-    }
-    return await user.create(email, name, password);
-  }
-
   @Mutation(() => String)
   async deleteUser(@Arg("id") id: string): Promise<string> {
     try {
@@ -63,5 +50,18 @@ export class UserResolver {
       console.error(`Failed to delete user with ID : ${id}`);
       throw new Error(`Something went wrong`);
     }
+  }
+
+  @Mutation(() => User)
+  async createUser(
+    @Arg("email") email: string,
+    @Arg("name") name: string,
+    @Arg("password") password: string
+  ): Promise<User> {
+    if (password.trim() === "") {
+      console.error(`Password can't be empty`);
+      throw new Error("Password can't be empty");
+    }
+    return await user.create(email, name, password);
   }
 }
