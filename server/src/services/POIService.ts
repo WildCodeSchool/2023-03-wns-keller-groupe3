@@ -11,6 +11,7 @@ interface pointOfInterestArgs {
     longitude: number,
     gpsPin: GpsPin,
     address: string,
+    name: string,
     description: string,
     picture: string,
     rating: number,
@@ -39,7 +40,7 @@ export class POIService {
     // return await dataSource.getRepository(POI).findBy({ city });
     // }
 
-    async createPOI({latitude, longitude, gpsPin, address, description, picture, rating, categories, city}: pointOfInterestArgs): Promise<POI> {
-        return await dataSource.getRepository(POI).save({latitude, longitude, gpsPin, address, description, picture, rating, categories, city})
+    async createPOI({latitude, longitude, gpsPin, address, name, description, picture, rating, categories, city}: pointOfInterestArgs): Promise<POI> {
+        return await dataSource.getRepository(POI).save({latitude, longitude, gpsPin, address, name, description, picture, rating, categories, city})
     }
 }

@@ -4,6 +4,8 @@ import { GpsPin, POI } from "../entities/POI";
 import { POIService } from "../services/POIService";
 import { Category } from "../entities/Category";
 import { City } from "../entities/City";
+import { CityInput } from "./input_types/CityInputType";
+import { CategoryInput } from "./input_types/CategoryInput";
 
 const pointOfInterest = new POIService();
 
@@ -31,19 +33,21 @@ export class POIResolver {
 //     return await pointOfInterest.getAllPOIsByCity(city);
 //   }
 
+// TODO create a class definition "@InputType" https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
   @Mutation(() => POI)
   async createPOI(
     @Arg("latitude") latitude: number,
     @Arg("longitude") longitude: number,
     @Arg("gpsPin") gpsPin: GpsPin,
     @Arg("address") address: string,
+    @Arg("name") name: string,
     @Arg("description") description: string,
     @Arg("picture") picture: string,
     @Arg("rating") rating: number,
-    @Arg("categories", type => [Category]) categories: Category[],
-    @Arg("city", type => City) city: City,
+    @Arg("categories", type => [CategoryInput]) categories: Category[],
+    @Arg("city", type => CityInput) city: City,
   ): Promise<POI> {
-    return await pointOfInterest.createPOI({latitude, longitude, gpsPin, address, description, picture, rating, categories, city})
+    return await pointOfInterest.createPOI({latitude, longitude, gpsPin, address, name, description, picture, rating, categories, city})
   }
 
 //   @Mutation(() => POI)
