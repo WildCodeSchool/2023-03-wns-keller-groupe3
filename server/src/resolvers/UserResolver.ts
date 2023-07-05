@@ -37,7 +37,7 @@ export class UserResolver {
       return await user.getOne(id);
     } catch (error) {
       console.error(`Failed to update user with ID : ${id}`);
-      throw new Error(`Something went wrond when updating settings`);
+      throw new Error(`Something went wrong when updating settings`);
     }
   }
 
@@ -45,7 +45,7 @@ export class UserResolver {
   async deleteUser(@Arg("id") id: string): Promise<string> {
     try {
       await user.delete(id);
-      return `User with ${id} deleted`;
+      return `User with ID : ${id} deleted`;
     } catch (error) {
       console.error(`Failed to delete user with ID : ${id}`);
       throw new Error(`Something went wrong`);
