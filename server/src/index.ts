@@ -5,12 +5,13 @@ import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/UserResolver";
 import { CityResolver } from "./resolvers/CityResolver";
+import { CategoryResolver } from "./resolvers/CategoryResolver";
 
 const start = async (): Promise<void> => {
   await dataSource.initialize();
 
   const typeGraphQLgeneratedSchema = await buildSchema({
-    resolvers: [UserResolver, CityResolver],
+    resolvers: [UserResolver, CityResolver, CategoryResolver],
     authChecker: ({ context }) => {
       console.log("context from authchecker", context);
       if (context.email !== undefined) {
