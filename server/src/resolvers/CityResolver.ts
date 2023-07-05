@@ -50,19 +50,5 @@ export class CityResolver {
     @Arg("picture") picture: string
   ): Promise<City> {
     return await city.updatedCity(id, name, picture);
-    // const updatedCity = await this.cityService.updateCity(id, name, picture);
-    // return updatedCity;
-    // const cityRepository = dataSource.getRepository(City);
-    // const cityToUpdate = await cityRepository.findOne({ where: { id } });
-
-    // if (cityToUpdate === null) {
-    //   throw new Error("City not found");
-    // }
-
-    // cityToUpdate.name = name;
-    // cityToUpdate.picture = picture;
-
-    // const updatedCity = await cityRepository.save(cityToUpdate);
-    // return updatedCity;
   }
 }
