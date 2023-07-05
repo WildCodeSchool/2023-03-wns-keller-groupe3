@@ -26,20 +26,20 @@ export class CityResolver {
   }
 
   @Mutation(() => String)
-  async deleteToCity(@Arg("id") id: string): Promise<string> {
+  async deleteCity(@Arg("id") id: string): Promise<string> {
     try {
       await dataSource.getRepository(City).delete({ id });
       return await city.DeleteCity(id);
     } catch (err) {
-      return `Error while deleting city`;
+      return `Error while deleting city with ID : ${id}`;
     }
   }
 
   @Mutation(() => City)
-  async UpdateToCity(
+  async UpdateCity(
     @Arg("id") id: string,
-    @Arg("name") name: string,
-    @Arg("picture") picture: string
+    @Arg("name", { nullable: true }) name: string,
+    @Arg("picture", { nullable: true }) picture: string
   ): Promise<City> {
     return await city.updatedCity(id, name, picture);
   }

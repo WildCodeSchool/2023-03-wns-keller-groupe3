@@ -27,6 +27,7 @@ export class CityService {
       const cityRepository = dataSource.getRepository(City);
       const cityToUpdate = await cityRepository.findOne({ where: { id } });
 
+      // TODO move validation logic inside the Resolver
       if (cityToUpdate === null) {
         throw new Error("City not found");
       }
@@ -37,7 +38,7 @@ export class CityService {
       const updatedCity = await cityRepository.save(cityToUpdate);
       return updatedCity;
     } catch {
-      throw new Error("An error occurred while updating the city: ");
+      throw new Error(`An error occurred while updating the city with ID : ${id}`);
     }
   }
 }
