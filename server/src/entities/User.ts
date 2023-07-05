@@ -35,11 +35,7 @@ export class User {
     type: "varchar",
     length: 255,
   })
-<<<<<<< HEAD
   hashedPassword: string;
-=======
-  password: string;
->>>>>>> 024c06d (fix-feature)
 
   @Field()
   @Column({
