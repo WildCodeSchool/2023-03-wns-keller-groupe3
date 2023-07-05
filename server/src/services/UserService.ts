@@ -24,7 +24,6 @@ export class UserService {
     newUser.name = name;
     newUser.hashedPassword = await argon2.hash(password);
     const userFromDB = await dataSource.manager.save(User, newUser);
-    console.log(userFromDB);
     return userFromDB;
   }
 
