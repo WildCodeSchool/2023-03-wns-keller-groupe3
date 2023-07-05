@@ -30,10 +30,10 @@ export class CategoryResolver {
   ): Promise<string> {
     try {
       await category.updateCategory(id, name);
-      return `Category with id: ${id} has been successfully updated`;
+      return `Category with ID : ${id} has been successfully updated`;
     } catch (err) {
       console.log(err);
-      return `Error while updating category with id: ${id}`;
+      return `Error while updating category with ID : ${id}`;
     }
   }
 
@@ -47,15 +47,15 @@ export class CategoryResolver {
       .findBy({ categories: categoryToDelete });
 
     if (poisRelated.length > 0) {
-      return `This category contains points of interest. Please remove the category from these points before and try again.`;
+      return `This category contains points of interest. Please remove the category from these points before, then try again.`;
     }
 
     try {
       await category.deleteCategory(id);
-      return `Category with id: ${id} has been successfully deleted`;
+      return `Category with ID : ${id} has been successfully deleted`;
     } catch (err) {
       console.log(err);
-      return `Error while deleting category with id: ${id}`;
+      return `Error while deleting category with ID : ${id}`;
     }
   }
 }
