@@ -3,15 +3,16 @@ import * as jwt from "jsonwebtoken";
 import dataSource from "./utils";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
-import { UserResolver } from "./resolvers/UserResolver";
-import { CityResolver } from "./resolvers/CityResolver";
 import { CategoryResolver } from "./resolvers/CategoryResolver";
+import { CityResolver } from "./resolvers/CityResolver";
+import { POIResolver } from "./resolvers/POIResolver";
+import { UserResolver } from "./resolvers/UserResolver";
 
 const start = async (): Promise<void> => {
   await dataSource.initialize();
 
   const typeGraphQLgeneratedSchema = await buildSchema({
-    resolvers: [UserResolver, CityResolver, CategoryResolver],
+    resolvers: [CategoryResolver, CityResolver, UserResolver, POIResolver],
     authChecker: ({ context }) => {
       console.log("context from authchecker", context);
       if (context.email !== undefined) {
