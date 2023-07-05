@@ -17,14 +17,6 @@ export class CityResolver {
     return await city.getCityById(id);
   }
 
-  // @Query(() => [City])
-  // async getAllPOIsByCity(): Promise<City[]> {
-  //   const AllPOIsByCity = await dataSource
-  //     .getRepository(City)
-  //     .find({ relations: { pointsOfInterest: {} } });
-  //   return AllPOIsByCity;
-  // }
-
   @Mutation(() => City)
   async createCity(
     @Arg("name") name: string,
