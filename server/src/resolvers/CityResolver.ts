@@ -1,7 +1,7 @@
 import { Arg, Mutation, Resolver, Query } from "type-graphql";
 import { City } from "../entities/City";
 import dataSource from "../utils";
-import { CityService } from "../service/CityService";
+import { CityService } from "../services/CityService";
 
 const city = new CityService();
 
