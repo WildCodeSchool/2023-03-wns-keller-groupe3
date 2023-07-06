@@ -20,9 +20,9 @@ export class POIResolver {
     return await pointOfInterest.getPOIById(id);
   }
 
-//   TODO Queries "getAllPOIsByCategory" and "getAllPOIsByCity"
+// TODO Queries "getAllPOIsByCategory" and "getAllPOIsByCity"
 
-// TODO create a class definition "@InputType" https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
+// https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
 // TODO Make class-validations
   @Mutation(() => POI)
   async createPOI(
@@ -34,11 +34,11 @@ export class POIResolver {
     @Arg("description") description: string,
     @Arg("picture") picture: string,
     @Arg("rating") rating: number,
-    @Arg("categories", type => [CategoryInput]) categoriesID: Category[],
-    @Arg("city", type => CityInput) cityID: City,
+    @Arg("categories", type => [CategoryInput]) categories: Category[],
+    @Arg("city", type => CityInput) city: City,
   ): Promise<POI | string> {
     // TODO Manage error handling
-    return await pointOfInterest.createPOI({latitude, longitude, gpsPin, address, name, description, picture, rating, categoriesID, cityID})
+    return await pointOfInterest.createPOI({latitude, longitude, gpsPin, address, name, description, picture, rating, categories, city})
   }
 
   // TODO Mutations "updatePOI" and "deletePOI"
