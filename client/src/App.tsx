@@ -4,6 +4,7 @@ import Home from "./Pages/Home";
 import City from "./Pages/City";
 import "./App.css";
 import Nav from "./components/Nav";
+import User from "./Pages/User";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Nav />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/user' element={<User />} />
           <Route path='/city' element={<City />} />
           <Route path='/city/:id' element={<MapSelected />} />
         </Routes>
