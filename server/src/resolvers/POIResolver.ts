@@ -46,10 +46,10 @@ export class POIResolver {
     @Arg("picture") picture: string,
     @Arg("rating") rating: number,
     @Arg("categories", type => [CategoryInput]) categoriesID: Category[],
-    @Arg("city", type => CityInput) city: City,
+    @Arg("city", type => CityInput) cityID: City,
   ): Promise<POI | string> {
     // TODO Manage error handling
-    return await pointOfInterest.createPOI({latitude, longitude, gpsPin, address, name, description, picture, rating, categoriesID, city})
+    return await pointOfInterest.createPOI({latitude, longitude, gpsPin, address, name, description, picture, rating, categoriesID, cityID})
   }
 
   // TODO

@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import * as jwt from "jsonwebtoken";
-import dataSource from "./utils";
 import { ApolloServer } from "apollo-server";
+import dataSource from "./utils";
 import { buildSchema } from "type-graphql";
 import { CategoryResolver } from "./resolvers/CategoryResolver";
 import { CityResolver } from "./resolvers/CityResolver";
