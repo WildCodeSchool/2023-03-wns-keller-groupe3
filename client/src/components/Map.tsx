@@ -9,15 +9,14 @@ interface POI {
   poiLong: number;
 }
 
-interface MapContainerProps {
+interface MapProps {
   id: string;
-  name?: string;
   lat: number;
   long: number;
   poi: POI[];
 }
 
-export default function Map({ id, lat, long, poi }: MapContainerProps) {
+export default function Map({ id, lat, long, poi }: MapProps) {
   return (
     <div id='map'>
       <MapContainer
