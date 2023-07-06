@@ -22,10 +22,6 @@ export class POI {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  // @Field()
-  // @Column({ unique: true })
-  // gps_coordinates: number;
-
   @Field()
   @Column("double precision")
   latitude: number;
