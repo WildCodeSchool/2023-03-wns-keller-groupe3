@@ -3,15 +3,12 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(isOpen);
 
   return (
     <div
-      className={
-        !isOpen
-          ? `z-10 fixed h-full menu bg-base-200 w-20 flex justify-between`
-          : `z-10 fixed h-full menu bg-base-200 w-52 flex justify-between`
-      }
+      className={`z-10 fixed h-full menu bg-base-200 w-${
+        isOpen ? "48" : "20"
+      } flex justify-between rounded-r-xl shadow-[5px_0px_20px_0px_#00000024]`}
     >
       <div className='mx-auto'>
         <button className='btn btn-sm' onClick={() => setIsOpen(!isOpen)}>
@@ -103,7 +100,6 @@ export default function Sidebar() {
                 d='M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z'
               />
             </svg>
-
             {isOpen ? <p className='ml-2'>Profil</p> : null}
           </Link>
         </li>
