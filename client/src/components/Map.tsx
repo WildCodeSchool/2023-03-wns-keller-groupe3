@@ -24,7 +24,7 @@ export default function Map({ id, lat, long, poi }: MapContainerProps) {
         id={id}
         center={[lat, long]}
         zoom={14}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
