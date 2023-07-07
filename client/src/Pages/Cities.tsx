@@ -1,5 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
 import { Link } from "react-router-dom";
+import { CityCard, City } from "../components/CityCard";
 
 export const GET_CITIES = gql`
   query Query {
@@ -11,7 +12,7 @@ export const GET_CITIES = gql`
   }
 `;
 
-function City() {
+function Cities() {
   const { loading, error, data } = useQuery(GET_CITIES);
 
   if (loading) return <p>Loading...</p>;
@@ -37,18 +38,11 @@ function City() {
         </svg>
         <input className="w-full" placeholder="Recherche" />
       </div>
-      {/* Liste de ville */}
+      {/* Liste de villes */}
       <ul className="container grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {data.getAllCities.map((city: any) => (
+        {data.getAllCities.map((city: City) => (
           <Link key={city.id} to={`/city/${city.id}`}>
-            <div className="card bg-base-100 shadow-xl">
-              <figure className="h-32">
-                <img src={city.picture} alt="City" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{city.name}</h2>
-              </div>
-            </div>
+            <CityCard city={city} />
           </Link>
         ))}
       </ul>
@@ -56,4 +50,4 @@ function City() {
   );
 }
 
-export default City;
+export default Cities;

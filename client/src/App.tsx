@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MapSelected from "./components/MapSelected";
 import Home from "./Pages/Home";
-import City from "./Pages/City";
+import Cities from "./Pages/Cities";
 import "./App.css";
 import Nav from "./components/Nav";
 import User from "./Pages/User";
@@ -12,10 +12,10 @@ function App() {
       <div>
         <Nav />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/user' element={<User />} />
-          <Route path='/city' element={<City />} />
-          <Route path='/city/:id' element={<MapSelected />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/city" element={<Cities />} />
+          <Route path="/city/:id" element={<MapSelected />} />
         </Routes>
       </div>
     </Router>
