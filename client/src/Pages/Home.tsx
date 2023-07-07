@@ -1,31 +1,20 @@
-import React from "react";
+import backgroundImage from '../assets/europeMap.png';
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
-      <div className="hero min-h-screen bg-base-200">
-        <div>
-          <div className="hero-content flex-col lg:flex-row">
-            <img
-              src="https://www.colmar.fr/sites/colmar.fr/files/styles/colmar_rect_773_x_520/public/visiter/statue-liberte-colmar.jpg?itok=tO_SQYXn"
-              className="max-w-sm h-half rounded-lg shadow-2xl"
-              alt="Statue Liberté Colmar" />
-            <div>
-              <h1 className="text-5xl font-bold">Découvrez City Guide</h1>
-              <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-              <button className="btn btn-primary">Get Started</button>
-            </div>
-          </div>
-
-          <div className="hero-content flex-col lg:flex-row-reverse">
-            <img
-              src="https://media.routard.com/image/53/1/pt155031.1363531.w430.jpg"
-              className="max-w-sm rounded-lg shadow-2xl"
-              alt="Colonne de la Déesse Lille" />
-            <div>
-              <h1 className="text-5xl font-bold">Arpentez la France comme un local</h1>
-              <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-              <button className="btn btn-primary">Get Started</button>
-            </div>
+      <div
+        className="hero min-h-screen"
+        style={{backgroundImage: `url(${backgroundImage})`}}
+      >
+        <div className="hero-overlay bg-opacity-60"></div>
+        <div className="hero-content text-center text-neutral-content">
+          <div className="max-w-2-xl">
+            <h1 className="mb-10 text-9xl font-bold outline-black">City Guide</h1>
+            <p className="mb-2 text-2xl font-medium text-left ml-20">Parcourir une ville comme un local.</p>
+            <p className="mb-2 text-2xl font-medium">Aller droit au but.</p>
+            <p className="mb-5 text-2xl font-medium text-right mr-20">Découvrir des perles rares.</p>
+            <Link to='/city'><button className="btn btn-primary">Explorez maintenant !</button></Link>
           </div>
         </div>
       </div>
