@@ -17,8 +17,6 @@ function City() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
 
-  console.log(data.getAllCities);
-
   return (
     <section className="container max-w-5xl md:mx-auto p-5 flex flex-col gap-6">
       <h1 className="text-2xl font-bold ">Choisissez votre ville</h1>
