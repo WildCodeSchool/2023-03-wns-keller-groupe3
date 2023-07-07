@@ -1,6 +1,6 @@
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import bar from "../Assets/bar.png";
+import bar from "../assets/bar.png";
 
 interface POI {
   picture: string;
@@ -10,6 +10,7 @@ interface POI {
   description: string;
   poiLat: number;
   poiLong: number;
+  rating: number;
 }
 
 interface MapProps {
@@ -36,15 +37,17 @@ export default function Map({ id, lat, long, poi }: MapProps) {
           <Marker position={[p.poiLat, p.poiLong]}>
             <Popup>
               <div>
-                <div className="leafletLine"></div>
-                <div className="w-full h-[190px]">
-                  <img
-                    className="w-full h-full rounded-t-2xl"
-                    src={bar}
-                    alt="test"
-                  />
+                <div className="">
+                  <div className="w-full h-[150px]">
+                    <img
+                      className="w-full h-full rounded-t-2xl"
+                      src={bar}
+                      alt="test"
+                    />
+                  </div>
                 </div>
-                <div className="px-[20px] pb-[30px]">
+                <div className="px-[20px] pb-[30px] overflow-hidden relative">
+                  <div className="leafletLine"></div>
                   <div className="py-[15px]">
                     <h1 className="text-xl font-bold">{p.name}</h1>
                   </div>
@@ -56,7 +59,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                       <a href="">Avis</a>
                     </div>
                   </div>
-                  <div className="flex py-4 border-b border-[#1B2F02]">
+                  <div className="flex py-3 border-b border-[#1B2F02]">
                     <div className="w-4/5">
                       <p className="!m-0">{p.address}</p>
                     </div>
@@ -82,9 +85,12 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                       </svg>
                     </div>
                   </div>
-
-                  <br />
-                  <span>{p.description}</span>
+                  <div>
+                    <p className="line-clamp-3 truncate">{p.description}</p>
+                  </div>
+                  <div>
+                    <p>{p.rating}</p>
+                  </div>
                 </div>
               </div>
             </Popup>
