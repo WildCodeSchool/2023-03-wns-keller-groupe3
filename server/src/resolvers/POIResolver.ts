@@ -61,7 +61,7 @@ export class POIResolver {
     @Arg("city", type => CityInput, { nullable: true }) city: City
   ): Promise<POI> {
     try {
-      return await pointOfInterest.updatePOI(id, { latitude, longitude, gpsPin, address, name, description, picture, rating, categories, city });
+      return await pointOfInterest.updatePOI(id, { latitude, longitude, gps_pin:gpsPin, address, name, description, picture, rating, categories, city });
     } catch (error) {
       console.error(`Failed to update POI with ID: ${id}`);
       throw new Error(`Something went wrong when updating the POI`);

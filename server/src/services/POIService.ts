@@ -47,26 +47,14 @@ export class POIService {
 
     async updatePOI(
         id: string,
-        { latitude, longitude, gpsPin, address, name, description, picture, rating, categories, city }: pointOfInterestArgs
+        poiUpdate: Partial<POI>
       ): Promise<POI> {
         const poiRepository = dataSource.getRepository(POI);
-        let poi = await poiRepository.findOneByOrFail({ id });
+        const poi = await poiRepository.findOneByOrFail({ id });
 
-        poi = {
-          ...poi,
-          latitude: latitude !== undefined ? latitude : poi.latitude,
-          longitude: longitude !== undefined ? longitude : poi.longitude,
-          gps_pin: gpsPin !== undefined ? gpsPin : poi.gps_pin,
-          address: address !== undefined ? address : poi.address,
-          name: name !== undefined ? name : poi.name,
-          description: description !== undefined ? description : poi.description,
-          picture: picture !== undefined ? picture : poi.picture,
-          rating: rating !== undefined ? rating : poi.rating,
-          categories: categories !== undefined ? categories : poi.categories,
-          city: city !== undefined ? city : poi.city,
-        };
+        Object.assign(poi, poiUpdate);
 
-        return await poiRepository.save(poi);
-      }
+          return await poiRepository.save(poi);
+        }
 }
 
