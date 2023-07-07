@@ -9,8 +9,8 @@ export default function Sidebar() {
         className='hidden md:block md:mask mask-circle w-14 mx-auto'
         src={logo}
       />
-      <ul className='flex items-center justify-evenly w-full md:flex-col'>
-        <li className='rounded p-2 md:mb-5'>
+      <ul className='flex items-center justify-center w-full md:flex-col'>
+        <li className='rounded p-2 mr-10 md:mb-5 md:mr-0'>
           <Link to='/' className='flex flex-col items-center md:block'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -29,7 +29,7 @@ export default function Sidebar() {
             <p className='text-xs md:text'>Accueil</p>
           </Link>
         </li>
-        <li className='p-2 md:mb-5'>
+        <li className='p-2 mr-10 md:mb-5 md:mr-0'>
           <Link to='/city' className='flex flex-col items-center md:block'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -48,7 +48,7 @@ export default function Sidebar() {
             <p className='text-xs md:text'>Ville</p>
           </Link>
         </li>
-        <li className='p-2 md:mb-5'>
+        <li className='p-2 md:mb-5 md:mr-0'>
           <Link to='/user' className='flex flex-col items-center md:block'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
