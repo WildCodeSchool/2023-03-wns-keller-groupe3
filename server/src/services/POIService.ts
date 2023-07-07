@@ -39,7 +39,7 @@ export class POIService {
         const deleteResult = await poiRepository.delete(id);
 
         if (deleteResult.affected === 0) {
-          throw new Error("Le POI spécifié n'existe pas");
+          throw new Error("Error : POI doesn't exist.");
         }
 
         return true;
