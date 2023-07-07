@@ -3,8 +3,7 @@ import { mockData } from "../utils/mockData";
 
 function City() {
   return (
-    <>
-      <h1>City</h1>
+    <div className='flex justify-center items-center h-full'>
       {/* Liste de ville */}
       <ul>
         {mockData.map((c) => (
@@ -13,7 +12,7 @@ function City() {
           </Link>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
