@@ -34,5 +34,27 @@ export class POIService {
         return await dataSource.getRepository(POI).save({latitude, longitude, gpsPin, address, name, description, picture, rating, categories, city})
     }
 
-    // TODO : "updatePOI" and "deletePOI"
+    async deletePOI(id: string): Promise<boolean> {
+        const poiRepository = dataSource.getRepository(POI);
+        const deleteResult = await poiRepository.delete(id);
+
+        if (deleteResult.affected === 0) {
+          throw new Error("Error : POI doesn't exist.");
+        }
+
+        return true;
+      }
+
+    async updatePOI(
+        id: string,
+        poiUpdate: Partial<POI>
+      ): Promise<POI> {
+        const poiRepository = dataSource.getRepository(POI);
+        const poi = await poiRepository.findOneByOrFail({ id });
+
+        Object.assign(poi, poiUpdate);
+
+          return await poiRepository.save(poi);
+        }
 }
+
