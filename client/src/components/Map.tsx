@@ -3,10 +3,10 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 export interface POI {
   name: string;
-  category: string;
+  categories: string;
   description: string;
-  poiLat: number;
-  poiLong: number;
+  latitude: number;
+  longitude: number;
 }
 
 interface MapProps {
@@ -17,8 +17,7 @@ interface MapProps {
 }
 
 export default function Map({ id, lat, long, poi }: MapProps) {
-  // const testLatLng = new LatLng(lat, long);
-  // console.log(testLatLng.lat);
+  console.log(poi);
   return (
     <div id="map">
       <MapContainer
@@ -32,9 +31,9 @@ export default function Map({ id, lat, long, poi }: MapProps) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {poi.map((p) => (
-          <Marker position={[p.poiLat, p.poiLong]}>
+          <Marker position={[p.latitude, p.longitude]}>
             <Popup>
-              <span> Catégorie : {p.category}</span>
+              <span> Catégorie : {}</span>
               <br />
               <span>{p.name}</span>
               <br />

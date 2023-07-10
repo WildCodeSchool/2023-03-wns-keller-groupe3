@@ -12,6 +12,8 @@ export const GET_ONE_CITY = gql`
       pointsOfInterest {
         id
         name
+        latitude
+        longitude
       }
     }
   }
