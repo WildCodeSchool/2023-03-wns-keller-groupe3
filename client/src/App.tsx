@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MapSelected from "./components/MapSelected";
-import Home from "./Pages/Home";
-import Cities from "./Pages/Cities";
 import "./App.css";
 import Nav from "./components/Nav";
-import User from "./Pages/User";
+import Cities from "./pages/Cities";
+import Home from "./pages/Home";
+import User from "./pages/User";
 
 function App() {
   return (
@@ -12,10 +12,10 @@ function App() {
       <div>
         <Nav />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/user" element={<User />} />
-          <Route path="/city" element={<Cities />} />
-          <Route path="/city/:id" element={<MapSelected />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/user' element={<User />} />
+          <Route path='/cities' element={<Cities />} />
+          <Route path='/city/:id' element={<MapSelected />} />
         </Routes>
       </div>
     </Router>
