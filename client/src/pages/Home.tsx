@@ -18,7 +18,7 @@ function Home() {
           <p className='mb-10 text-2xl font-medium text-right mr-20'>
             Découvrir des perles rares.
           </p>
-          <Link to='/city'>
+          <Link to='/cities'>
             <button className='btn btn-lg btn-block max-w-md btn-primary'>
               Explorez maintenant !
             </button>
