@@ -4,7 +4,7 @@ import Map, { POI } from "./Map";
 
 export const GET_ONE_CITY = gql`
   query Query($id: String!) {
-    getCityById(id: $id) {
+    getCityBy(id: $id) {
       id
       name
       latitude
@@ -34,12 +34,12 @@ export default function MapSelected() {
 
   return (
     <div>
-      <div key={data.getCityById.id}>
+      <div key={data.getCityBy.id}>
         <Map
-          id={data.getCityById.id}
-          lat={data.getCityById.latitude}
-          long={data.getCityById.longitude}
-          poi={data.getCityById.pointsOfInterest.map((poi: POI) => poi)}
+          id={data.getCityBy.id}
+          lat={data.getCityBy.latitude}
+          long={data.getCityBy.longitude}
+          poi={data.getCityBy.pointsOfInterest.map((poi: POI) => poi)}
         />
       </div>
     </div>

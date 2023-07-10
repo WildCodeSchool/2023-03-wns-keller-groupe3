@@ -24,7 +24,7 @@ export class POIService {
         return await dataSource.getRepository(POI).find({relations: {categories : true, city: true}});
     }
 
-    async getPOIById(id: string): Promise<POI> {
+    async getPOIBy(id: string): Promise<POI> {
         return await dataSource.getRepository(POI).findOneOrFail({ where: {id}, relations: {categories : true, city: true}});
     }
 
