@@ -36,6 +36,8 @@ const start = async (): Promise<void> => {
     name: "Saint-Dié-Des-Vosges",
     picture:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Lille_gd_place_colonne.jpg/1280px-Lille_gd_place_colonne.jpg",
+    latitude: 48.2900,
+    longitude: 6.9305,
   });
   const SaintDié = await dataSource
     .getRepository(City)
