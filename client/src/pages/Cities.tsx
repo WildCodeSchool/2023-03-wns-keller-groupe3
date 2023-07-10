@@ -1,6 +1,7 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { CityCard, City } from "../components/CityCard";
+import { useState } from "react";
 
 const GET_CITIES = gql`
   query Query {
@@ -11,13 +12,48 @@ const GET_CITIES = gql`
     }
   }
 `;
+const ADD_CITY = gql`
+  mutation Mutation(
+    $longitude: Float!
+    $latitude: Float!
+    $picture: String!
+    $name: String!
+  ) {
+    createCity(
+      longitude: $longitude
+      latitude: $latitude
+      picture: $picture
+      name: $name
+    ) {
+      id
+      name
+      picture
+      latitude
+      longitude
+    }
+  }
+`;
 
 function Cities() {
+  const [name, setName] = useState("");
+  const [picture, setPicture] = useState("");
+  const [lat, setLat] = useState("");
+  const [long, setLong] = useState("");
+
   const { loading, error, data } = useQuery(GET_CITIES);
+
+  const [createCity] = useMutation(ADD_CITY, {
+    variables: {
+      name,
+      picture,
+      latitude: parseFloat(lat),
+      longitude: parseFloat(long),
+    },
+    refetchQueries: [GET_CITIES],
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
-
   return (
     <section className='container max-w-5xl md:mx-auto p-5 flex flex-col gap-6'>
       <h1 className='text-xl font-bold mt-5'>Choisissez votre ville</h1>
@@ -72,6 +108,10 @@ function Cities() {
           <h3 className='font-bold text-lg mb-4'>Ajouter une ville</h3>
           <hr></hr>
           <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createCity();
+            }}
             className='py-6 flex flex-col'
             action='
           '
@@ -84,6 +124,7 @@ function Cities() {
               type='text'
               placeholder='Paris, Rome, Rio ...'
               className='input input-bordered w-full max-w-xs mb-4'
+              onChange={(e) => setName(e.target.value)}
             />
             <label className='text-sm mb-2' htmlFor='name'>
               Image :
@@ -92,6 +133,7 @@ function Cities() {
               type='text'
               placeholder='url : https://...'
               className='input input-bordered w-full max-w-xs mb-4'
+              onChange={(e) => setPicture(e.target.value)}
             />
             <label className='text-sm mb-2' htmlFor='name'>
               Latitude :
@@ -100,6 +142,7 @@ function Cities() {
               type='text'
               placeholder='43.2345'
               className='input input-bordered w-full max-w-xs mb-4'
+              onChange={(e) => setLat(e.target.value)}
             />
             <label className='text-sm mb-2' htmlFor='name'>
               Longitude :
@@ -108,16 +151,19 @@ function Cities() {
               type='text'
               placeholder='2.5456'
               className='input input-bordered w-full max-w-xs'
+              onChange={(e) => setLong(e.target.value)}
             />
+            <div className='modal-action flex justify-between'>
+              <label htmlFor='my_modal_6' className='btn'>
+                Annuler
+              </label>
+              <input
+                type='submit'
+                className='btn btn-primary'
+                value='valider'
+              />
+            </div>
           </form>
-          <div className='modal-action flex justify-between'>
-            <label htmlFor='my_modal_6' className='btn'>
-              Annuler
-            </label>
-            <label htmlFor='my_modal_6' className='btn btn-primary'>
-              Valider
-            </label>
-          </div>
         </div>
       </div>
     </section>
