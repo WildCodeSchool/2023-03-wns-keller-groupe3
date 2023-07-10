@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MapSelected from "./components/MapSelected";
-import Home from "./Pages/Home";
-import City from "./Pages/City";
 import "./App.css";
 import Nav from "./components/Nav";
-import User from "./Pages/User";
+import City from "./pages/City";
+import Home from "./pages/Home";
+import User from "./pages/User";
 
 function App() {
   return (
