@@ -16,6 +16,8 @@ const start = async (): Promise<void> => {
     name: "Colmar",
     picture:
       "https://static.actu.fr/uploads/2021/08/1446540341-58ac3304d9-b-960x640.jpg",
+    latitude: 48.0789,
+    longitude: 7.3594,
   });
   const colmar = await dataSource
     .getRepository(City)
@@ -26,6 +28,8 @@ const start = async (): Promise<void> => {
     name: "Lille",
     picture:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Lille_gd_place_colonne.jpg/1280px-Lille_gd_place_colonne.jpg",
+    latitude: 50.6283,
+    longitude: 3.0573,
   });
   const lille = await dataSource
     .getRepository(City)
@@ -48,6 +52,8 @@ const start = async (): Promise<void> => {
     name: "Strasbourg",
     picture:
       "https://pokaa.fr/wp-content/uploads/2020/07/cathedrale-illumination-20207.jpeg",
+    latitude: 48.5735,
+    longitude: 7.7534,
   });
   const strasbourg = await dataSource
     .getRepository(City)
@@ -58,6 +64,8 @@ const start = async (): Promise<void> => {
     name: "Troyes",
     picture:
       "https://cdn.discordapp.com/attachments/1096407741234421851/1116278754403160084/Capture_decran_2023-06-08_101302.png",
+    latitude: 48.297,
+    longitude: 4.0746,
   });
   const troyes = await dataSource
     .getRepository(City)

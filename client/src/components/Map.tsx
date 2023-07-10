@@ -2,14 +2,14 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import bar from "../assets/bar.png";
 
-interface POI {
-  picture: string;
+export interface POI {
   name: string;
-  address: string;
-  category: string;
+  categories: string;
   description: string;
-  poiLat: number;
-  poiLong: number;
+  latitude: number;
+  longitude: number;
+  picture: string;
+  address: string;
   rating: number;
 }
 
@@ -21,6 +21,7 @@ interface MapProps {
 }
 
 export default function Map({ id, lat, long, poi }: MapProps) {
+  console.log(poi);
   return (
     <div id='map'>
       <MapContainer
@@ -34,7 +35,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         {poi.map((p) => (
-          <Marker position={[p.poiLat, p.poiLong]}>
+          <Marker position={[p.latitude, p.longitude]}>
             <Popup>
               <div>
                 <div className=''>

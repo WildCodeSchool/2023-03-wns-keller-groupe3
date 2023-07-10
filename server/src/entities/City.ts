@@ -25,6 +25,14 @@ export class City {
   })
   picture: string;
 
+  @Field()
+  @Column("double precision")
+  latitude: number;
+
+  @Field()
+  @Column("double precision")
+  longitude: number;
+
   @Field(() => [POI])
   @OneToMany(() => POI, (pointOfInterest) => pointOfInterest.city)
   pointsOfInterest: POI[];
