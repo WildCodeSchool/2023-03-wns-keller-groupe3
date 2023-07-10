@@ -22,7 +22,7 @@ interface MapProps {
 
 export default function Map({ id, lat, long, poi }: MapProps) {
   return (
-    <div id="map">
+    <div id='map'>
       <MapContainer
         id={id}
         center={[lat, long]}
@@ -31,18 +31,18 @@ export default function Map({ id, lat, long, poi }: MapProps) {
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         {poi.map((p) => (
           <Marker position={[p.poiLat, p.poiLong]}>
             <Popup>
               <div>
-                <div className="">
-                  <div className="w-full h-[150px]">
+                <div className=''>
+                  <div className='w-full h-[150px]'>
                     <img
-                      className="w-full h-full rounded-t-2xl"
+                      className='w-full h-full rounded-t-2xl'
                       src={bar}
-                      alt="test"
+                      alt='test'
                     />
                   </div>
                 </div>
