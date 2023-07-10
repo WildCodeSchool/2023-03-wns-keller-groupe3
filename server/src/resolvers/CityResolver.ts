@@ -20,9 +20,11 @@ export class CityResolver {
   @Mutation(() => City)
   async createCity(
     @Arg("name") name: string,
-    @Arg("picture") picture: string
+    @Arg("picture") picture: string,
+    @Arg("latitude") latitude: number,
+    @Arg("longitude") longitude: number
   ): Promise<City> {
-    return await city.createCity(name, picture);
+    return await city.createCity(name, picture, latitude, longitude);
   }
 
   @Mutation(() => String)
@@ -39,8 +41,10 @@ export class CityResolver {
   async UpdateCity(
     @Arg("id") id: string,
     @Arg("name", { nullable: true }) name: string,
-    @Arg("picture", { nullable: true }) picture: string
+    @Arg("picture", { nullable: true }) picture: string,
+    @Arg("latitude", { nullable: true }) latitude: number,
+    @Arg("longitude", { nullable: true }) longitude: number
   ): Promise<City> {
-    return await city.updatedCity(id, name, picture);
+    return await city.updatedCity(id, name, picture, latitude, longitude);
   }
 }

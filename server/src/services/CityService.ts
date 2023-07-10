@@ -5,13 +5,20 @@ export class CityService {
   async getCityById(id: string): Promise<City> {
     return await dataSource
       .getRepository(City)
-      .findOneOrFail({ where: { id } });
+      .findOneOrFail({ where: { id }, relations: { pointsOfInterest: true } });
   }
 
-  async createCity(name: string, picture: string): Promise<City> {
+  async createCity(
+    name: string,
+    picture: string,
+    latitude: number,
+    longitude: number
+  ): Promise<City> {
     const newCity = new City();
     newCity.name = name;
     newCity.picture = picture;
+    newCity.latitude = latitude;
+    newCity.longitude = longitude;
 
     const cityFromDB = await dataSource.getRepository(City).save(newCity);
     return cityFromDB;
@@ -22,7 +29,13 @@ export class CityService {
     return "city deleted";
   }
 
-  async updatedCity(id: string, name: string, picture: string): Promise<City> {
+  async updatedCity(
+    id: string,
+    name: string,
+    picture: string,
+    latitude: number,
+    longitude: number
+  ): Promise<City> {
     try {
       const cityRepository = dataSource.getRepository(City);
       const cityToUpdate = await cityRepository.findOne({ where: { id } });
@@ -34,11 +47,15 @@ export class CityService {
 
       cityToUpdate.name = name;
       cityToUpdate.picture = picture;
+      cityToUpdate.latitude = latitude;
+      cityToUpdate.longitude = longitude;
 
       const updatedCity = await cityRepository.save(cityToUpdate);
       return updatedCity;
     } catch {
-      throw new Error(`An error occurred while updating the city with ID : ${id}`);
+      throw new Error(
+        `An error occurred while updating the city with ID : ${id}`
+      );
     }
   }
 }
