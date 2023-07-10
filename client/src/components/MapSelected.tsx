@@ -11,6 +11,7 @@ export const GET_ONE_CITY = gql`
       longitude
       pointsOfInterest {
         id
+        picture
         name
         latitude
         longitude
