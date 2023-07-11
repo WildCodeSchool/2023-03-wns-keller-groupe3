@@ -140,6 +140,7 @@ function Cities() {
             <input
               id='latitude'
               type='number'
+              step='0.0001'
               //todo à gérer côté server
               min={-90}
               max={90}
@@ -153,6 +154,7 @@ function Cities() {
             <input
               id='longitude'
               type='number'
+              step='0.0001'
               //todo à gérer côté server
               min={-180}
               max={180}
