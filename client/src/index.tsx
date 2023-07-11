@@ -17,7 +17,15 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <ApolloProvider client={client}>
-    <ToastContainer />
+    <ToastContainer
+      position='top-right'
+      autoClose={2000}
+      hideProgressBar
+      closeOnClick
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
     <App />
   </ApolloProvider>
 );

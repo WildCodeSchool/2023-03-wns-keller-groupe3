@@ -8,6 +8,7 @@ import { CityCard, City } from "../components/CityCard";
 import { ADD_CITY } from "../graphql/mutations";
 import { GET_CITIES } from "../graphql/queries";
 import "react-toastify/dist/ReactToastify.css";
+import CustomToast from "../utils/CustomToast";
 
 function Cities() {
   const navigate = useNavigate();
@@ -32,16 +33,7 @@ function Cities() {
         navigate(`/city/${createCity.id}`);
       },
       onError(err) {
-        toast.error(`${err.message}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        toast(<CustomToast message={err.message} color='text-error' />);
         console.error(err);
       },
       refetchQueries: [GET_CITIES],
@@ -129,7 +121,10 @@ function Cities() {
               Latitude :
             </label>
             <input
-              type='text'
+              type='number'
+              //todo gérer côté server
+              min={-90}
+              max={90}
               placeholder='43.2345'
               className='input input-bordered w-full max-w-xs mb-4'
               onChange={(e) => setLat(e.target.value)}
@@ -138,7 +133,10 @@ function Cities() {
               Longitude :
             </label>
             <input
-              type='text'
+              //todo gérer côté server
+              min={-180}
+              max={-180}
+              type='number'
               placeholder='2.5456'
               className='input input-bordered w-full max-w-xs'
               onChange={(e) => setLong(e.target.value)}
