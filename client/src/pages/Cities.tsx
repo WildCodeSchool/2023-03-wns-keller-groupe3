@@ -20,7 +20,10 @@ function Cities() {
   if (error) return <p>Error : {error.message}</p>;
 
   return (
-    <section className="" style={{ backgroundImage: `url(${backgroundCity})` }}>
+    <section
+      className="hero min-h-screen"
+      style={{ backgroundImage: `url(${backgroundCity})` }}
+    >
       <div className="container max-w-5xl md:mx-auto pt-12 px-9 pb-[6rem] md:pl-[10rem] md:pr-[6rem] flex flex-col gap-6">
         <h1 className="text-2xl font-bold ">Choisissez votre ville</h1>
         <div className="border border-grey-900 rounded-full flex gap-2 p-2 bg-white">
