@@ -34,7 +34,7 @@ function Cities() {
         <h1 className="text-2xl text-primary font-bold ">
           Choisissez votre ville
         </h1>
-        <div className="border border-grey-900 rounded-full flex gap-2 p-2 bg-white">
+        <div className="border shadow-md border-grey-900 rounded-full flex gap-2 p-2 bg-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
