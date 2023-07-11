@@ -46,10 +46,6 @@ function Cities() {
       },
       refetchQueries: [GET_CITIES],
     });
-    setName("");
-    setPicture("");
-    setLat("");
-    setLong("");
   };
 
   if (loading) return <p>Loading...</p>;

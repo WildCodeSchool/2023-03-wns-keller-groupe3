@@ -14,13 +14,14 @@ export class CityService {
     latitude: number,
     longitude: number
   ): Promise<City> {
-    const newCity = new City();
-    newCity.name = name.trim();
-    newCity.picture = picture.trim();
-    newCity.latitude = latitude;
-    newCity.longitude = longitude;
-    const city = await dataSource.getRepository(City).save(newCity);
-    return city;
+    const cityRepository = dataSource.getRepository(City);
+    const city = cityRepository.create({
+      name: name.trim(),
+      picture: picture.trim(),
+      latitude,
+      longitude,
+    });
+    return await cityRepository.save(city);
   }
 
   async DeleteCity(id: string): Promise<string> {

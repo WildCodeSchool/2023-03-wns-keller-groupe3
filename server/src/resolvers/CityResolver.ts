@@ -1,4 +1,4 @@
-import { Arg, Mutation, Resolver, Query } from "type-graphql";
+import { Arg, Mutation, Resolver, Query, Float } from "type-graphql";
 import { City } from "../entities/City";
 import dataSource from "../utils";
 import { CityService } from "../services/CityService";
@@ -22,8 +22,8 @@ export class CityResolver {
   async createCity(
     @Arg("name") name: string,
     @Arg("picture") picture: string,
-    @Arg("latitude", { nullable: true }) latitude: number,
-    @Arg("longitude", { nullable: true }) longitude: number
+    @Arg("latitude", () => Float, { nullable: true }) latitude: number,
+    @Arg("longitude", () => Float, { nullable: true }) longitude: number
   ): Promise<City> {
     if (
       name.length === 0 ||

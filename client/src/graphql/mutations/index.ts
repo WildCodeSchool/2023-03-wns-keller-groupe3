@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 
 export const ADD_CITY = gql`
   mutation Mutation(
-    $longitude: Float!
-    $latitude: Float!
+    $longitude: Float
+    $latitude: Float
     $picture: String!
     $name: String!
   ) {
