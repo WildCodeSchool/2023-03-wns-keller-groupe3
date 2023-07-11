@@ -1,6 +1,9 @@
 import { Arg, Mutation, Resolver, Query } from "type-graphql";
 import { User } from "../entities/User";
 import { UserService } from "../services/UserService";
+import * as argon2 from "argon2";
+import dataSource from "../utils";
+import * as jwt from "jsonwebtoken";
 
 const user = new UserService();
 
@@ -63,5 +66,27 @@ export class UserResolver {
       throw new Error("Password can't be empty");
     }
     return await user.create(email, name, password);
+  }
+
+  @Query(() => String)
+  async login(
+    @Arg("email") email: string,
+    @Arg("password") password: string
+  ): Promise<String> {
+    const user = await dataSource
+      .getRepository(User)
+      .findOneByOrFail({ email });
+
+    try {
+      if (await argon2.verify(user.hashedPassword, password)) {
+        const token = jwt.sign({ email }, "supersecretkey");
+        return token;
+      } else {
+        return "error";
+      }
+    } catch (err) {
+      console.log(err);
+      return "error";
+    }
   }
 }
