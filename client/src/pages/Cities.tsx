@@ -52,7 +52,7 @@ function Cities() {
 
   return (
     <section
-      className='hero min-h-screen'
+      className='min-h-screen'
       style={{ backgroundImage: `url(${backgroundCity})` }}
     >
       <div className='container max-w-5xl md:mx-auto pt-12 px-9 pb-[6rem] md:pl-[10rem] md:pr-[6rem] flex flex-col gap-6'>
@@ -103,7 +103,7 @@ function Cities() {
             <p className='ml-2'>ajouter</p>
           </div>
         </label>
-        <ul className='grid grid-cols-1 min-[520px]:grid-cols-2 min-[823px]:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto'>
+        <ul className='grid grid-cols-1 min-[520px]:grid-cols-2 min-[823px]:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto md:mx-0'>
           {filteredCities.map((city: City) => (
             <Link key={city.id} to={`/city/${city.id}`}>
               <CityCard city={city} />
