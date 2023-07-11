@@ -26,11 +26,11 @@ export class City {
   picture: string;
 
   @Field()
-  @Column("double precision")
+  @Column("double precision", { nullable: true })
   latitude: number;
 
   @Field()
-  @Column("double precision")
+  @Column("double precision", { nullable: true })
   longitude: number;
 
   @Field(() => [POI])

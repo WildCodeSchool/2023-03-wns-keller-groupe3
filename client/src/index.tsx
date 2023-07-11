@@ -1,9 +1,10 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000",
@@ -15,6 +16,15 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <ApolloProvider client={client}>
+    <ToastContainer
+      position='top-right'
+      autoClose={2000}
+      hideProgressBar
+      closeOnClick
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
     <App />
   </ApolloProvider>
 );
