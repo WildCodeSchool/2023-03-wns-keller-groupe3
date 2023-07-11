@@ -14,8 +14,8 @@ export class CategoryResolver {
   }
 
   @Query(() => Category)
-  async getCategoryById(@Arg("id") id: string): Promise<Category> {
-    return await category.getCategoryById(id);
+  async getCategoryBy(@Arg("id") id: string): Promise<Category> {
+    return await category.getCategoryBy(id);
   }
 
   @Mutation(() => Category)

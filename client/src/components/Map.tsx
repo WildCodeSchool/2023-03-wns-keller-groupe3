@@ -120,7 +120,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
                             stroke="currentColor"
-                            className="w-4 h-4 inline"
+                            className="w-6 h-6"
                           >
                             <path
                               strokeLinecap="round"

@@ -2,7 +2,7 @@ import { City } from "../entities/City";
 import dataSource from "../utils";
 
 export class CityService {
-  async getCityById(id: string): Promise<City> {
+  async getCityBy(id: string): Promise<City> {
     return await dataSource
       .getRepository(City)
       .findOneOrFail({

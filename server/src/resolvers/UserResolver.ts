@@ -1,28 +1,31 @@
 import { Arg, Mutation, Resolver, Query } from "type-graphql";
 import { User } from "../entities/User";
 import { UserService } from "../services/UserService";
+import * as argon2 from "argon2";
+import dataSource from "../utils";
+import * as jwt from "jsonwebtoken";
 
 const user = new UserService();
 
 @Resolver(User)
 export class UserResolver {
-  @Query(() => User)
-  async user(@Arg("id") id: string): Promise<User> {
-    try {
-      return await user.getOne(id);
-    } catch (error) {
-      console.error(`User with ID : ${id} not found`);
-      throw new Error(`User not found`);
-    }
-  }
-
   @Query(() => [User])
-  async users(): Promise<User[]> {
+  async getAllUsers(): Promise<User[]> {
     try {
-      return await user.getAll();
+      return await user.getAllUsers();
     } catch (error) {
       console.error("Something went wrong when fetching users");
       throw new Error("Something went wrong when fetching users");
+    }
+  }
+
+  @Query(() => User)
+  async getUserBy(@Arg("id") id: string): Promise<User> {
+    try {
+      return await user.getUserBy(id);
+    } catch (error) {
+      console.error(`User with ID : ${id} not found`);
+      throw new Error(`User not found`);
     }
   }
 
@@ -34,7 +37,7 @@ export class UserResolver {
   ): Promise<User> {
     try {
       await user.update(id, { name, email });
-      return await user.getOne(id);
+      return await user.getUserBy(id);
     } catch (error) {
       console.error(`Failed to update user with ID : ${id}`);
       throw new Error(`Something went wrong when updating settings`);
@@ -63,5 +66,27 @@ export class UserResolver {
       throw new Error("Password can't be empty");
     }
     return await user.create(email, name, password);
+  }
+
+  @Query(() => String)
+  async login(
+    @Arg("email") email: string,
+    @Arg("password") password: string
+  ): Promise<String> {
+    const user = await dataSource
+      .getRepository(User)
+      .findOneByOrFail({ email });
+
+    try {
+      if (await argon2.verify(user.hashedPassword, password)) {
+        const token = jwt.sign({ email }, "supersecretkey");
+        return token;
+      } else {
+        return "error";
+      }
+    } catch (err) {
+      console.log(err);
+      return "error";
+    }
   }
 }
