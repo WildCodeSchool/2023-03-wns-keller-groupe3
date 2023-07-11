@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CityCard, City } from "../components/CityCard";
 import backgroundCity from "../assets/cityBackground.png";
@@ -15,9 +16,14 @@ const GET_CITIES = gql`
 
 function Cities() {
   const { loading, error, data } = useQuery(GET_CITIES);
+  const [searchText, setSearchText] = useState("");
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
+
+  const filteredCities = data.getAllCities.filter((city: City) =>
+    city.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
     <section
@@ -43,11 +49,16 @@ function Cities() {
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
-          <input className="w-full" placeholder="Recherche" />
+          <input
+            className="w-full"
+            placeholder="Recherche"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
         </div>
         {/* Liste de villes */}
         <ul className="container grid grid-cols-1 min-[420px]:grid-cols-2 min-[823px]:grid-cols-3 lg:grid-cols-4 gap-6">
-          {data.getAllCities.map((city: City) => (
+          {filteredCities.map((city: City) => (
             <Link key={city.id} to={`/city/${city.id}`}>
               <CityCard city={city} />
             </Link>
