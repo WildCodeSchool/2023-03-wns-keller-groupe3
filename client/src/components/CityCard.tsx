@@ -10,12 +10,12 @@ interface CityCardProps {
 
 export function CityCard({ city }: CityCardProps) {
   return (
-    <div className="card h-full border-b-[6px] border-[#0b2b08] bg-base-100 shadow-xl">
+    <div className="card h-full border-b-[6px] border-primary bg-base-100 shadow-xl">
       <figure className="h-32">
         <img className="w-full h-full" src={city.picture} alt="City" />
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">{city.name}</h2>
+      <div className="card-body border-t-2 border-primary">
+        <h2 className="card-title text-primary">{city.name}</h2>
       </div>
     </div>
   );
