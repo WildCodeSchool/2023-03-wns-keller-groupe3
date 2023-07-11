@@ -7,7 +7,6 @@ import { useQuery, useMutation } from "@apollo/client";
 import { CityCard, City } from "../components/CityCard";
 import { ADD_CITY } from "../graphql/mutations";
 import { GET_CITIES } from "../graphql/queries";
-import "react-toastify/dist/ReactToastify.css";
 import CustomToast from "../utils/CustomToast";
 
 function Cities() {
@@ -95,12 +94,7 @@ function Cities() {
         <div className='modal-box'>
           <h3 className='font-bold text-lg mb-4'>Ajouter une ville</h3>
           <hr></hr>
-          <form
-            onSubmit={handleSubmit}
-            className='py-6 flex flex-col'
-            action='
-          '
-          >
+          <form onSubmit={handleSubmit} className='py-6 flex flex-col'>
             <label className='text-sm mb-2' htmlFor='name'>
               Nom :
             </label>
@@ -127,7 +121,7 @@ function Cities() {
             <input
               id='latitude'
               type='number'
-              //todo gérer côté server
+              //todo à gérer côté server
               min={-90}
               max={90}
               placeholder='43.2345'
@@ -140,7 +134,7 @@ function Cities() {
             <input
               id='longitude'
               type='number'
-              //todo gérer côté server
+              //todo à gérer côté server
               min={-180}
               max={180}
               placeholder='2.5456'
