@@ -10,12 +10,18 @@ interface CityCardProps {
 
 export function CityCard({ city }: CityCardProps) {
   return (
-    <div className="card CardShadowHover h-full border-b-[6px] border-primary bg-base-100 shadow-xl">
-      <figure className="h-32">
-        <img className="w-full h-full" src={city.picture} alt="City" />
+    <div className='CardShadowHover max-w-sm rounded-lg border-b-[6px] border-primary bg-base-100 shadow-xl'>
+      <figure className='h-48 md:h-28'>
+        <img
+          src={city.picture}
+          className='rounded-t-lg h-full w-full'
+          alt='City'
+        />
       </figure>
-      <div className="card-body border-t-2 border-primary">
-        <h2 className="card-title text-primary">{city.name}</h2>
+      <div className='card-body border-t-2 border-primary'>
+        <p className='card-title text-primary md:h-8 text-ellipsis'>
+          {city.name}
+        </p>
       </div>
     </div>
   );
