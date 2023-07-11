@@ -2,6 +2,7 @@ import { useQuery, gql, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { CityCard, City } from "../components/CityCard";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GET_CITIES = gql`
   query Query {
@@ -35,6 +36,7 @@ const ADD_CITY = gql`
 `;
 
 function Cities() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [picture, setPicture] = useState("");
   const [lat, setLat] = useState("");
@@ -42,18 +44,11 @@ function Cities() {
 
   const { loading, error, data } = useQuery(GET_CITIES);
 
-  const [createCity] = useMutation(ADD_CITY, {
-    variables: {
-      name,
-      picture,
-      latitude: parseFloat(lat),
-      longitude: parseFloat(long),
-    },
-    refetchQueries: [GET_CITIES],
-  });
+  const [createCity] = useMutation(ADD_CITY);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
+
   return (
     <section className='container max-w-5xl md:mx-auto p-5 flex flex-col gap-6'>
       <h1 className='text-xl font-bold mt-5'>Choisissez votre ville</h1>
@@ -74,15 +69,12 @@ function Cities() {
         </svg>
         <input className='w-full' placeholder='Recherche' />
       </div>
-      <label
-        htmlFor='my_modal_6'
-        className='md:fixed md:top-5 right-5 btn btn-primary'
-      >
+      <label htmlFor='my_modal_6' className='btn btn-primary md:w-1/6'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           fill='none'
           viewBox='0 0 24 24'
-          stroke-width='1.5'
+          strokeWidth='1.5'
           stroke='currentColor'
           className='w-6 h-6'
         >
@@ -108,9 +100,31 @@ function Cities() {
           <h3 className='font-bold text-lg mb-4'>Ajouter une ville</h3>
           <hr></hr>
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              createCity();
+              await createCity({
+                variables: {
+                  name,
+                  picture,
+                  latitude: parseFloat(lat),
+                  longitude: parseFloat(long),
+                },
+                onCompleted(city: City) {
+                  console.log(city);
+                },
+                onError(err) {
+                  <div className='toast toast-top toast-center'>
+                    <div className='alert alert-info'>
+                      <span>{err.message}</span>
+                    </div>
+                  </div>;
+                },
+                refetchQueries: [GET_CITIES],
+              });
+              setName("");
+              setPicture("");
+              setLat("");
+              setLong("");
             }}
             className='py-6 flex flex-col'
             action='
@@ -158,6 +172,7 @@ function Cities() {
                 Annuler
               </label>
               <input
+                id='submit'
                 type='submit'
                 className='btn btn-primary'
                 value='valider'
