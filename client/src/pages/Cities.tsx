@@ -1,39 +1,13 @@
-import { useQuery, gql, useMutation } from "@apollo/client";
-import { Link } from "react-router-dom";
-import { CityCard, City } from "../components/CityCard";
+import React from "react";
+import { toast } from "react-toastify";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
-const GET_CITIES = gql`
-  query Query {
-    getAllCities {
-      id
-      name
-      picture
-    }
-  }
-`;
-const ADD_CITY = gql`
-  mutation Mutation(
-    $longitude: Float!
-    $latitude: Float!
-    $picture: String!
-    $name: String!
-  ) {
-    createCity(
-      longitude: $longitude
-      latitude: $latitude
-      picture: $picture
-      name: $name
-    ) {
-      id
-      name
-      picture
-      latitude
-      longitude
-    }
-  }
-`;
+import { useQuery, useMutation } from "@apollo/client";
+import { CityCard, City } from "../components/CityCard";
+import { ADD_CITY } from "../graphql/mutations";
+import { GET_CITIES } from "../graphql/queries";
+import "react-toastify/dist/ReactToastify.css";
 
 function Cities() {
   const navigate = useNavigate();
@@ -43,8 +17,40 @@ function Cities() {
   const [long, setLong] = useState("");
 
   const { loading, error, data } = useQuery(GET_CITIES);
-
   const [createCity] = useMutation(ADD_CITY);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createCity({
+      variables: {
+        name,
+        picture,
+        latitude: parseFloat(lat),
+        longitude: parseFloat(long),
+      },
+      onCompleted({ createCity }) {
+        navigate(`/city/${createCity.id}`);
+      },
+      onError(err) {
+        toast.error(`${err.message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        console.error(err);
+      },
+      refetchQueries: [GET_CITIES],
+    });
+    setName("");
+    setPicture("");
+    setLat("");
+    setLong("");
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
@@ -86,7 +92,6 @@ function Cities() {
         </svg>
         ajouter
       </label>
-      {/* Liste de villes */}
       <ul className='container grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
         {data.getAllCities.map((city: City) => (
           <Link key={city.id} to={`/city/${city.id}`}>
@@ -100,32 +105,7 @@ function Cities() {
           <h3 className='font-bold text-lg mb-4'>Ajouter une ville</h3>
           <hr></hr>
           <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              await createCity({
-                variables: {
-                  name,
-                  picture,
-                  latitude: parseFloat(lat),
-                  longitude: parseFloat(long),
-                },
-                onCompleted({ createCity }) {
-                  navigate(`/city/${createCity.id}`);
-                },
-                onError(err) {
-                  <div className='toast toast-top toast-center'>
-                    <div className='alert alert-info'>
-                      <span>{err.message}</span>
-                    </div>
-                  </div>;
-                },
-                refetchQueries: [GET_CITIES],
-              });
-              setName("");
-              setPicture("");
-              setLat("");
-              setLong("");
-            }}
+            onSubmit={handleSubmit}
             className='py-6 flex flex-col'
             action='
           '
