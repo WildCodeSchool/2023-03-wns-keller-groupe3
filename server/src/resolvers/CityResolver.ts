@@ -39,10 +39,7 @@ export class CityResolver {
     try {
       return await city.createCity(name, picture, latitude, longitude);
     } catch (error) {
-      throw new ApolloError(
-        "Une erreur est survenue lors de la création de la ville",
-        "CITY_CREATION_ERROR"
-      );
+      throw new ApolloError("Une erreur est survenue", "CITY_CREATION_ERROR");
     }
   }
 

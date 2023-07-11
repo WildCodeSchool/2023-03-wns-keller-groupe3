@@ -9,10 +9,10 @@ export default function CustomToast({ message, color }: CustomeToastProps) {
       <svg
         xmlns='http://www.w3.org/2000/svg'
         fill='none'
-        viewBox='0 0 24 24'
+        viewBox='0 0 30 30'
         stroke-width='1.5'
         stroke='currentColor'
-        className={`w-6 h-6 ${color}`}
+        className={`w-7 h-7 ${color}`}
       >
         <path
           strokeLinecap='round'

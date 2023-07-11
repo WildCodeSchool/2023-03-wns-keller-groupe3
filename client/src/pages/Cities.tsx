@@ -30,6 +30,12 @@ function Cities() {
         longitude: parseFloat(long),
       },
       onCompleted({ createCity }) {
+        toast(
+          <CustomToast
+            message={`La ville de "${createCity.name}" a été ajouté`}
+            color='text-success'
+          />
+        );
         navigate(`/city/${createCity.id}`);
       },
       onError(err) {
@@ -135,7 +141,7 @@ function Cities() {
             <input
               //todo gérer côté server
               min={-180}
-              max={-180}
+              max={180}
               type='number'
               placeholder='2.5456'
               className='input input-bordered w-full max-w-xs'
