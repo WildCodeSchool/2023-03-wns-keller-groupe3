@@ -12,9 +12,16 @@ export const GET_ONE_CITY = gql`
       pointsOfInterest {
         id
         picture
+        description
+        address
+        rating
         name
         latitude
         longitude
+        categories {
+          id
+          name
+        }
       }
     }
   }
@@ -29,8 +36,6 @@ export default function MapSelected() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
-
-  console.log(data);
 
   return (
     <div>

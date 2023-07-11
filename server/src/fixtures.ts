@@ -35,12 +35,12 @@ const start = async (): Promise<void> => {
     .getRepository(City)
     .findOneByOrFail({ name: "Lille" });
 
-      // Saint-Dié-Des-Vosges
+  // Saint-Dié-Des-Vosges
   await dataSource.getRepository(City).save({
     name: "Saint-Dié-Des-Vosges",
     picture:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Lille_gd_place_colonne.jpg/1280px-Lille_gd_place_colonne.jpg",
-    latitude: 48.2900,
+    latitude: 48.29,
     longitude: 6.9305,
   });
   const SaintDié = await dataSource
@@ -84,7 +84,7 @@ const start = async (): Promise<void> => {
     .getRepository(Category)
     .findOneByOrFail({ name: "Restaurant" });
 
-      // Bar
+  // Bar
   await dataSource.getRepository(Category).save({
     name: "Bar",
   });
@@ -123,7 +123,7 @@ const start = async (): Promise<void> => {
       address: "45 Rte de Strasbourg, 68000 Colmar",
       name: "Statue de la Liberté",
       description: "La plus belle statue du monde",
-      picture: "client/src/assets/PictPoi/statueDeLaLiberté.jpeg",
+      picture: "../assets/PictPoi/statueDeLaLiberté.jpeg",
       rating: 5,
       categories: [monument],
     },
@@ -132,10 +132,12 @@ const start = async (): Promise<void> => {
       city: SaintDié,
       latitude: 48.28669346812704,
       longitude: 6.947476999908756,
-      address: "Tour de la Liberté, 5 Pl. Jules Ferry, 88100 Saint-Dié-des-Vosges",
+      address:
+        "Tour de la Liberté, 5 Pl. Jules Ferry, 88100 Saint-Dié-des-Vosges",
       name: "Tour de la Liberté",
-      description: "La tour de la liberté est un monument de Saint-Dié-des-Vosges, ressemblant à un grand oiseau blanc posé au milieu du parc Mansuy. Elle symbolise la recherche de tous les peuples, la liberté.",
-      picture: "client/src/assets/PictPoi/tourDeLaLiberté.jpg",
+      description:
+        "La tour de la liberté est un monument de Saint-Dié-des-Vosges, ressemblant à un grand oiseau blanc posé au milieu du parc Mansuy. Elle symbolise la recherche de tous les peuples, la liberté.",
+      picture: "../assets/PictPoi/tourDeLaLiberté.jpg",
       rating: 4,
       categories: [monument, parc],
     },
@@ -145,8 +147,9 @@ const start = async (): Promise<void> => {
       longitude: 6.950666958126326,
       address: "10 Rue de la Prairie, 88100 Saint-Dié-des-Vosges",
       name: "La Cabane au Darou",
-      description: "La Cabane au Darou : un lieu de brassage multiple , un bar atypique en plein centre ville",
-      picture: "client/src/assets/PictPoi/darou.jpeg",
+      description:
+        "La Cabane au Darou : un lieu de brassage multiple , un bar atypique en plein centre ville",
+      picture: "../assets/PictPoi/darou.jpeg",
       rating: 4,
       categories: [bar, restaurant],
     },
@@ -156,8 +159,9 @@ const start = async (): Promise<void> => {
       longitude: 6.950442702440239,
       address: "Rdpt des Combattants d'Afn et Téo, 88100 Saint-Dié-des-Vosges",
       name: "Cathédrale de Saint-Dié-des-Vosges",
-      description: "L’origine de l’église de Saint-Dié-des-Vosges remonte à Saint Déodat (Dié ou Dieudonné), moine irlandais qui fonda au viie siècle la cité qui porte encore son nom. D'abord église abbatiale, elle devint la collégiale d’un chapitre de chanoines séculiers.",
-      picture: "client/src/assets/PictPoi/tourDeLaLiberté.jpg",
+      description:
+        "L’origine de l’église de Saint-Dié-des-Vosges remonte à Saint Déodat (Dié ou Dieudonné), moine irlandais qui fonda au viie siècle la cité qui porte encore son nom. D'abord église abbatiale, elle devint la collégiale d’un chapitre de chanoines séculiers.",
+      picture: "../assets/PictPoi/tourDeLaLiberté.jpg",
       rating: 4,
       categories: [monument, parc],
     },
@@ -169,7 +173,7 @@ const start = async (): Promise<void> => {
       address: "Colonne de la Déesse, Place du Général de Gaulle, Lille",
       name: "Colonne de la Déesse",
       description: "La plus belle colonne du monde",
-      picture: "client/src/assets/PictPoi/colonnedelaDéesse.jpeg",
+      picture: "../assets/PictPoi/colonnedelaDéesse.jpeg",
       rating: 5,
       categories: [monument, parc],
     },
@@ -181,7 +185,7 @@ const start = async (): Promise<void> => {
       address: "Pl. de la Cathédrale, 67000 Strasbourg",
       name: "Cathédrale Notre-Dame de Strasbourg",
       description: "La plus belle cathédrale du monde",
-      picture: "client/src/assets/PictPoi/cathédraleStrasbourg.jpeg",
+      picture: "../assets/PictPoi/cathédraleStrasbourg.jpeg",
       rating: 5,
       categories: [monument],
     },
@@ -191,19 +195,21 @@ const start = async (): Promise<void> => {
       longitude: 7.738157546032719,
       address: "Pl. du Qur Blanc, 67000 Strasbourg",
       name: "Barrage Vauban",
-      description: "Barrage et pont en grès rose construit au XVIIe siècle, abritant aujourd'hui des sculptures anciennes.",
-      picture: "client/src/assets/PictPoi/barageVauban.jpeg",
+      description:
+        "Barrage et pont en grès rose construit au XVIIe siècle, abritant aujourd'hui des sculptures anciennes.",
+      picture: "../assets/PictPoi/barageVauban.jpeg",
       rating: 5,
       categories: [monument],
     },
     {
       city: strasbourg,
       latitude: 48.586883488648944,
-      longitude:  7.734078804923648,
+      longitude: 7.734078804923648,
       address: "Pl. de la Gare, 67000 Strasbourg",
       name: "Gare de strasbourg",
-      description: "Imposante gare du XIXe siècle à la façade moderne, avec services ferroviaires, restaurants et boutiques.",
-      picture: "client/src/assets/PictPoi/gareStrasbourg.jpeg",
+      description:
+        "Imposante gare du XIXe siècle à la façade moderne, avec services ferroviaires, restaurants et boutiques.",
+      picture: "../assets/PictPoi/gareStrasbourg.jpeg",
       rating: 5,
       categories: [monument],
     },
@@ -213,10 +219,11 @@ const start = async (): Promise<void> => {
       longitude: 7.741152828909318,
       address: "10 Rue du 22 Novembre, 67000 Strasbourg",
       name: "Le Meteor",
-      description: "Restaurant décontracté au style branché proposant des bières artisanales, du vin et des plats.",
-      picture: "client/src/assets/PictPoi/meteor.jpeg",
+      description:
+        "Restaurant décontracté au style branché proposant des bières artisanales, du vin et des plats.",
+      picture: "../assets/PictPoi/meteor.jpeg",
       rating: 5,
-      categories: [ bar ,restaurant ],
+      categories: [bar, restaurant],
     },
     {
       city: strasbourg,
@@ -224,10 +231,11 @@ const start = async (): Promise<void> => {
       longitude: 7.737573497746059,
       address: "5 Rue du Faubourg-National, 67000 Strasbourg",
       name: "Le Petit Tigre",
-      description: "Microbrasserie historique décorée dans un style clair et dotée d'une terrasse extérieure, proposant des repas simples.",
-      picture: "client/src/assets/PictPoi/leTigre.jpeg",
+      description:
+        "Microbrasserie historique décorée dans un style clair et dotée d'une terrasse extérieure, proposant des repas simples.",
+      picture: "../assets/PictPoi/leTigre.jpeg",
       rating: 5,
-      categories: [ bar ,restaurant ],
+      categories: [bar, restaurant],
     },
     // POIs for Troyes
     {
@@ -237,7 +245,7 @@ const start = async (): Promise<void> => {
       address: "Quai de Dampierre, 10000 Troyes",
       name: "Le Cœur de Troyes",
       description: "Le plus beau coeur du monde",
-      picture: "client/src/assets/PictPoi/coeurDeTroye.jpeg",
+      picture: "../assets/PictPoi/coeurDeTroye.jpeg",
       rating: 5,
       categories: [monument, restaurant],
     },
@@ -247,6 +255,8 @@ const start = async (): Promise<void> => {
     const poi = dataSource.getRepository(POI).create(poiItem);
     await dataSource.getRepository(POI).save(poi);
   }
+
+  const pois = await dataSource.getRepository(POI).find();
 
   /** ----------- Users ------------ **/
 
@@ -261,10 +271,11 @@ const start = async (): Promise<void> => {
   const users = await dataSource
     .getRepository(User)
     .find({ relations: { city: true } });
-    console.log(users);
-    console.log(cities);
-    console.log(categories);
+
+  console.log(users);
+  console.log(cities);
+  console.log(categories);
+  console.log(pois);
 };
 
 void start();
-
