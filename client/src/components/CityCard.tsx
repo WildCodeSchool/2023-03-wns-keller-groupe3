@@ -10,7 +10,7 @@ interface CityCardProps {
 
 export function CityCard({ city }: CityCardProps) {
   return (
-    <div className="card h-full border-b-[6px] border-primary bg-base-100 shadow-xl">
+    <div className="card CardShadowHover h-full border-b-[6px] border-primary bg-base-100 shadow-xl">
       <figure className="h-32">
         <img className="w-full h-full" src={city.picture} alt="City" />
       </figure>
