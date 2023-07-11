@@ -50,7 +50,7 @@ function Cities() {
             />
           </svg>
           <input
-            className="w-full"
+            className="w-full px-2"
             placeholder="Recherche"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
