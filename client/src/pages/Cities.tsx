@@ -16,10 +16,8 @@ function Cities() {
   const [picture, setPicture] = useState("");
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
-
   const { loading, error, data } = useQuery(GET_CITIES);
   const [createCity] = useMutation(ADD_CITY);
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createCity({
@@ -38,16 +36,15 @@ function Cities() {
         );
         navigate(`/city/${createCity.id}`);
       },
-      onError(err) {
-        toast(<CustomToast message={err.message} color='text-error' />);
-        console.error(err);
+      onError(error) {
+        toast(<CustomToast message={error.message} color='text-error' />);
       },
       refetchQueries: [GET_CITIES],
     });
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
+  if (loading) return <p className='text-center'>Loading...</p>;
+  if (error) return <p className='text-center'>Error : {error.message}</p>;
 
   return (
     <section className='container max-w-5xl md:mx-auto p-5 flex flex-col gap-6'>
@@ -114,19 +111,21 @@ function Cities() {
               className='input input-bordered w-full max-w-xs mb-4'
               onChange={(e) => setName(e.target.value)}
             />
-            <label className='text-sm mb-2' htmlFor='name'>
+            <label className='text-sm mb-2' htmlFor='image'>
               Image :
             </label>
             <input
+              id='image'
               type='text'
               placeholder='url : https://...'
               className='input input-bordered w-full max-w-xs mb-4'
               onChange={(e) => setPicture(e.target.value)}
             />
-            <label className='text-sm mb-2' htmlFor='name'>
+            <label className='text-sm mb-2' htmlFor='latitude'>
               Latitude :
             </label>
             <input
+              id='latitude'
               type='number'
               //todo gérer côté server
               min={-90}
@@ -135,14 +134,15 @@ function Cities() {
               className='input input-bordered w-full max-w-xs mb-4'
               onChange={(e) => setLat(e.target.value)}
             />
-            <label className='text-sm mb-2' htmlFor='name'>
+            <label className='text-sm mb-2' htmlFor='longitude'>
               Longitude :
             </label>
             <input
+              id='longitude'
+              type='number'
               //todo gérer côté server
               min={-180}
               max={180}
-              type='number'
               placeholder='2.5456'
               className='input input-bordered w-full max-w-xs'
               onChange={(e) => setLong(e.target.value)}
