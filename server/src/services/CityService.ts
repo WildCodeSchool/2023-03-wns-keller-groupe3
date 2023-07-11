@@ -5,7 +5,10 @@ export class CityService {
   async getCityById(id: string): Promise<City> {
     return await dataSource
       .getRepository(City)
-      .findOneOrFail({ where: { id }, relations: { pointsOfInterest: true } });
+      .findOneOrFail({
+        where: { id },
+        relations: { pointsOfInterest: { categories: true, city: true } },
+      });
   }
 
   async createCity(
