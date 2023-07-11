@@ -16,8 +16,8 @@ export class POIResolver {
   }
 
   @Query(() => POI)
-  async getPOIById(@Arg("id") id: string): Promise<POI> {
-    return await pointOfInterest.getPOIById(id);
+  async getPOIBy(@Arg("id") id: string): Promise<POI> {
+    return await pointOfInterest.getPOIBy(id);
   }
 
 // TODO Queries "getAllPOIsByCategory" and "getAllPOIsByCity"

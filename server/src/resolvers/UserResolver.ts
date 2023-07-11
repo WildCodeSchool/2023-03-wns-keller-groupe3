@@ -6,23 +6,23 @@ const user = new UserService();
 
 @Resolver(User)
 export class UserResolver {
-  @Query(() => User)
-  async user(@Arg("id") id: string): Promise<User> {
-    try {
-      return await user.getOne(id);
-    } catch (error) {
-      console.error(`User with ID : ${id} not found`);
-      throw new Error(`User not found`);
-    }
-  }
-
   @Query(() => [User])
-  async users(): Promise<User[]> {
+  async getAllUsers(): Promise<User[]> {
     try {
-      return await user.getAll();
+      return await user.getAllUsers();
     } catch (error) {
       console.error("Something went wrong when fetching users");
       throw new Error("Something went wrong when fetching users");
+    }
+  }
+
+  @Query(() => User)
+  async getUserBy(@Arg("id") id: string): Promise<User> {
+    try {
+      return await user.getUserBy(id);
+    } catch (error) {
+      console.error(`User with ID : ${id} not found`);
+      throw new Error(`User not found`);
     }
   }
 
@@ -34,7 +34,7 @@ export class UserResolver {
   ): Promise<User> {
     try {
       await user.update(id, { name, email });
-      return await user.getOne(id);
+      return await user.getUserBy(id);
     } catch (error) {
       console.error(`Failed to update user with ID : ${id}`);
       throw new Error(`Something went wrong when updating settings`);

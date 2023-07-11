@@ -8,11 +8,11 @@ export interface updateArgs {
   email: string;
 }
 export class UserService {
-  async getAll(): Promise<User[]> {
+  async getAllUsers(): Promise<User[]> {
     return await dataSource.getRepository(User).find();
   }
 
-  async getOne(id: string): Promise<User> {
+  async getUserBy(id: string): Promise<User> {
     return await dataSource
       .getRepository(User)
       .findOneOrFail({ where: { id }, relations: { city: true } });

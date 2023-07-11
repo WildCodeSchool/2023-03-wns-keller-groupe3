@@ -14,8 +14,8 @@ export class CityResolver {
   }
 
   @Query(() => City)
-  async getCityById(@Arg("id", () => String) id: string): Promise<City> {
-    return await city.getCityById(id);
+  async getCityBy(@Arg("id", () => String) id: string): Promise<City> {
+    return await city.getCityBy(id);
   }
 
   @Mutation(() => City)
