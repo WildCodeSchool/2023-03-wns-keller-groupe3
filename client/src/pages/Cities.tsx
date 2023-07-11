@@ -109,8 +109,8 @@ function Cities() {
                   latitude: parseFloat(lat),
                   longitude: parseFloat(long),
                 },
-                onCompleted(city: City) {
-                  console.log(city);
+                onCompleted({ createCity }) {
+                  navigate(`/city/${createCity.id}`);
                 },
                 onError(err) {
                   <div className='toast toast-top toast-center'>
