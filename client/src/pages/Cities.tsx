@@ -81,7 +81,10 @@ function Cities() {
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <label htmlFor='my_modal_6' className='btn btn-primary md:w-1/6'>
+        <label
+          htmlFor='my_modal_6'
+          className='btn btn-primary md:w-2/6 lg:w-1/6'
+        >
           <div className='flex items-center'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -100,7 +103,7 @@ function Cities() {
             <p className='ml-2'>ajouter</p>
           </div>
         </label>
-        <ul className='container grid grid-cols-1 min-[420px]:grid-cols-2 min-[823px]:grid-cols-3 lg:grid-cols-4 gap-6'>
+        <ul className='grid grid-cols-1 min-[520px]:grid-cols-2 min-[823px]:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto'>
           {filteredCities.map((city: City) => (
             <Link key={city.id} to={`/city/${city.id}`}>
               <CityCard city={city} />
