@@ -1,6 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import test from "../assets/PictPoi/meteor.jpeg";
+import AddPOIForm from "./POI_Form";
 
 export interface Category {
   id: number;
@@ -27,6 +28,34 @@ interface MapProps {
 
 export default function Map({ id, lat, long, poi }: MapProps) {
   return (
+    <>
+        <label htmlFor='my_modal_6' className='btn btn-primary md:w-1/6'>
+          <div className='flex items-center'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth='1.5'
+              stroke='currentColor'
+              className='w-6 h-6'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M12 4.5v15m7.5-7.5h-15'
+              />
+            </svg>
+            <p className='ml-2'>ajouter</p>
+          </div>
+        </label>
+      <input type='checkbox' id='my_modal_6' className='modal-toggle' />
+      <div className='modal'>
+        <div className='modal-box'>
+          <h3 className='font-bold text-lg mb-4'>Ajouter un point d'intérêt</h3>
+          <hr></hr>
+        <AddPOIForm city={id} />
+        </div>
+    </div>
     <div id="map">
       <MapContainer
         id={id}
@@ -140,5 +169,6 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         })}
       </MapContainer>
     </div>
+    </>
   );
 }

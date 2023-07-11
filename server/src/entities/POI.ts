@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { Category } from "./Category";
 import { City } from "./City";
+import { Max, Min } from "class-validator";
 
 export enum GpsPin {
   // TODO insert paths to different images for GPS pin
@@ -23,12 +24,28 @@ export class POI {
   id: string;
 
   @Field()
-  @Column("double precision")
-  latitude: number;
+  @Column({
+    type: "varchar",
+    length: 255,
+  })
+  address: string;
+
+  @Field(() => [Category])
+  @ManyToMany(() => Category, (category) => category.pois)
+  @JoinTable()
+  categories: Category[];
+
+  @Field({nullable: true})
+  @Column({
+    type: "varchar",
+    length: 500,
+    nullable: true,
+  })
+  comments: string;
 
   @Field()
-  @Column("double precision")
-  longitude: number;
+  @Column("text")
+  description: string;
 
   @Field()
   @Column({
@@ -41,20 +58,9 @@ export class POI {
   @Field()
   @Column({
     type: "varchar",
-    length: 255,
-  })
-  address: string;
-
-  @Field()
-  @Column({
-    type: "varchar",
     length: 100,
   })
   name: string;
-
-  @Field()
-  @Column("text")
-  description: string;
 
   @Field()
   @Column({
@@ -64,26 +70,22 @@ export class POI {
   picture: string;
 
   @Field()
+  @Min(0)
+  @Max(5)
   @Column(
     "int"
-    // TODO how to set rating between 0 and 5 : { limit: 5 }
   )
   rating: number;
-
-  @Field({nullable: true})
-  @Column({
-    type: "varchar",
-    length: 500,
-    nullable: true,
-  })
-  comments: string;
 
   @Field(() => City)
   @ManyToOne(() => City, (city) => city.pointsOfInterest)
   city: City;
 
-  @Field(() => [Category])
-  @ManyToMany(() => Category, (category) => category.pois)
-  @JoinTable()
-  categories: Category[];
+  @Field()
+  @Column("double precision")
+  latitude: number;
+
+  @Field()
+  @Column("double precision")
+  longitude: number;
 }
