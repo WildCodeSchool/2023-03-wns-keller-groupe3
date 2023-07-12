@@ -6,7 +6,7 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: "http://localhost:4000",
   cache: new InMemoryCache(),
 });
@@ -17,7 +17,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <ApolloProvider client={client}>
     <ToastContainer
-      position='top-right'
+      position="top-right"
       autoClose={2000}
       hideProgressBar
       closeOnClick

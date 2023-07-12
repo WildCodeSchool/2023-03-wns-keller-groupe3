@@ -1,4 +1,4 @@
-import { Arg, Mutation, Resolver, Query, Float } from "type-graphql";
+import { Arg, Mutation, Resolver, Query, Float, Int } from "type-graphql";
 import { City } from "../entities/City";
 import dataSource from "../utils";
 import { CityService } from "../services/CityService";
@@ -9,8 +9,14 @@ const city = new CityService();
 @Resolver(City)
 export class CityResolver {
   @Query(() => [City])
-  async getAllCities(): Promise<City[]> {
-    return await dataSource.getRepository(City).find();
+  async getAllCities(
+    @Arg("limit", () => Int) limit: number,
+    @Arg("offset", () => Int, { defaultValue: 0 }) offset: number
+  ): Promise<City[]> {
+    return await dataSource.getRepository(City).find({
+      skip: offset,
+      take: limit,
+    });
   }
 
   @Query(() => City)
