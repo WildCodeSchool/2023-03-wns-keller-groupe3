@@ -55,7 +55,7 @@ function Cities() {
       className='min-h-screen'
       style={{ backgroundImage: `url(${backgroundCity})` }}
     >
-      <div className='flex flex-col w-11/12 mx-auto py-5 md:w-3/5'>
+      <div className='flex flex-col w-11/12 mx-auto pt-5 md:w-3/5'>
         <h1 className='text-2xl text-primary font-bold py-5'>
           Choisissez votre ville
         </h1>
@@ -89,13 +89,17 @@ function Cities() {
           </label>
         </div>
       </div>
-      <ul className='flex flex-wrap justify-center'>
+      <div className='pt-5 pb-16 flex flex-wrap justify-center md:max-w-2xl lg:max-w-3xl xl:max-w-5xl mx-auto '>
         {filteredCities.map((city: City) => (
-          <Link key={city.id} to={`/city/${city.id}`}>
+          <Link
+            key={city.id}
+            to={`/city/${city.id}`}
+            className='m-4 w-80 md:w-48'
+          >
             <CityCard city={city} />
           </Link>
         ))}
-      </ul>
+      </div>
       <input type='checkbox' id='my_modal_6' className='modal-toggle' />
       <div className='modal'>
         <div className='modal-box'>
@@ -167,5 +171,4 @@ function Cities() {
     </section>
   );
 }
-
 export default Cities;
