@@ -38,8 +38,7 @@ const start = async (): Promise<void> => {
   // Saint-Dié-Des-Vosges
   await dataSource.getRepository(City).save({
     name: "Saint-Dié-Des-Vosges",
-    picture:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Lille_gd_place_colonne.jpg/1280px-Lille_gd_place_colonne.jpg",
+    picture: "https://farm2.staticflickr.com/1872/29168895587_f81643f939_b.jpg",
     latitude: 48.29,
     longitude: 6.9305,
   });
@@ -63,7 +62,7 @@ const start = async (): Promise<void> => {
   await dataSource.getRepository(City).save({
     name: "Troyes",
     picture:
-      "https://cdn.discordapp.com/attachments/1096407741234421851/1116278754403160084/Capture_decran_2023-06-08_101302.png",
+      "https://www.lonelyplanet.fr/sites/lonelyplanet/files/media/article/image/adobestock_126159915.jpeg",
     latitude: 48.297,
     longitude: 4.0746,
   });
@@ -123,7 +122,8 @@ const start = async (): Promise<void> => {
       address: "45 Rte de Strasbourg, 68000 Colmar",
       name: "Statue de la Liberté",
       description: "La plus belle statue du monde",
-      picture: "../assets/PictPoi/statueDeLaLiberté.jpeg",
+      picture:
+        "https://static.actu.fr/uploads/2021/08/1446540341-58ac3304d9-b.jpg",
       rating: 5,
       categories: [monument],
     },
@@ -137,7 +137,8 @@ const start = async (): Promise<void> => {
       name: "Tour de la Liberté",
       description:
         "La tour de la liberté est un monument de Saint-Dié-des-Vosges, ressemblant à un grand oiseau blanc posé au milieu du parc Mansuy. Elle symbolise la recherche de tous les peuples, la liberté.",
-      picture: "../assets/PictPoi/tourDeLaLiberté.jpg",
+      picture:
+        "https://www.tourisme.vosges.fr/wp-content/themes/vosges/Sitlor/query/img.php?&w=1600&url=https://www.sitlor.fr/photos/940/940000955_2.jpg",
       rating: 4,
       categories: [monument, parc],
     },
@@ -149,7 +150,8 @@ const start = async (): Promise<void> => {
       name: "La Cabane au Darou",
       description:
         "La Cabane au Darou : un lieu de brassage multiple , un bar atypique en plein centre ville",
-      picture: "../assets/PictPoi/darou.jpeg",
+      picture:
+        "http://www.jc-servais.be/application/files/thumbnails/small/9016/4529/9322/Cabane_au_Darou.jpg",
       rating: 4,
       categories: [bar, restaurant],
     },
@@ -161,7 +163,7 @@ const start = async (): Promise<void> => {
       name: "Cathédrale de Saint-Dié-des-Vosges",
       description:
         "L’origine de l’église de Saint-Dié-des-Vosges remonte à Saint Déodat (Dié ou Dieudonné), moine irlandais qui fonda au viie siècle la cité qui porte encore son nom. D'abord église abbatiale, elle devint la collégiale d’un chapitre de chanoines séculiers.",
-      picture: "../assets/PictPoi/tourDeLaLiberté.jpg",
+      picture: "https://c1.staticflickr.com/7/6147/5993794534_9370f9b451_b.jpg",
       rating: 4,
       categories: [monument, parc],
     },
@@ -173,7 +175,8 @@ const start = async (): Promise<void> => {
       address: "Colonne de la Déesse, Place du Général de Gaulle, Lille",
       name: "Colonne de la Déesse",
       description: "La plus belle colonne du monde",
-      picture: "../assets/PictPoi/colonnedelaDéesse.jpeg",
+      picture:
+        "https://intra.nestenn.com/ACTU_AGENCES/somain/Lille_gd_place_colonne_8514_mid.jpg",
       rating: 5,
       categories: [monument, parc],
     },
@@ -185,7 +188,8 @@ const start = async (): Promise<void> => {
       address: "Pl. de la Cathédrale, 67000 Strasbourg",
       name: "Cathédrale Notre-Dame de Strasbourg",
       description: "La plus belle cathédrale du monde",
-      picture: "../assets/PictPoi/cathédraleStrasbourg.jpeg",
+      picture:
+        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.european-traveler.com%2Fwp-content%2Fuploads%2F2020%2F11%2FStrasbourg_Cathedral.jpg&f=1&nofb=1&ipt=e5604893be06d060cad4b208ed945f327c93ef8b3c1a55f5984a593b5524c6e5&ipo=images",
       rating: 5,
       categories: [monument],
     },
@@ -197,7 +201,8 @@ const start = async (): Promise<void> => {
       name: "Barrage Vauban",
       description:
         "Barrage et pont en grès rose construit au XVIIe siècle, abritant aujourd'hui des sculptures anciennes.",
-      picture: "../assets/PictPoi/barageVauban.jpeg",
+      picture:
+        "https://img-4.linternaute.com/ZsRlR8BTTEv0YH4yLcO03EaZVo8=/1240x/smart/c0295ff1f94942bdb2d8829cd02cc0b0/ccmcms-linternaute/10490082.jpg",
       rating: 5,
       categories: [monument],
     },
@@ -209,7 +214,8 @@ const start = async (): Promise<void> => {
       name: "Gare de strasbourg",
       description:
         "Imposante gare du XIXe siècle à la façade moderne, avec services ferroviaires, restaurants et boutiques.",
-      picture: "../assets/PictPoi/gareStrasbourg.jpeg",
+      picture:
+        "https://pokaa.fr/wp-content/uploads/2018/09/gare-de-strasbourg.jpg",
       rating: 5,
       categories: [monument],
     },
@@ -221,7 +227,7 @@ const start = async (): Promise<void> => {
       name: "Le Meteor",
       description:
         "Restaurant décontracté au style branché proposant des bières artisanales, du vin et des plats.",
-      picture: "../assets/PictPoi/meteor.jpeg",
+      picture: "https://static.actu.fr/uploads/2019/10/le-meteor.jpg",
       rating: 5,
       categories: [bar, restaurant],
     },
@@ -233,7 +239,7 @@ const start = async (): Promise<void> => {
       name: "Le Petit Tigre",
       description:
         "Microbrasserie historique décorée dans un style clair et dotée d'une terrasse extérieure, proposant des repas simples.",
-      picture: "../assets/PictPoi/leTigre.jpeg",
+      picture: "https://letigre.eu/img/petit_tigre_02.jpg",
       rating: 5,
       categories: [bar, restaurant],
     },
@@ -245,7 +251,8 @@ const start = async (): Promise<void> => {
       address: "Quai de Dampierre, 10000 Troyes",
       name: "Le Cœur de Troyes",
       description: "Le plus beau coeur du monde",
-      picture: "../assets/PictPoi/coeurDeTroye.jpeg",
+      picture:
+        "https://static.wixstatic.com/media/15b084_e1f5a2431ea24eb38433a4844bca2819~mv2.jpeg/v1/fill/w_1000,h_558,al_c,q_90,usm_0.66_1.00_0.01/15b084_e1f5a2431ea24eb38433a4844bca2819~mv2.jpeg",
       rating: 5,
       categories: [monument, restaurant],
     },
