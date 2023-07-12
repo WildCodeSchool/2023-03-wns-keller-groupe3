@@ -18,9 +18,6 @@ export default function Cities() {
   const [searchText, setSearchText] = useState("");
   const { loading, error, data } = useQuery(GET_CITIES);
   const [createCity] = useMutation(ADD_CITY);
-  const filteredCities = data.getAllCities.filter((city: City) =>
-    city.name.toLowerCase().includes(searchText.toLowerCase())
-  );
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createCity({
@@ -47,6 +44,10 @@ export default function Cities() {
   };
   if (loading) return <p className='text-center'>Loading...</p>;
   if (error) return <p className='text-center'>Error : {error.message}</p>;
+
+  const filteredCities = data.getAllCities.filter((city: City) =>
+    city.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
     <section
