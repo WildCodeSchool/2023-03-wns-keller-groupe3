@@ -1,12 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { gql, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { useState } from 'react';
-
-const LOGIN = gql`
-  query Query($password: String!, $email: String!) {
-    login(password: $password, email: $email)
-  }
-`;
+import { LOGIN } from "../graphql/queries";
+import { toast } from "react-toastify";
+import CustomToast from "../utils/CustomToast";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -24,11 +21,21 @@ export default function Login() {
   }
 
   const handleSubmitLogin = async () => {
+    if (error) {
+      toast(
+        <CustomToast
+          message={`Vos informations de connection sont erroné`}
+          color='text-error'
+        />
+      );
+    } else {
     login();
       }
+    }
 
 return (
     <>
+      <h2 className="text-6xl text-base-content font-bold mb-10 text">Connexion</h2>
       <div className="mb-4 w-full">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
           Email
@@ -59,7 +66,7 @@ return (
           placeholder="Entrez votre mot de passe"
           />
           </div>
-          <button className="btn btn-active btn-primary w-full mb-4" type="button" onClick={ handleSubmitLogin }>
+          <button className="btn btn-active btn-primary w-full mt-4" type="button" onClick={ handleSubmitLogin }>
           Se connecter
           </button>
         </>

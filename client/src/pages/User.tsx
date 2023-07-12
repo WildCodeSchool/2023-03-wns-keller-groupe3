@@ -21,7 +21,7 @@ function UserPage () {
         {isRegisterMode ? <Subscribe /> : <Login />}
       </form>
       <p
-        className="text-center text-gray-600 cursor-pointer justify-center items-center"
+        className="text-center text-gray-600 cursor-pointer justify-center items-center mt-4"
         onClick={toggleMode}
       >
         {isRegisterMode ? "Déjà un compte ? Se connecter" : "Pas de compte ? S'inscrire"}
