@@ -39,7 +39,6 @@ export default function Map({ id, lat, long, poi }: MapProps) {
   console.log("LAT----------->", clickedLat);
   console.log("LONG---------->", clickedLong);
   console.log("SHOWMODAL----->", showModal);
-
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
@@ -53,7 +52,21 @@ export default function Map({ id, lat, long, poi }: MapProps) {
   };
 
   return (
-    <>
+    <div className='z-0'>
+      {showModal && clickedLat && clickedLong && (
+        <form className='modal opacity-100 pointer-events-auto'>
+          <div className='modal-box z-1 flex flex-col py-5 gap-y-6'>
+            <h3 className='font-bold text-lg'>Coordonnées</h3>
+            <p>
+              Latitude: {clickedLat}, Longitude: {clickedLong}
+            </p>
+            <input type='text' className='input input-bordered' />
+            <button onClick={() => setShowModal(!showModal)} className='btn'>
+              Fermer
+            </button>
+          </div>
+        </form>
+      )}
       <div id='map'>
         <MapContainer
           id={id}
@@ -67,7 +80,6 @@ export default function Map({ id, lat, long, poi }: MapProps) {
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
           <OpenModalWithPosition />
-
           {poi.map((p, key) => {
             return (
               <Marker position={[p.latitude, p.longitude]}>
@@ -171,20 +183,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
             );
           })}
         </MapContainer>
-        {showModal && clickedLat && clickedLong && (
-          <div className='modal opacity-100'>
-            <div className='modal-box z-1'>
-              <h3 className='font-bold text-lg'>Coordonnées</h3>
-              <p>
-                Latitude: {clickedLat}, Longitude: {clickedLong}
-              </p>
-              <button onClick={() => setShowModal(!showModal)} className='btn'>
-                Fermer
-              </button>
-            </div>
-          </div>
-        )}
       </div>
-    </>
+    </div>
   );
 }
