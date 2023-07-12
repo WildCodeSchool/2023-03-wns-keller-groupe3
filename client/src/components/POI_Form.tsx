@@ -41,7 +41,7 @@ export const GET_CATEGORIES = gql(`
     }
 `)
 
-export default function AddPOIForm(city: any) {
+export default function AddPOIForm(city: any, lat: number, lng: number) {
     const [address, setAddress] = useState('')
     const [categories, setCategories] = useState([''])
     const [description, setDescription] = useState('')
@@ -49,8 +49,6 @@ export default function AddPOIForm(city: any) {
     const [name, setName] = useState('')
     const [picture, setPicture] = useState('')
     const [rating, setRating] = useState(5)
-    const [latitude, setLatitude] = useState('')
-    const [longitude, setLongitude] = useState('')
 
     const [AddNewPoi]  = useMutation(ADD_POI)
     const { data, error, loading } = useQuery(GET_CATEGORIES);
@@ -63,8 +61,6 @@ export default function AddPOIForm(city: any) {
         console.log("error is : ", error);
         return <p>Error</p>;
     }
-    console.log("data is : ", data);
-    console.log("city is ", typeof(city.city), city.city)
     return (
         <form
             className='py-6 flex flex-col'
@@ -79,8 +75,8 @@ export default function AddPOIForm(city: any) {
                     picture,
                     rating,
                     city: {"id": city.city},
-                    latitude: parseFloat(latitude),
-                    longitude: parseFloat(longitude),
+                    latitude: lat,
+                    longitude: lng,
                 } });
             }}
         >
@@ -177,36 +173,6 @@ export default function AddPOIForm(city: any) {
                 value={picture}
                 onChange={(e) => {
                     setPicture(e.target.value);
-                }}
-            />
-
-            <label className='text-sm mb-2 font-bold' htmlFor='latitude'>
-                Latitude
-            </label>
-            <input
-                id='latitude'
-                type='number'
-                step='0.0001'
-                min={-90}
-                max={90}
-                className='input input-bordered w-full max-w-xs mb-4'
-                value={latitude}
-                onChange={(e) => {
-                    setLatitude(e.target.value);
-                }}
-            />
-            
-            <label className='text-sm mb-2 font-bold' htmlFor='longitude'>Longitude</label>
-            <input
-                id='longitude'
-                type='number'
-                step='0.0001'
-                min={-90}
-                max={90}
-                className='input input-bordered w-full max-w-xs mb-4'
-                value={longitude}
-                onChange={(e) => {
-                    setLongitude(e.target.value);
                 }}
             />
             
