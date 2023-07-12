@@ -9,14 +9,18 @@ import CustomToast from "../utils/CustomToast";
 import backgroundCity from "../assets/cityBackground.png";
 import { toast } from "react-toastify";
 
-function Cities() {
+export default function Cities() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [picture, setPicture] = useState("");
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
+  const [searchText, setSearchText] = useState("");
   const { loading, error, data } = useQuery(GET_CITIES);
   const [createCity] = useMutation(ADD_CITY);
+  const filteredCities = data.getAllCities.filter((city: City) =>
+    city.name.toLowerCase().includes(searchText.toLowerCase())
+  );
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createCity({
@@ -41,14 +45,8 @@ function Cities() {
       refetchQueries: [GET_CITIES],
     });
   };
-  const [searchText, setSearchText] = useState("");
-
   if (loading) return <p className='text-center'>Loading...</p>;
   if (error) return <p className='text-center'>Error : {error.message}</p>;
-
-  const filteredCities = data.getAllCities.filter((city: City) =>
-    city.name.toLowerCase().includes(searchText.toLowerCase())
-  );
 
   return (
     <section
@@ -171,4 +169,3 @@ function Cities() {
     </section>
   );
 }
-export default Cities;
