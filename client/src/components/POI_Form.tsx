@@ -41,7 +41,7 @@ export const GET_CATEGORIES = gql(`
     }
 `)
 
-export default function AddPOIForm(city: any, lat: number, lng: number) {
+export default function AddPOIForm(city: any, clickedLat: number, clickedLong: number) {
     const [address, setAddress] = useState('')
     const [categories, setCategories] = useState([''])
     const [description, setDescription] = useState('')
@@ -53,6 +53,7 @@ export default function AddPOIForm(city: any, lat: number, lng: number) {
     const [AddNewPoi]  = useMutation(ADD_POI)
     const { data, error, loading } = useQuery(GET_CATEGORIES);
     const allCategories = data?.getAllCategories;
+    console.log("clickedLat, clickedLong = ", clickedLat, clickedLong)
 
     if (loading) {
         return <p>Loading</p>;
@@ -61,11 +62,13 @@ export default function AddPOIForm(city: any, lat: number, lng: number) {
         console.log("error is : ", error);
         return <p>Error</p>;
     }
+    
     return (
         <form
             className='py-6 flex flex-col'
             onSubmit={async (e) => {
                 e.preventDefault();
+                
                 AddNewPoi({ variables: { 
                     address,
                     "categories": {"id": categories[0]},
@@ -75,8 +78,8 @@ export default function AddPOIForm(city: any, lat: number, lng: number) {
                     picture,
                     rating,
                     city: {"id": city.city},
-                    latitude: lat,
-                    longitude: lng,
+                    latitude: clickedLat,
+                    longitude: clickedLong,
                 } });
             }}
         >

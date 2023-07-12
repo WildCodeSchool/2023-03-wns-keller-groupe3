@@ -35,35 +35,28 @@ interface MapProps {
 }
 
 export default function Map({ id, lat, long, poi }: MapProps) {
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [clickedLat, setClikedLat] = useState<number>();
+  const [clickedLong, setClikedLong] = useState<number>();
+  console.log("LAT----------->", clickedLat);
+  console.log("LONG---------->", clickedLong);
+  console.log("SHOWMODAL----->", showModal);
 
-  function AddPOI() {
+  const OpenModalWithPosition = () => {
     useMapEvents({
-      dblclick(e) {
-        console.log(latitude, longitude)
-        setLatitude(e.latlng.lat);
-        setLongitude(e.latlng.lng);
-        <label htmlFor="my_modal_6" className="btn btn-primary md:w-1/6"></label>
+      dblclick: (e) => {
+        console.log("event---------->", e);
+        setClikedLat(() => e?.latlng?.lat);
+        setClikedLong(() => e?.latlng?.lng);
+        setShowModal(!showModal);
       },
     });
-    return null
-  }
+    return null;
+  };
 
   return (
     <>
-      <input type="checkbox" id="my_modal_6" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg mb-4">Ajouter un point d'intérêt</h3>
-          <hr></hr>
-          <AddPOIForm
-            city={id}
-            lat={latitude}
-            lng={longitude}
-          />
-        </div>
-      </div>
+    
       <div id="map">
         <MapContainer
           id={id}
@@ -72,7 +65,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
           scrollWheelZoom={true}
           doubleClickZoom={false}
         >
-          <AddPOI />
+          <OpenModalWithPosition />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -178,6 +171,17 @@ export default function Map({ id, lat, long, poi }: MapProps) {
           })}
         </MapContainer>
       </div>
+      {showModal && clickedLat && clickedLong && (
+        <div className='modal opacity-100 pointer-events-auto'>
+          <div className='modal-box z-1 flex flex-col py-5 gap-y-6'>
+            <AddPOIForm 
+              city={id}
+              clickedLat={clickedLat}
+              clickedLong={clickedLong}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
