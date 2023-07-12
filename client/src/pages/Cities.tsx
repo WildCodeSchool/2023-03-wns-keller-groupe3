@@ -55,62 +55,47 @@ function Cities() {
       className='min-h-screen'
       style={{ backgroundImage: `url(${backgroundCity})` }}
     >
-      <div className='container max-w-5xl md:mx-auto pt-12 px-9 pb-[6rem] md:pl-[10rem] md:pr-[6rem] flex flex-col gap-6'>
-        <h1 className='text-2xl text-primary font-bold '>
+      <div className='flex flex-col w-11/12 mx-auto py-5 md:w-3/5'>
+        <h1 className='text-2xl text-primary font-bold py-5'>
           Choisissez votre ville
         </h1>
-        <div className='border shadow-md border-grey-900 rounded-full flex gap-2 p-2 bg-white'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            className='h-5 w-5'
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke='currentColor'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-            />
-          </svg>
+        <div className='flex items-center'>
           <input
-            className='w-full px-2'
+            className='input input-bordered w-full'
             placeholder='Recherche'
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
+          <label
+            htmlFor='my_modal_6'
+            className='btn btn-circle btn-primary ml-5'
+          >
+            <div className='flex items-center'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth='1.5'
+                stroke='currentColor'
+                className='w-6 h-6'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M12 4.5v15m7.5-7.5h-15'
+                />
+              </svg>
+            </div>
+          </label>
         </div>
-        <label
-          htmlFor='my_modal_6'
-          className='btn btn-primary md:w-2/6 lg:w-1/6'
-        >
-          <div className='flex items-center'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth='1.5'
-              stroke='currentColor'
-              className='w-6 h-6'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M12 4.5v15m7.5-7.5h-15'
-              />
-            </svg>
-            <p className='ml-2'>ajouter</p>
-          </div>
-        </label>
-        <ul className='grid grid-cols-1 min-[520px]:grid-cols-2 min-[823px]:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto md:mx-0'>
-          {filteredCities.map((city: City) => (
-            <Link key={city.id} to={`/city/${city.id}`}>
-              <CityCard city={city} />
-            </Link>
-          ))}
-        </ul>
       </div>
+      <ul className='flex flex-wrap justify-center'>
+        {filteredCities.map((city: City) => (
+          <Link key={city.id} to={`/city/${city.id}`}>
+            <CityCard city={city} />
+          </Link>
+        ))}
+      </ul>
       <input type='checkbox' id='my_modal_6' className='modal-toggle' />
       <div className='modal'>
         <div className='modal-box'>
