@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { gql, useLazyQuery } from '@apollo/client';
-import { useState } from 'react';
+import { gql, useLazyQuery } from "@apollo/client";
+import { useState } from "react";
 
 const LOGIN = gql`
   query Query($password: String!, $email: String!) {
@@ -25,16 +25,19 @@ export default function Login() {
 
   const handleSubmitLogin = async () => {
     login();
-      }
+  };
 
-return (
+  return (
     <>
       <div className="mb-4 w-full">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+        <label
+          className="block text-base-content text-sm font-bold mb-2"
+          htmlFor="email"
+        >
           Email
         </label>
         <input
-          className="input input-bordered w-full"
+          className="input input-bordered bg-base-content text-base-100 w-full"
           type="email"
           id="email"
           value={email}
@@ -43,13 +46,16 @@ return (
           }}
           placeholder="Entrez votre email"
         />
-        </div>
-        <div className="mb-4 w-full">
-        <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="password">
+      </div>
+      <div className="mb-4 w-full">
+        <label
+          className="block text-base-content text-sm font-bold mb-2 "
+          htmlFor="password"
+        >
           Mot de passe
         </label>
         <input
-          className="input input-bordered w-full"
+          className="input input-bordered bg-base-content text-base-100 w-full"
           type="password"
           id="password"
           value={password}
@@ -57,11 +63,15 @@ return (
             setPassword(e.target.value);
           }}
           placeholder="Entrez votre mot de passe"
-          />
-          </div>
-          <button className="btn btn-active btn-primary w-full mb-4" type="button" onClick={ handleSubmitLogin }>
-          Se connecter
-          </button>
-        </>
-      );
-    }
+        />
+      </div>
+      <button
+        className="btn btn-active btn-primary w-full mb-4"
+        type="button"
+        onClick={handleSubmitLogin}
+      >
+        Se connecter
+      </button>
+    </>
+  );
+}

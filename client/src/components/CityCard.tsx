@@ -15,7 +15,7 @@ export function CityCard({ city }: CityCardProps) {
         <img className="w-full h-full" src={city.picture} alt="City" />
       </figure>
       <div className="card-body border-t-2 border-primary">
-        <h2 className="card-title text-primary">{city.name}</h2>
+        <h2 className="card-title text-base-content">{city.name}</h2>
       </div>
     </div>
   );

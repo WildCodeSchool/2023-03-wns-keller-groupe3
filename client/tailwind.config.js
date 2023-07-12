@@ -6,7 +6,23 @@ module.exports = {
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
-    themes: ["cupcake"],
+    themes: [
+      {
+        dark: {
+          primary: "#ED9986",
+          secondary: "#96BBBB",
+          accent: "#f9d8b8",
+          neutral: "#2d3139",
+          "base-100": "#1F1B23",
+          "base-content": "#EDEBEB",
+          info: "#5fbcd8",
+          success: "#22c55e",
+          warning: "#fde047",
+          error: "#f44375",
+        },
+      },
+      "cupcake",
+    ],
     // themes: false, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
     // darkTheme: "dark", // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
