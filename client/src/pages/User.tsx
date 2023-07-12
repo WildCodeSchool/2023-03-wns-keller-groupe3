@@ -10,7 +10,7 @@ function UserPage() {
   };
 
   return (
-    <div className="container flex flex-col justify-center items-center h-screen w-full px-9">
+    <div className="container flex flex-col justify-center items-center h-screen w-full px-9 mx-auto">
       <form
         className="max-w-sm flex flex-col w-full"
         onSubmit={async (e) => {
