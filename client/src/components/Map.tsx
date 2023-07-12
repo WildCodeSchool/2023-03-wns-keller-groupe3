@@ -8,6 +8,7 @@ import {
 } from "react-leaflet";
 import test from "../assets/PictPoi/meteor.jpeg";
 import { useState } from "react";
+import AddPOIForm from "./POI_Form";
 
 export interface Category {
   id: number;
@@ -52,18 +53,54 @@ export default function Map({ id, lat, long, poi }: MapProps) {
   };
 
   return (
-    <div className='z-0'>
+    <>
       {showModal && clickedLat && clickedLong && (
-        <form className='modal opacity-100 pointer-events-auto'>
-          <div className='modal-box z-1 flex flex-col py-5 gap-y-6'>
-            <h3 className='font-bold text-lg'>Coordonnées</h3>
+        <form className='modal opacity-100 pointer-events-auto w-full'>
+          <div className='modal-box z-1 flex flex-col gap-y-2'>
+            <h3 className='font-bold text-lg'>Ajouter un Point d'interêt</h3>
             <p>
-              Latitude: {clickedLat}, Longitude: {clickedLong}
+              lat:{clickedLat}, long:{clickedLong}
             </p>
-            <input type='text' className='input input-bordered' />
-            <button onClick={() => setShowModal(!showModal)} className='btn'>
-              Fermer
-            </button>
+            <hr></hr>
+            <input
+              type='text'
+              placeholder='Nom'
+              className='input input-bordered mt-4 mb-4'
+            />
+            <input
+              id='address'
+              type='text'
+              placeholder='Adresse'
+              className='input input-bordered mb-4'
+            />
+            <select
+              id='category'
+              className='select select-bordered w-full mb-4'
+            >
+              <option disabled selected>
+                Catégories
+              </option>
+              <option>Restaurant</option>
+              <option>Bar</option>
+            </select>
+            <textarea
+              id='description'
+              rows={3}
+              className='textarea textarea-bordered mb-4'
+              placeholder='Description'
+            ></textarea>
+            <input
+              id='picture'
+              type='text'
+              placeholder='Image'
+              className='input input-bordered mb-4'
+            />
+            <div className='flex justify-between mt-4'>
+              <button onClick={() => setShowModal(!showModal)} className='btn'>
+                Annuler
+              </button>
+              <button className='btn btn-primary'>Valider</button>
+            </div>
           </div>
         </form>
       )}
@@ -184,6 +221,6 @@ export default function Map({ id, lat, long, poi }: MapProps) {
           })}
         </MapContainer>
       </div>
-    </div>
+    </>
   );
 }
