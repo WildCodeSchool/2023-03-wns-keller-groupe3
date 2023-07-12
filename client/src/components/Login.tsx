@@ -24,7 +24,7 @@ export default function Login() {
     if (error) {
       toast(
         <CustomToast
-          message={`Vos informations de connection sont erroné`}
+          message={`Vos informations de connexion sont erronées`}
           color='text-error'
         />
       );

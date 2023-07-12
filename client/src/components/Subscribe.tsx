@@ -12,6 +12,7 @@ export default function Subscribe() {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPasswordDescription, setShowPasswordDescription] = useState(false);
   const navigate = useNavigate();
   const [addUser] = useMutation(CREATE_USER, {
     refetchQueries: [GET_USER],
@@ -19,6 +20,10 @@ export default function Subscribe() {
   const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+  const handleTogglePasswordDescription = () => {
+    setShowPasswordDescription(!showPasswordDescription);
+  };
 
   const handleSubmit = async () => {
     if ( name.trim() === "" ) {
@@ -126,14 +131,20 @@ export default function Subscribe() {
       onChange={(e) => {
         setConfirmEmail(e.target.value);
       }}
-      placeholder="Entrez votre email"
+      placeholder="Entrez votre email a nouveau"
     />
     </div>
     <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-          Mot de passe
-        </label>
-        <input
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+        Mot de passe{" "}
+        <span
+          className="text-primary text-xs cursor-help"
+          onClick={handleTogglePasswordDescription}
+        >
+          ?
+        </span>
+      </label>
+      <input
           className="input input-bordered w-full"
           type="password"
           id="password"
@@ -142,7 +153,10 @@ export default function Subscribe() {
             setPassword(e.target.value);
           }}
           placeholder="Entrez votre mot de passe"
-          />
+        />
+        {showPasswordDescription && (
+          <p className="text-xs text-gray-500 mt-1">{`Votre mot de passe doit comporter au moins 8 caractères et inclure au moins une lettre minuscule, une lettre majuscule et un chiffre.`}</p>
+        )}
       </div>
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
