@@ -30,21 +30,21 @@ function Cities() {
         toast(
           <CustomToast
             message={`La ville de "${createCity.name}" a été ajouté`}
-            color='text-success'
+            color="text-success"
           />
         );
         navigate(`/city/${createCity.id}`);
       },
       onError(error) {
-        toast(<CustomToast message={error.message} color='text-error' />);
+        toast(<CustomToast message={error.message} color="text-error" />);
       },
       refetchQueries: [GET_CITIES],
     });
   };
   const [searchText, setSearchText] = useState("");
 
-  if (loading) return <p className='text-center'>Loading...</p>;
-  if (error) return <p className='text-center'>Error : {error.message}</p>;
+  if (loading) return <p className="text-center">Loading...</p>;
+  if (error) return <p className="text-center">Error : {error.message}</p>;
 
   const filteredCities = data.getAllCities.filter((city: City) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
@@ -52,55 +52,55 @@ function Cities() {
 
   return (
     <section
-      className='hero min-h-screen'
+      className="min-h-screen bg-base-content"
       style={{ backgroundImage: `url(${backgroundCity})` }}
     >
-      <div className='container max-w-5xl md:mx-auto pt-12 px-9 pb-[6rem] md:pl-[10rem] md:pr-[6rem] flex flex-col gap-6'>
-        <h1 className='text-2xl text-primary font-bold '>
+      <div className="container max-w-5xl md:mx-auto pt-12 px-9 pb-[6rem] md:pl-[10rem] md:pr-[6rem] flex flex-col gap-6">
+        <h1 className="text-2xl text-base-100 font-bold ">
           Choisissez votre ville
         </h1>
-        <div className='border shadow-md border-grey-900 rounded-full flex gap-2 p-2 bg-white'>
+        <div className="border shadow-md border-grey-900 rounded-full flex gap-2 p-2 bg-base-content">
           <svg
-            xmlns='http://www.w3.org/2000/svg'
-            className='h-5 w-5'
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke='currentColor'
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="black"
           >
             <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
           <input
-            className='w-full px-2'
-            placeholder='Recherche'
+            className="w-full px-2 text-base-100 bg-base-content"
+            placeholder="Recherche"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <label htmlFor='my_modal_6' className='btn btn-primary md:w-1/6'>
-          <div className='flex items-center'>
+        <label htmlFor="my_modal_6" className="btn btn-primary md:w-1/6">
+          <div className="flex items-center">
             <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth='1.5'
-              stroke='currentColor'
-              className='w-6 h-6'
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
             >
               <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M12 4.5v15m7.5-7.5h-15'
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
-            <p className='ml-2'>ajouter</p>
+            <p className="ml-2">ajouter</p>
           </div>
         </label>
-        <ul className='container grid grid-cols-1 min-[420px]:grid-cols-2 min-[823px]:grid-cols-3 lg:grid-cols-4 gap-6'>
+        <ul className="container grid grid-cols-1 min-[420px]:grid-cols-2 min-[823px]:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredCities.map((city: City) => (
             <Link key={city.id} to={`/city/${city.id}`}>
               <CityCard city={city} />
@@ -108,69 +108,69 @@ function Cities() {
           ))}
         </ul>
       </div>
-      <input type='checkbox' id='my_modal_6' className='modal-toggle' />
-      <div className='modal'>
-        <div className='modal-box'>
-          <h3 className='font-bold text-lg mb-4'>Ajouter une ville</h3>
+      <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-4">Ajouter une ville</h3>
           <hr></hr>
-          <form onSubmit={handleSubmit} className='py-6 flex flex-col'>
-            <label className='text-sm mb-2 font-bold' htmlFor='name'>
+          <form onSubmit={handleSubmit} className="py-6 flex flex-col">
+            <label className="text-sm mb-2 font-bold" htmlFor="name">
               Nom :
             </label>
             <input
-              id='name'
-              type='text'
-              placeholder='Paris, Rome, Rio ...'
-              className='input input-bordered w-full max-w-xs mb-4'
+              id="name"
+              type="text"
+              placeholder="Paris, Rome, Rio ..."
+              className="input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4"
               onChange={(e) => setName(e.target.value)}
             />
-            <label className='text-sm mb-2 font-bold' htmlFor='image'>
+            <label className="text-sm mb-2 font-bold" htmlFor="image">
               Image :
             </label>
             <input
-              id='image'
-              type='text'
-              placeholder='url : https://...'
-              className='input input-bordered w-full max-w-xs mb-4'
+              id="image"
+              type="text"
+              placeholder="url : https://..."
+              className="input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4"
               onChange={(e) => setPicture(e.target.value)}
             />
-            <label className='text-sm mb-2 font-bold' htmlFor='latitude'>
+            <label className="text-sm mb-2 font-bold" htmlFor="latitude">
               Latitude :
             </label>
             <input
-              id='latitude'
-              type='number'
-              step='0.0001'
+              id="latitude"
+              type="number"
+              step="0.0001"
               //todo à gérer côté server
               min={-90}
               max={90}
-              placeholder='43.2345'
-              className='input input-bordered w-full max-w-xs mb-4'
+              placeholder="43.2345"
+              className="input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4"
               onChange={(e) => setLat(e.target.value)}
             />
-            <label className='text-sm mb-2 font-bold' htmlFor='longitude'>
+            <label className="text-sm mb-2 font-bold" htmlFor="longitude">
               Longitude :
             </label>
             <input
-              id='longitude'
-              type='number'
-              step='0.0001'
+              id="longitude"
+              type="number"
+              step="0.0001"
               //todo à gérer côté server
               min={-180}
               max={180}
-              placeholder='2.5456'
-              className='input input-bordered w-full max-w-xs'
+              placeholder="2.5456"
+              className="input input-bordered bg-base-content text-base-100 w-full max-w-xs"
               onChange={(e) => setLong(e.target.value)}
             />
-            <div className='modal-action flex justify-between'>
-              <label htmlFor='my_modal_6' className='btn'>
+            <div className="modal-action flex justify-between">
+              <label htmlFor="my_modal_6" className="btn">
                 Annuler
               </label>
               <input
-                id='submit'
-                type='submit'
-                className='btn btn-primary'
-                value='valider'
+                id="submit"
+                type="submit"
+                className="btn btn-primary"
+                value="valider"
               />
             </div>
           </form>
