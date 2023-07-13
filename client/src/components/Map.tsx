@@ -1,5 +1,4 @@
 import "leaflet/dist/leaflet.css";
-import test from "../assets/PictPoi/meteor.jpeg";
 import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_POI } from "../graphql/mutations";
