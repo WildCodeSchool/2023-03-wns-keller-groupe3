@@ -1,12 +1,9 @@
+import { useLazyQuery } from "@apollo/client";
+import { useState } from "react";
+import { LOGIN } from "../graphql/queries";
+import { toast } from "react-toastify";
+import CustomToast from "../utils/CustomToast";
 import { Navigate } from "react-router-dom";
-import { gql, useLazyQuery } from '@apollo/client';
-import { useState } from 'react';
-
-const LOGIN = gql`
-  query Query($password: String!, $email: String!) {
-    login(password: $password, email: $email)
-  }
-`;
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -17,51 +14,73 @@ export default function Login() {
   if (data) {
     console.log("data from query", data.login);
     localStorage.setItem("token", data.login);
-    return <Navigate to="/" />;
+    return <Navigate to='/' />;
   }
   if (error) {
     console.log("error", error);
   }
 
   const handleSubmitLogin = async () => {
-    login();
-      }
+    if (error) {
+      toast(
+        <CustomToast
+          message={`Vos informations de connexion sont erronées`}
+          color='text-error'
+        />
+      );
+    } else {
+      login();
+    }
+  };
 
-return (
+  return (
     <>
-      <div className="mb-4 w-full">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+      <h2 className='text-6xl text-base-content font-bold mb-10 text'>
+        Connexion
+      </h2>
+      <div className='mb-4 w-full'>
+        <label
+          className='block text-base-content text-sm font-bold mb-2'
+          htmlFor='email'
+        >
           Email
         </label>
         <input
-          className="input input-bordered w-full"
-          type="email"
-          id="email"
+          className='input input-bordered bg-base-content text-base-100 w-full'
+          type='email'
+          id='email'
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
           }}
-          placeholder="Entrez votre email"
+          placeholder='Entrez votre email'
         />
-        </div>
-        <div className="mb-4 w-full">
-        <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="password">
+      </div>
+      <div className='mb-4 w-full'>
+        <label
+          className='block text-base-content text-sm font-bold mb-2 '
+          htmlFor='password'
+        >
           Mot de passe
         </label>
         <input
-          className="input input-bordered w-full"
-          type="password"
-          id="password"
+          className='input input-bordered bg-base-content text-base-100 w-full'
+          type='password'
+          id='password'
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
-          placeholder="Entrez votre mot de passe"
-          />
-          </div>
-          <button className="btn btn-active btn-primary w-full mb-4" type="button" onClick={ handleSubmitLogin }>
-          Se connecter
-          </button>
-        </>
-      );
-    }
+          placeholder='Entrez votre mot de passe'
+        />
+      </div>
+      <button
+        className='btn btn-active btn-primary w-full mt-4'
+        type='button'
+        onClick={handleSubmitLogin}
+      >
+        Se connecter
+      </button>
+    </>
+  );
+}

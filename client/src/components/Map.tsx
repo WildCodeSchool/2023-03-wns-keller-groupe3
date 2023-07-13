@@ -1,4 +1,9 @@
 import "leaflet/dist/leaflet.css";
+import test from "../assets/PictPoi/meteor.jpeg";
+import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { ADD_POI } from "../graphql/mutations";
+import { GET_CATEGORIES } from "../graphql/queries";
 import {
   MapContainer,
   TileLayer,
@@ -6,11 +11,6 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import test from "../assets/PictPoi/meteor.jpeg";
-import { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import { ADD_POI } from "../graphql/mutations";
-import { GET_CATEGORIES } from "../graphql/queries";
 
 export interface Category {
   id: number;

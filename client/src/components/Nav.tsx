@@ -3,7 +3,7 @@ import logo from "../assets/logo.png";
 
 export default function Sidebar() {
   return (
-    <div className='z-10 fixed bottom-0 w-full h-14  md:fixed md:h-full md:menu bg-base-200 md:w-24 flex justify-between rounded-tl-xl rounded-tr-xl md:rounded-r-xl md:rounded-tl-none shadow-[5px_0px_20px_0px_#00000024]'>
+    <div className='z-10 fixed bottom-0 w-full h-14  md:fixed md:h-full md:menu bg-base-100 md:w-24 flex justify-between rounded-tl-xl rounded-tr-xl md:rounded-r-xl md:rounded-tl-none shadow-[5px_0px_20px_0px_#00000024]'>
       <img
         alt='logo'
         className='hidden md:block md:mask mask-circle w-14 mx-auto'

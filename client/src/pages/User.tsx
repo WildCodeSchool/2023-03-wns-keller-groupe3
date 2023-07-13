@@ -1,33 +1,34 @@
 import { useState } from "react";
-import Subscribe from "../components/Subscribe";
+import Signup from "../components/Signup";
 import Login from "../components/Login";
 
-function UserPage () {
+function UserPage() {
   const [isRegisterMode, setIsRegisterMode] = useState(false);
-
 
   const toggleMode = () => {
     setIsRegisterMode(!isRegisterMode);
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen w-full">
+    <div className='container flex flex-col justify-center items-center h-screen w-full px-9 mx-auto'>
       <form
-        className="max-w-sm flex flex-col w-full"
+        className='max-w-sm flex flex-col w-full'
         onSubmit={async (e) => {
           e.preventDefault();
         }}
       >
-        {isRegisterMode ? <Subscribe /> : <Login />}
+        {isRegisterMode ? <Signup /> : <Login />}
       </form>
       <p
-        className="text-center text-gray-600 cursor-pointer justify-center items-center"
+        className='text-center text-base-content cursor-pointer justify-center items-center mt-4'
         onClick={toggleMode}
       >
-        {isRegisterMode ? "Déjà un compte ? Se connecter" : "Pas de compte ? S'inscrire"}
+        {isRegisterMode
+          ? "Déjà un compte ? Se connecter"
+          : "Pas de compte ? S'inscrire"}
       </p>
     </div>
-);
-};
+  );
+}
 
 export default UserPage;
