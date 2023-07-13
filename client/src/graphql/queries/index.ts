@@ -9,3 +9,12 @@ export const GET_CITIES = gql`
     }
   }
 `;
+
+export const GET_CATEGORIES = gql`
+  query getAllCategories {
+    getAllCategories {
+      id
+      name
+    }
+  }
+`;

@@ -8,7 +8,9 @@ import {
 } from "react-leaflet";
 import test from "../assets/PictPoi/meteor.jpeg";
 import { useState } from "react";
-import AddPOIForm from "./POI_Form";
+import { useMutation, useQuery } from "@apollo/client";
+import { ADD_POI } from "../graphql/mutations";
+import { GET_CATEGORIES } from "../graphql/queries";
 
 export interface Category {
   id: number;
@@ -37,6 +39,14 @@ export default function Map({ id, lat, long, poi }: MapProps) {
   const [showModal, setShowModal] = useState(false);
   const [clickedLat, setClikedLat] = useState<number>();
   const [clickedLong, setClikedLong] = useState<number>();
+  const [name, setName] = useState("");
+  const [address, setAdress] = useState("");
+  const [categories, setCategories] = useState([""]);
+  const [description, setDescription] = useState("");
+  const [picture, setPicture] = useState("");
+  const { data } = useQuery(GET_CATEGORIES);
+  const allCategories = data?.getAllCategories;
+  const [createPoi] = useMutation(ADD_POI);
   console.log("LAT----------->", clickedLat);
   console.log("LONG---------->", clickedLong);
   console.log("SHOWMODAL----->", showModal);
@@ -52,10 +62,31 @@ export default function Map({ id, lat, long, poi }: MapProps) {
     return null;
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createPoi({
+      variables: {
+        name,
+        address,
+        description,
+        picture,
+        categories: { id: categories[0] },
+        latitude: clickedLat,
+        longitude: clickedLong,
+        city: { id: id },
+        gpsPin: "Default",
+        rating: 5,
+      },
+    });
+  };
+
   return (
     <>
       {showModal && clickedLat && clickedLong && (
-        <form className='modal opacity-100 pointer-events-auto w-full'>
+        <form
+          className='modal opacity-100 pointer-events-auto w-full'
+          onSubmit={handleSubmit}
+        >
           <div className='modal-box z-1 flex flex-col gap-y-2'>
             <h3 className='font-bold text-lg'>Ajouter un Point d'interêt</h3>
             <p>
@@ -66,40 +97,55 @@ export default function Map({ id, lat, long, poi }: MapProps) {
               type='text'
               placeholder='Nom'
               className='input input-bordered mt-4 mb-4'
+              onChange={(e) => setName(e.target.value)}
             />
             <input
               id='address'
               type='text'
               placeholder='Adresse'
               className='input input-bordered mb-4'
+              onChange={(e) => setAdress(e.target.value)}
             />
             <select
               id='category'
               className='select select-bordered w-full mb-4'
+              multiple
+              onChange={(e) => {
+                setCategories(
+                  Array.from(e.target.selectedOptions).map((el) => el.value)
+                );
+              }}
             >
-              <option disabled selected>
-                Catégories
+              <option value='disabled' disabled selected>
+                Sélectionner une ou plusieurs catégories
               </option>
-              <option>Restaurant</option>
-              <option>Bar</option>
+              {allCategories.map((category: any) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
             </select>
             <textarea
               id='description'
               rows={3}
               className='textarea textarea-bordered mb-4'
               placeholder='Description'
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
             <input
               id='picture'
               type='text'
               placeholder='Image'
               className='input input-bordered mb-4'
+              onChange={(e) => setPicture(e.target.value)}
             />
             <div className='flex justify-between mt-4'>
               <button onClick={() => setShowModal(!showModal)} className='btn'>
                 Annuler
               </button>
-              <button className='btn btn-primary'>Valider</button>
+              <button className='btn btn-primary' type='submit'>
+                Valider
+              </button>
             </div>
           </div>
         </form>
