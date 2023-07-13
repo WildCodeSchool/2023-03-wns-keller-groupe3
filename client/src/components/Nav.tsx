@@ -4,11 +4,6 @@ import logo from "../assets/logo.png";
 export default function Sidebar() {
   return (
     <div className='z-10 fixed bottom-0 w-full h-14  md:fixed md:h-full md:menu bg-base-100 md:w-24 flex justify-between rounded-tl-xl rounded-tr-xl md:rounded-r-xl md:rounded-tl-none shadow-[5px_0px_20px_0px_#00000024]'>
-      <img
-        alt='logo'
-        className='hidden md:block md:mask mask-circle w-14 mx-auto'
-        src={logo}
-      />
       <ul className='flex items-center justify-center w-full md:flex-col'>
         <li className='rounded p-2 mr-10 md:mb-5 md:mr-0'>
           <Link to='/' className='flex flex-col items-center md:block'>
@@ -68,7 +63,13 @@ export default function Sidebar() {
           </Link>
         </li>
       </ul>
-      <div />
+      <div className='w-14 flex justify-center items-center mx-auto'>
+        <img
+          alt='logo'
+          className='hidden md:block md:mask mask-circle mx-auto'
+          src={logo}
+        />
+      </div>
     </div>
   );
 }
