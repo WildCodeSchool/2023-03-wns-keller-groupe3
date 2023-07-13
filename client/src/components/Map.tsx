@@ -73,7 +73,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         gpsPin: "Default",
         rating: 5,
       },
-      //todo refetch POI
+      //todo refetch  ou city
       //génerer les toasts
       //gérer les messages d'erreurs
     });
@@ -88,27 +88,23 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         >
           <div className='modal-box z-1 flex flex-col gap-y-2'>
             <h3 className='font-bold text-lg'>Ajouter un Point d'interêt</h3>
-            <p>
-              lat:{clickedLat}, long:{clickedLong}
-            </p>
             <hr></hr>
             <input
               type='text'
               placeholder='Nom'
-              className='input input-bordered mt-4 mb-4'
+              className='input input-bordered mt-4 mb-4 bg-base-content text-base-100'
               onChange={(e) => setName(e.target.value)}
             />
             <input
               id='address'
               type='text'
               placeholder='Adresse'
-              className='input input-bordered mb-4'
+              className='input input-bordered mb-4 bg-base-content text-base-100'
               onChange={(e) => setAdress(e.target.value)}
             />
             <select
               id='category'
-              className='select select-bordered w-full mb-4'
-              multiple
+              className='select select-bordered w-full mb-4 bg-base-content text-base-100'
               onChange={(e) => {
                 setCategories(
                   Array.from(e.target.selectedOptions).map((el) => el.value)
@@ -127,7 +123,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
             <textarea
               id='description'
               rows={3}
-              className='textarea textarea-bordered mb-4'
+              className='textarea textarea-bordered mb-4 bg-base-content text-base-100'
               placeholder='Description'
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
@@ -135,7 +131,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
               id='picture'
               type='text'
               placeholder='Image'
-              className='input input-bordered mb-4'
+              className='input input-bordered mb-4 bg-base-content text-base-100'
               onChange={(e) => setPicture(e.target.value)}
             />
             <div className='flex justify-between mt-4'>
