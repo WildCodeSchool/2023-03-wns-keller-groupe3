@@ -41,12 +41,15 @@ export default function Map({ id, lat, long, poi }: MapProps) {
   const [clickedLong, setClikedLong] = useState<number>();
   const [name, setName] = useState("");
   const [address, setAdress] = useState("");
-  const [categories, setCategories] = useState([""]);
+  const [categories, setCategories] = useState([{}]);
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState("");
+
   const { data } = useQuery(GET_CATEGORIES);
   const allCategories = data?.getAllCategories;
+
   const [createPoi] = useMutation(ADD_POI);
+
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
@@ -58,6 +61,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
     return null;
   };
 
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createPoi({
@@ -66,7 +70,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         address,
         description,
         picture,
-        categories: { id: categories[0] },
+        categories: categories,
         latitude: clickedLat,
         longitude: clickedLong,
         city: { id: id },
@@ -105,9 +109,10 @@ export default function Map({ id, lat, long, poi }: MapProps) {
             <select
               id='category'
               className='select select-bordered w-full mb-4 bg-base-content text-base-100'
+              multiple
               onChange={(e) => {
                 setCategories(
-                  Array.from(e.target.selectedOptions).map((el) => el.value)
+                  Array.from(e.target.selectedOptions).map((el) => ({id: el.value}))
                 );
               }}
             >
