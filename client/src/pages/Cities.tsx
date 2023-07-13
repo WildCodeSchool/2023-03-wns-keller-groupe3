@@ -5,9 +5,9 @@ import { useQuery, useMutation } from "@apollo/client";
 import { CityCard, City } from "../components/CityCard";
 import { ADD_CITY } from "../graphql/mutations";
 import { GET_CITIES } from "../graphql/queries";
+import { toast } from "react-toastify";
 import CustomToast from "../utils/CustomToast";
 import backgroundCity from "../assets/cityBackground.png";
-import { toast } from "react-toastify";
 
 export default function Cities() {
   const navigate = useNavigate();

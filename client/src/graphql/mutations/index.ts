@@ -21,3 +21,14 @@ export const ADD_CITY = gql`
     }
   }
 `;
+
+
+export const CREATE_USER = gql`
+  mutation CreateUser($email: String!, $name: String!, $password: String!) {
+    createUser(email: $email, name: $name, password: $password) {
+      id
+      email
+      name
+    }
+  }
+`;
