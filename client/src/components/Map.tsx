@@ -47,13 +47,9 @@ export default function Map({ id, lat, long, poi }: MapProps) {
   const { data } = useQuery(GET_CATEGORIES);
   const allCategories = data?.getAllCategories;
   const [createPoi] = useMutation(ADD_POI);
-  console.log("LAT----------->", clickedLat);
-  console.log("LONG---------->", clickedLong);
-  console.log("SHOWMODAL----->", showModal);
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
-        console.log("event---------->", e);
         setClikedLat(e?.latlng?.lat);
         setClikedLong(e?.latlng?.lng);
         setShowModal(!showModal);
@@ -77,6 +73,9 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         gpsPin: "Default",
         rating: 5,
       },
+      //todo refetch POI
+      //génerer les toasts
+      //gérer les messages d'erreurs
     });
   };
 
