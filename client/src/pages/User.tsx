@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Subscribe from "../components/Subscribe";
+import Signup from "../components/Signup";
 import Login from "../components/Login";
 
 function UserPage() {
@@ -10,17 +10,17 @@ function UserPage() {
   };
 
   return (
-    <div className="container flex flex-col justify-center items-center h-screen w-full px-9 mx-auto">
+    <div className='container flex flex-col justify-center items-center h-screen w-full px-9 mx-auto'>
       <form
-        className="max-w-sm flex flex-col w-full"
+        className='max-w-sm flex flex-col w-full'
         onSubmit={async (e) => {
           e.preventDefault();
         }}
       >
-        {isRegisterMode ? <Subscribe /> : <Login />}
+        {isRegisterMode ? <Signup /> : <Login />}
       </form>
       <p
-        className="text-center text-gray-600 cursor-pointer justify-center items-center mt-4"
+        className='text-center text-base-content cursor-pointer justify-center items-center mt-4'
         onClick={toggleMode}
       >
         {isRegisterMode
