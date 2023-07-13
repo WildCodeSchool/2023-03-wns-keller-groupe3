@@ -1,6 +1,5 @@
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import test from "../assets/PictPoi/meteor.jpeg";
 
 export interface Category {
   id: number;
@@ -39,7 +38,6 @@ export default function Map({ id, lat, long, poi }: MapProps) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {poi.map((p) => {
-          console.log(p.categories);
           return (
             <Marker position={[p.latitude, p.longitude]}>
               <Popup>
@@ -48,7 +46,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                     <div className="w-full h-[150px]">
                       <img
                         className="w-full h-full rounded-t-2xl"
-                        src={test}
+                        src={p.picture}
                         alt="poi_image"
                       />
                     </div>
