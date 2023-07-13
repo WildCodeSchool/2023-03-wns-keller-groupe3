@@ -42,6 +42,7 @@ export default function Cities() {
       refetchQueries: [GET_CITIES],
     });
   };
+
   if (loading) return <p className='text-center'>Loading...</p>;
   if (error) return <p className='text-center'>Error : {error.message}</p>;
 
@@ -51,24 +52,25 @@ export default function Cities() {
 
   return (
     <section
-      className='min-h-screen'
-      style={{ backgroundImage: `url(${backgroundCity})` }}
+      className='min-h-screen bg-base-content'
+      style={{
+        backgroundImage: `url(${backgroundCity})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
     >
       <div className='flex flex-col w-11/12 mx-auto pt-5 md:w-3/5'>
-        <h1 className='text-2xl text-primary font-bold py-5'>
+        <h1 className='text-2xl text-base-100 font-bold py-5'>
           Choisissez votre ville
         </h1>
         <div className='flex items-center'>
           <input
-            className='input input-bordered w-full'
+            className='input input-bordered bg-base-content text-accent-content w-full'
             placeholder='Recherche'
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <label
-            htmlFor='my_modal_6'
-            className='btn btn-circle btn-primary ml-5'
-          >
+          <label htmlFor='my_modal_6' className='btn btn-primary ml-5'>
             <div className='flex items-center'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -88,7 +90,7 @@ export default function Cities() {
           </label>
         </div>
       </div>
-      <div className='pt-5 pb-16 flex flex-wrap justify-center md:max-w-2xl lg:max-w-3xl xl:max-w-5xl mx-auto '>
+      <div className='pt-5 pb-16 flex flex-wrap justify-center md:max-w-xl lg:max-w-3xl xl:max-w-5xl mx-auto'>
         {filteredCities.map((city: City) => (
           <Link
             key={city.id}
@@ -112,7 +114,7 @@ export default function Cities() {
               id='name'
               type='text'
               placeholder='Paris, Rome, Rio ...'
-              className='input input-bordered w-full max-w-xs mb-4'
+              className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
               onChange={(e) => setName(e.target.value)}
             />
             <label className='text-sm mb-2 font-bold' htmlFor='image'>
@@ -122,7 +124,7 @@ export default function Cities() {
               id='image'
               type='text'
               placeholder='url : https://...'
-              className='input input-bordered w-full max-w-xs mb-4'
+              className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
               onChange={(e) => setPicture(e.target.value)}
             />
             <label className='text-sm mb-2 font-bold' htmlFor='latitude'>
@@ -136,7 +138,7 @@ export default function Cities() {
               min={-90}
               max={90}
               placeholder='43.2345'
-              className='input input-bordered w-full max-w-xs mb-4'
+              className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
               onChange={(e) => setLat(e.target.value)}
             />
             <label className='text-sm mb-2 font-bold' htmlFor='longitude'>
@@ -150,7 +152,7 @@ export default function Cities() {
               min={-180}
               max={180}
               placeholder='2.5456'
-              className='input input-bordered w-full max-w-xs'
+              className='input input-bordered bg-base-content text-base-100 w-full max-w-xs'
               onChange={(e) => setLong(e.target.value)}
             />
             <div className='modal-action flex justify-between'>

@@ -3,7 +3,7 @@ import logo from "../assets/logo.png";
 
 export default function Sidebar() {
   return (
-    <div className='z-10 fixed bottom-0 w-full h-14  md:fixed md:h-full md:menu bg-base-200 md:w-20 flex justify-between rounded-tl-xl rounded-tr-xl md:rounded-r-xl md:rounded-tl-none shadow-[5px_0px_20px_0px_#00000024]'>
+    <div className='z-10 fixed bottom-0 w-full h-14  md:fixed md:h-full md:menu bg-base-100 md:w-24 flex justify-between rounded-tl-xl rounded-tr-xl md:rounded-r-xl md:rounded-tl-none shadow-[5px_0px_20px_0px_#00000024]'>
       <img
         alt='logo'
         className='hidden md:block md:mask mask-circle w-14 mx-auto'
@@ -45,7 +45,7 @@ export default function Sidebar() {
                 d='M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z'
               />
             </svg>
-            <p className='text-xs md:text'>Villes</p>
+            <p className='text-xs md:text'>Ville</p>
           </Link>
         </li>
         <li className='p-2 md:mb-5 md:mr-0'>
