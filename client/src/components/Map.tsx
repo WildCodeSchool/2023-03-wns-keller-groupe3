@@ -61,7 +61,6 @@ export default function Map({ id, lat, long, poi }: MapProps) {
     return null;
   };
 
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createPoi({
@@ -112,7 +111,9 @@ export default function Map({ id, lat, long, poi }: MapProps) {
               multiple
               onChange={(e) => {
                 setCategories(
-                  Array.from(e.target.selectedOptions).map((el) => ({id: el.value}))
+                  Array.from(e.target.selectedOptions).map((el) => ({
+                    id: el.value,
+                  }))
                 );
               }}
             >
@@ -172,7 +173,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                       <div className='w-full h-[150px]'>
                         <img
                           className='w-full h-full rounded-t-2xl'
-                          src={test}
+                          src={p.picture}
                           alt='poi_image'
                         />
                       </div>
