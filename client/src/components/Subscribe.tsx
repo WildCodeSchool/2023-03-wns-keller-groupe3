@@ -176,6 +176,6 @@ export default function Subscribe() {
       <button className="btn btn-active btn-primary mt-3" type="button" onClick={ handleSubmit }>
       S'inscrire
       </button>
-  </>
-    )
+    </>
+  );
 }
