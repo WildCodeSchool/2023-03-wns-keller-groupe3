@@ -89,7 +89,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
           onSubmit={handleSubmit}
         >
           <div className='modal-box z-1 flex flex-col gap-y-2'>
-            <h3 className='font-bold text-lg'>Ajouter un Point d'interêt</h3>
+            <p className='font-bold text-xl'>Ajouter un Point d'interêt</p>
             <hr></hr>
             <input
               type='text'
@@ -116,11 +116,15 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                 );
               }}
             >
-              <option value='disabled' disabled selected>
+              <option className='text-lg' value='disabled' disabled selected>
                 Sélectionner une ou plusieurs catégories
               </option>
               {allCategories.map((category: any) => (
-                <option key={category.id} value={category.id}>
+                <option
+                  className='text-lg'
+                  key={category.id}
+                  value={category.id}
+                >
                   {category.name}
                 </option>
               ))}
@@ -128,7 +132,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
             <textarea
               id='description'
               rows={3}
-              className='textarea textarea-bordered mb-4 bg-base-content text-base-100'
+              className='textarea textarea-bordered mb-4 bg-base-content text-base-100 placeholder:text-base text-base'
               placeholder='Description'
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>

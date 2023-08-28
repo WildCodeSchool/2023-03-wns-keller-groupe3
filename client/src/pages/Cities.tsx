@@ -104,7 +104,7 @@ export default function Cities() {
       <input type='checkbox' id='my_modal_6' className='modal-toggle' />
       <div className='modal'>
         <div className='modal-box'>
-          <h3 className='font-bold text-lg mb-4'>Ajouter une ville</h3>
+          <h3 className='font-bold text-xl mb-4'>Ajouter une ville</h3>
           <hr></hr>
           <form onSubmit={handleSubmit} className='py-6 flex flex-col'>
             <label className='text-sm mb-2 font-bold' htmlFor='name'>

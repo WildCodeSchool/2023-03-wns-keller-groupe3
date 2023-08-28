@@ -33,7 +33,7 @@ export default function Sidebar() {
                 clip-rule='evenodd'
               />
             </svg>
-            <p className='text-xs md:text'>Ville</p>
+            <p className='text-xs md:text'>Villes</p>
           </Link>
         </li>
         <li className='p-2 md:mb-5 md:mr-0'>
