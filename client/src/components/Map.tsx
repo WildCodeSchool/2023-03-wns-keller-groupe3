@@ -71,13 +71,13 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         toast(
           <CustomToast
             message={`"${createPOI.name}" a été ajouté`}
-            color='text-success'
+            color="text-success"
           />
         );
         setShowModal(!showModal);
       },
       onError(error) {
-        toast(<CustomToast message={error.message} color='text-error' />);
+        toast(<CustomToast message={error.message} color="text-error" />);
       },
     });
   };
@@ -96,7 +96,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
           showModal={showModal}
         />
       )}
-      <div id='map'>
+      <div id="map">
         <MapContainer
           id={id}
           center={[lat, long]}
@@ -106,7 +106,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <OpenModalWithPosition />
           {poi.map((p, key) => {
@@ -114,29 +114,31 @@ export default function Map({ id, lat, long, poi }: MapProps) {
               <Marker position={[p.latitude, p.longitude]}>
                 <Popup>
                   <div key={key}>
-                    <div className=''>
-                      <div className='w-full h-[150px]'>
+                    <div className="">
+                      <div className="w-full h-[150px]">
                         <img
-                          className='w-full h-full rounded-t-2xl'
+                          className="w-full h-full rounded-t-2xl"
                           src={p.picture}
-                          alt='poi_image'
+                          alt="poi_image"
                         />
                       </div>
                     </div>
-                    <div className='px-[20px] pb-[25px] overflow-hidden relative'>
-                      <div className='leafletLine'></div>
-                      <div className='h-[305px] flex flex-col justify-between'>
+                    <div className="px-[20px] pb-[25px] overflow-hidden relative">
+                      <div className="leafletLine"></div>
+                      <div className="h-[305px] flex flex-col justify-between">
                         <div>
-                          <div className='py-[15px]'>
-                            <h1 className='text-xl font-bold'>{p.name}</h1>
+                          <div className="py-[15px]">
+                            <h1 className="text-xl font-bold text-white">
+                              {p.name}
+                            </h1>
                           </div>
                           <div>
-                            <div className='pb-2 flex gap-1'>
+                            <div className="pb-2 flex gap-1 text-white">
                               {p.categories.map((category) => {
                                 return (
                                   <span
                                     key={category.id}
-                                    className='badge badge-outline'
+                                    className="badge badge-outline"
                                   >
                                     {category.name}
                                   </span>
@@ -144,42 +146,41 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                               })}
                             </div>
                           </div>
-                          <div className='flex border-y border-[#1B2F02]'>
-                            <div className='flex-1 text-center py-2.5 hover:bg-[#1B2F021A] border-r border-[#1B2F02]'>
+                          <div className="flex border-y border-primary text-white">
+                            <div className="flex-1 text-center py-2.5 hover:bg-[#ed998621] border-r border-primary">
                               <p>Présentation</p>
                             </div>
-                            <div className='flex-1 text-center py-2.5 hover:bg-[#1B2F021A]'>
+                            <div className="flex-1 text-center py-2.5 hover:bg-[#ed998621]">
                               <p>Avis</p>
                             </div>
                           </div>
-                          <div className='flex py-3 border-b border-[#1B2F02]'>
-                            <div className='w-4/5'>
-                              <p className='!m-0'>{p.address}</p>
+                          <div className="flex py-3 border-b border-primary">
+                            <div className="w-4/5">
+                              <p className="!m-0 text-white">{p.address}</p>
                             </div>
-                            <div className='w-1/5 flex justify-end items-end'>
+                            <div className="w-1/5 flex justify-end items-end">
                               <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                strokeWidth={1.5}
-                                stroke='currentColor'
-                                className='w-6 h-6'
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  strokeLinecap='round'
-                                  strokeLinejoin='round'
-                                  d='M15 10.5a3 3 0 11-6 0 3 3 0 016 0z'
+                                  d="M4 10.143C4 5.646 7.582 2 12 2C16.418 2 20 5.646 20 10.143C20 14.605 17.447 19.813 13.463 21.674C13.0051 21.8884 12.5056 21.9996 12 21.9996C11.4944 21.9996 10.9949 21.8884 10.537 21.674C6.553 19.812 4 14.605 4 10.144V10.143Z"
+                                  stroke="#ED9986"
+                                  stroke-width="1.5"
                                 />
                                 <path
-                                  strokeLinecap='round'
-                                  strokeLinejoin='round'
-                                  d='M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z'
+                                  d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z"
+                                  stroke="#ED9986"
+                                  stroke-width="1.5"
                                 />
                               </svg>
                             </div>
                           </div>
-                          <div className='py-[25px]'>
-                            <p className=''>{p.description}</p>
+                          <div className="py-[25px]">
+                            <p className="text-white">{p.description}</p>
                           </div>
                         </div>
                       </div>
