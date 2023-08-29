@@ -1,35 +1,10 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import Map, { POI } from "./Map";
-
-export const GET_ONE_CITY = gql`
-  query Query($id: String!) {
-    getCityBy(id: $id) {
-      id
-      name
-      latitude
-      longitude
-      pointsOfInterest {
-        id
-        picture
-        description
-        address
-        rating
-        name
-        latitude
-        longitude
-        categories {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
+import { GET_ONE_CITY } from "../graphql/queries";
 
 export default function MapSelected() {
   const { id } = useParams();
-  // TODO fetch One city avec l'id en params avec une requête graphQL
   const { loading, error, data } = useQuery(GET_ONE_CITY, {
     variables: { id },
   });

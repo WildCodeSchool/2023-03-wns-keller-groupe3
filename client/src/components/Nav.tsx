@@ -4,27 +4,17 @@ import logo from "../assets/logo.png";
 export default function Sidebar() {
   return (
     <div className='z-10 fixed bottom-0 w-full h-14  md:fixed md:h-full md:menu bg-base-100 md:w-24 flex justify-between rounded-tl-xl rounded-tr-xl md:rounded-r-xl md:rounded-tl-none shadow-[5px_0px_20px_0px_#00000024]'>
-      <img
-        alt='logo'
-        className='hidden md:block md:mask mask-circle w-14 mx-auto'
-        src={logo}
-      />
       <ul className='flex items-center justify-center w-full md:flex-col'>
         <li className='rounded p-2 mr-10 md:mb-5 md:mr-0'>
           <Link to='/' className='flex flex-col items-center md:block'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              fill='none'
               viewBox='0 0 24 24'
-              strokeWidth='1.5'
-              stroke='currentColor'
+              fill='currentColor'
               className='w-6 h-6 md:flex md:mx-auto'
             >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25'
-              />
+              <path d='M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z' />
+              <path d='M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z' />
             </svg>
             <p className='text-xs md:text'>Accueil</p>
           </Link>
@@ -33,42 +23,40 @@ export default function Sidebar() {
           <Link to='/cities' className='flex flex-col items-center md:block'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              fill='none'
               viewBox='0 0 24 24'
-              strokeWidth='1.5'
-              stroke='currentColor'
+              fill='currentColor'
               className='w-6 h-6 md:flex md:mx-auto'
             >
               <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z'
+                fill-rule='evenodd'
+                d='M8.161 2.58a1.875 1.875 0 011.678 0l4.993 2.498c.106.052.23.052.336 0l3.869-1.935A1.875 1.875 0 0121.75 4.82v12.485c0 .71-.401 1.36-1.037 1.677l-4.875 2.437a1.875 1.875 0 01-1.676 0l-4.994-2.497a.375.375 0 00-.336 0l-3.868 1.935A1.875 1.875 0 012.25 19.18V6.695c0-.71.401-1.36 1.036-1.677l4.875-2.437zM9 6a.75.75 0 01.75.75V15a.75.75 0 01-1.5 0V6.75A.75.75 0 019 6zm6.75 3a.75.75 0 00-1.5 0v8.25a.75.75 0 001.5 0V9z'
+                clip-rule='evenodd'
               />
             </svg>
-            <p className='text-xs md:text'>Ville</p>
+            <p className='text-xs md:text'>Villes</p>
           </Link>
         </li>
         <li className='p-2 md:mb-5 md:mr-0'>
           <Link to='/user' className='flex flex-col items-center md:block'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              fill='none'
               viewBox='0 0 24 24'
-              strokeWidth='1.5'
-              stroke='currentColor'
+              fill='currentColor'
               className='w-6 h-6 md:flex md:mx-auto'
             >
               <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z'
+                fill-rule='evenodd'
+                d='M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z'
+                clip-rule='evenodd'
               />
             </svg>
             <p className='text-xs md:text'>Profil</p>
           </Link>
         </li>
       </ul>
-      <div />
+      <div className='w-16 flex justify-center items-center mx-auto'>
+        <img alt='logo' className='hidden md:block mx-auto' src={logo} />
+      </div>
     </div>
   );
 }

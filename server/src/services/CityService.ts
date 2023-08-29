@@ -3,12 +3,10 @@ import dataSource from "../utils";
 
 export class CityService {
   async getCityBy(id: string): Promise<City> {
-    return await dataSource
-      .getRepository(City)
-      .findOneOrFail({
-        where: { id },
-        relations: { pointsOfInterest: { categories: true, city: true } },
-      });
+    return await dataSource.getRepository(City).findOneOrFail({
+      where: { id },
+      relations: { pointsOfInterest: { categories: true, city: true } },
+    });
   }
 
   async createCity(
@@ -42,17 +40,13 @@ export class CityService {
     try {
       const cityRepository = dataSource.getRepository(City);
       const cityToUpdate = await cityRepository.findOne({ where: { id } });
-
-      // TODO move validation logic inside the Resolver
       if (cityToUpdate === null) {
         throw new Error("City not found");
       }
-
       cityToUpdate.name = name;
       cityToUpdate.picture = picture;
       cityToUpdate.latitude = latitude;
       cityToUpdate.longitude = longitude;
-
       const updatedCity = await cityRepository.save(cityToUpdate);
       return updatedCity;
     } catch {
