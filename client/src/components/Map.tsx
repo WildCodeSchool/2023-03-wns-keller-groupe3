@@ -10,6 +10,9 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
+import CustomToast from "../utils/CustomToast";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export interface Category {
   id: number;
@@ -35,6 +38,7 @@ interface MapProps {
 }
 
 export default function Map({ id, lat, long, poi }: MapProps) {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [clickedLat, setClikedLat] = useState<number>();
   const [clickedLong, setClikedLong] = useState<number>();
@@ -75,6 +79,15 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         gpsPin: "Default",
         rating: 5,
       },
+      onCompleted({ createPOI }) {
+        toast(
+          <CustomToast
+            message={`"${createPOI.name}" a été ajouté`}
+            color='text-success'
+          />
+        );
+      },
+      refetchQueries: [],
       //todo refetch  ou city
       //génerer les toasts
       //gérer les messages d'erreurs

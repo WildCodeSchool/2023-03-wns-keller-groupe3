@@ -134,7 +134,6 @@ export default function Cities() {
               id='latitude'
               type='number'
               step='0.0001'
-              //todo à gérer côté server
               min={-90}
               max={90}
               placeholder='43.2345'
@@ -148,7 +147,6 @@ export default function Cities() {
               id='longitude'
               type='number'
               step='0.0001'
-              //todo à gérer côté server
               min={-180}
               max={180}
               placeholder='2.5456'
