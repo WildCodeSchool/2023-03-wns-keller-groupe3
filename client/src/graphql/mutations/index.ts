@@ -30,7 +30,6 @@ export const ADD_POI = gql`
     $gpsPin: String!
     $name: String!
     $picture: String!
-    $rating: Float!
     $city: CityInput!
     $latitude: Float!
     $longitude: Float!
@@ -42,7 +41,6 @@ export const ADD_POI = gql`
       gpsPin: $gpsPin
       name: $name
       picture: $picture
-      rating: $rating
       city: $city
       latitude: $latitude
       longitude: $longitude

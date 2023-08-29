@@ -9,7 +9,6 @@ import {
 } from "typeorm";
 import { Category } from "./Category";
 import { City } from "./City";
-import { Max, Min } from "class-validator";
 
 export enum GpsPin {
   // TODO insert paths to different images for GPS pin
@@ -34,14 +33,6 @@ export class POI {
   @ManyToMany(() => Category, (category) => category.pois)
   @JoinTable()
   categories: Category[];
-
-  @Field({nullable: true})
-  @Column({
-    type: "varchar",
-    length: 500,
-    nullable: true,
-  })
-  comments: string;
 
   @Field()
   @Column("text")
@@ -68,14 +59,6 @@ export class POI {
     length: 255,
   })
   picture: string;
-
-  @Field()
-  @Min(0)
-  @Max(5)
-  @Column(
-    "int"
-  )
-  rating: number;
 
   @Field(() => City)
   @ManyToOne(() => City, (city) => city.pointsOfInterest)

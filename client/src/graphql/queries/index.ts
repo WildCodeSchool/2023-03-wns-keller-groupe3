@@ -22,7 +22,6 @@ export const GET_ONE_CITY = gql`
         picture
         description
         address
-        rating
         name
         latitude
         longitude

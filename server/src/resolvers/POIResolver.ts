@@ -34,7 +34,6 @@ export class POIResolver {
     @Arg("name") name: string,
     @Arg("description") description: string,
     @Arg("picture") picture: string,
-    @Arg("rating") rating: number,
     @Arg("categories", () => [CategoryInput]) categories: Category[],
     @Arg("city", () => CityInput) city: City
   ): Promise<POI | string> {
@@ -47,8 +46,7 @@ export class POIResolver {
       address.length === 0 ||
       description.length === 0 ||
       city === null ||
-      categories === null ||
-      rating === null
+      categories === null
     ) {
       throw new ApolloError(
         "Tous les champs sont obligatoires",
@@ -64,7 +62,6 @@ export class POIResolver {
         name,
         description,
         picture,
-        rating,
         categories,
         city,
       });
@@ -88,7 +85,6 @@ export class POIResolver {
     @Arg("name", { nullable: true }) name: string,
     @Arg("description", { nullable: true }) description: string,
     @Arg("picture", { nullable: true }) picture: string,
-    @Arg("rating", { nullable: true }) rating: number,
     @Arg("categories", (type) => [CategoryInput], { nullable: true })
     categories: Category[],
     @Arg("city", (type) => CityInput, { nullable: true }) city: City
@@ -102,7 +98,6 @@ export class POIResolver {
         name,
         description,
         picture,
-        rating,
         categories,
         city,
       });
