@@ -78,6 +78,9 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         );
         setShowModal(!showModal);
       },
+      onError(error) {
+        toast(<CustomToast message={error.message} color='text-error' />);
+      },
     });
   };
   return (
