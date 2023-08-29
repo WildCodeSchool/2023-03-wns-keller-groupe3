@@ -52,8 +52,8 @@ export default function CreatePoiModalForm({
           multiple
           onChange={(e) => {
             setCategories(
-              Array.from(e.target.selectedOptions).map((el) => ({
-                id: el.value,
+              Array.from(e.target.selectedOptions).map((element) => ({
+                id: element.value,
               }))
             );
           }}

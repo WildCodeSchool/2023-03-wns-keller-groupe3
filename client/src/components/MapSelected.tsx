@@ -5,7 +5,6 @@ import { GET_ONE_CITY } from "../graphql/queries";
 
 export default function MapSelected() {
   const { id } = useParams();
-  // TODO fetch One city avec l'id en params avec une requête graphQL
   const { loading, error, data } = useQuery(GET_ONE_CITY, {
     variables: { id },
   });
