@@ -49,6 +49,7 @@ export default function CreatePoiModalForm({
           className='select select-bordered w-full mb-4 bg-base-content text-base-100'
           multiple
           onChange={(e) => {
+            console.log(e.target);
             setCategories(
               Array.from(e.target.selectedOptions).map((element) => ({
                 id: element.value,
