@@ -35,7 +35,7 @@ export default function Login() {
 
   return (
     <>
-      <h2 className="text-3xl sm:text-6xl text-base-content font-bold mb-10 text">
+      <h2 className="text-3xl sm:text-4xl text-base-content font-bold mb-10 text">
         Connexion
       </h2>
       <div className="mb-4 w-full">
