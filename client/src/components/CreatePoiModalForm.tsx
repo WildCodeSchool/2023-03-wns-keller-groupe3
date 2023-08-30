@@ -1,9 +1,6 @@
-import { CategoryInput } from "../graphql/__generated__/graphql";
+import { Category, CategoryInput } from "../graphql/__generated__/graphql";
 
-export interface Category {
-  id: number;
-  name: string;
-}
+
 interface CreatePoiFormProps {
   allCategories: CategoryInput[];
   setName: React.Dispatch<React.SetStateAction<string>>;
@@ -55,7 +52,8 @@ export default function CreatePoiModalForm({
           onChange={(e) => {
             setCategories(
               Array.from(e.target.selectedOptions).map((element) => ({
-                id: element.value,
+                id: element.value[0],
+                name: element.value[1]
               }))
             );
           }}
@@ -64,7 +62,7 @@ export default function CreatePoiModalForm({
             Sélectionner une ou plusieurs catégories
           </option>
           {allCategories.map((category: any) => (
-            <option className='text-lg' key={category.id} value={category.id}>
+            <option className='text-lg' key={category.id} value={[category.id, category.name]}>
               {category.name}
             </option>
           ))}

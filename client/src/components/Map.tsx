@@ -12,7 +12,8 @@ import {
 } from "react-leaflet";
 import CustomToast from "../utils/CustomToast";
 import { toast } from "react-toastify";
-import CreatePoiModalForm, { Category } from "./CreatePoiModalForm";
+import CreatePoiModalForm from "./CreatePoiModalForm";
+import { Category } from "../graphql/__generated__/graphql";
 
 export interface POI {
   name: string;

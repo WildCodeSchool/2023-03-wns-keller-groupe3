@@ -46,7 +46,7 @@ export default function Cities() {
   if (loading) return <p className='text-center'>Loading...</p>;
   if (error) return <p className='text-center'>Error : {error.message}</p>;
 
-  const filteredCities = data.getAllCities.filter((city: City) =>
+  const filteredCities = data?.getAllCities.filter((city: City) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -91,7 +91,7 @@ export default function Cities() {
         </div>
       </div>
       <div className='pt-5 pb-16 flex flex-wrap justify-center md:max-w-xl lg:max-w-3xl xl:max-w-5xl mx-auto'>
-        {filteredCities.map((city: City) => (
+        {filteredCities?.map((city: City) => (
           <Link
             key={city.id}
             to={`/city/${city.id}`}
