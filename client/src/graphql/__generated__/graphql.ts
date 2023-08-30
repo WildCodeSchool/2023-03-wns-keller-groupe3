@@ -24,6 +24,7 @@ export type Category = {
 
 export type CategoryInput = {
   id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
 };
 
 export type City = {

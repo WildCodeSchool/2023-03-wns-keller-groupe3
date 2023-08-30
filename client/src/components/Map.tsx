@@ -42,7 +42,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState("");
   const { data } = useQuery(GET_CATEGORIES);
-  const allCategories = data!.getAllCategories;
+  const allCategories = data?.getAllCategories;
   const [createPoi] = useMutation(ADD_POI);
   const OpenModalWithPosition = () => {
     useMapEvents({
