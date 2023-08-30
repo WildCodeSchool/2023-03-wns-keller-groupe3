@@ -14,7 +14,7 @@ function UserPage() {
 
   return (
     <div
-      className={`container relative flex flex-col items-center xl:justify-center h-screen w-full px-9 md:pt-10 md:pl-16 md:pr-0 xl:pb-[120px] xl:pt-0 2xl:pt-16 mx-auto
+      className={`container relative flex flex-col items-center xl:justify-center h-screen w-full px-9 md:pt-10 md:pl-16 md:pr-0 xl:pl-0 xl:pb-[120px] xl:pt-0 2xl:pt-16 mx-auto
        ${isRegisterMode ? "mb-[250px] md:pb-8 md:mb-0" : ""}`}
     >
       <form
