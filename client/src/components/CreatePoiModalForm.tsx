@@ -45,6 +45,7 @@ export default function CreatePoiModalForm({
           onChange={(e) => setAdress(e.target.value)}
         />
         <select
+          defaultValue={["disabled"]}
           id='category'
           className='select select-bordered w-full mb-4 bg-base-content text-base-100'
           multiple
@@ -58,7 +59,7 @@ export default function CreatePoiModalForm({
             );
           }}
         >
-          <option className='text-lg' value='disabled' disabled selected>
+          <option className='text-lg' value='disabled' disabled>
             Sélectionner une ou plusieurs catégories
           </option>
           {allCategories?.map((category) => (
