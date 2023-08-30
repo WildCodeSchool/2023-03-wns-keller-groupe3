@@ -14,8 +14,8 @@ function UserPage() {
 
   return (
     <div
-      className={`container relative flex flex-col items-center xl:justify-center h-screen w-full px-9 md:pt-10 md:pl-16 md:pr-0 xl:pl-0 2xl:pb-[120px] xl:pt-0 2xl:pt-16 mx-auto
-       ${isRegisterMode ? "mb-[250px] sm:mb-[160px] md:pb-8 md:mb-0" : ""}`}
+      className={`container relative flex flex-col items-center xl:justify-center md:h-screen w-full px-9 md:pt-10 md:pl-16 md:pr-0 xl:pl-0 2xl:pb-[120px] xl:pt-0 2xl:pt-16 mx-auto
+       ${isRegisterMode ? "mb-[160px] md:pb-8 md:mb-0" : ""}`}
     >
       <form
         className="mt-8 xl:mt-0 max-w-sm flex flex-col w-full relative z-10"
