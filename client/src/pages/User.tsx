@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Signup from "../components/Signup";
 import Login from "../components/Login";
+import pinkCity from "../assets/picture/pink.png";
+import greenCity from "../assets/picture/green.png";
+import snowCity from "../assets/picture/snow.png";
 
 function UserPage() {
   const [isRegisterMode, setIsRegisterMode] = useState(false);
@@ -11,11 +14,11 @@ function UserPage() {
 
   return (
     <div
-      className={`container relative flex flex-col sm:justify-center items-center h-screen w-full px-9 md:pl-[5.5rem] md:pr-0 mx-auto
-       ${isRegisterMode ? "mb-[250px]" : ""}`}
+      className={`container relative flex flex-col md:justify-center items-center h-screen w-full px-9 md:pl-0 md:pr-0 mx-auto
+       ${isRegisterMode ? "mb-[250px] md:mb-0" : ""}`}
     >
       <form
-        className="mt-8 max-w-sm flex flex-col w-full"
+        className="mt-8 max-w-sm flex flex-col w-full relative z-10"
         onSubmit={async (e) => {
           e.preventDefault();
         }}
@@ -23,13 +26,25 @@ function UserPage() {
         {isRegisterMode ? <Signup /> : <Login />}
       </form>
       <p
-        className="text-center text-base-content cursor-pointer justify-center items-center mt-4"
+        className="text-center text-base-content cursor-pointer justify-center items-center mt-4 relative z-10 hover:text-[#ed9986]"
         onClick={toggleMode}
       >
         {isRegisterMode
           ? "Déjà un compte ? Se connecter"
           : "Pas de compte ? S'inscrire"}
       </p>
+
+      <div>
+        <div className="absolute right-0 bottom-0 h-auto hidden md:block md:w-[388px] lg:w-[341px] xl:w-[420px] 2xl:w-[510px]">
+          <img src={snowCity} alt="" />
+        </div>
+        <div className="absolute bottom-0 left-1/2 translate-x-[-50%] hidden lg:block lg:w-[341px] h-auto xl:w-[425px] 2xl:w-[512px]">
+          <img src={greenCity} alt="" />
+        </div>
+        <div className="absolute left-0 bottom-0 h-auto md:w-[388px] hidden md:block lg:w-[341px] xl:w-[420px] 2xl:w-[510px]">
+          <img src={pinkCity} alt="" />
+        </div>
+      </div>
     </div>
   );
 }
