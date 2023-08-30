@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import Map, { POI } from "./Map";
 import { GET_ONE_CITY } from "../graphql/queries";
+import Map from "./Map";
 
 export default function MapSelected() {
   const { id } = useParams();
@@ -19,7 +19,7 @@ export default function MapSelected() {
           id={data!.getCityBy.id}
           lat={data!.getCityBy.latitude}
           long={data!.getCityBy.longitude}
-          poi={data!.getCityBy.pointsOfInterest.map((poi: POI) => poi)}
+          allPoi={data!.getCityBy.pointsOfInterest.map((poi) => poi)}
         />
       </div>
     </div>

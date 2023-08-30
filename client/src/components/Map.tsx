@@ -13,7 +13,11 @@ import {
 import CustomToast from "../utils/CustomToast";
 import { toast } from "react-toastify";
 import CreatePoiModalForm from "./CreatePoiModalForm";
-import { Category } from "../graphql/__generated__/graphql";
+import {
+  Category,
+  GetPoiByCityQuery,
+  Poi,
+} from "../graphql/__generated__/graphql";
 
 export interface POI {
   name: string;
@@ -29,10 +33,10 @@ interface MapProps {
   id: string;
   lat: number;
   long: number;
-  poi: POI[];
+  allPoi: Poi[];
 }
 
-export default function Map({ id, lat, long, poi }: MapProps) {
+export default function Map({ id, lat, long, allPoi }: MapProps) {
   const [showModal, setShowModal] = useState(false);
   const [clickedLat, setClikedLat] = useState(lat);
   const [clickedLong, setClikedLong] = useState(long);
@@ -110,16 +114,16 @@ export default function Map({ id, lat, long, poi }: MapProps) {
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
           <OpenModalWithPosition />
-          {poi.map((p, key) => {
+          {allPoi.map((poi, key) => {
             return (
-              <Marker position={[p.latitude, p.longitude]}>
+              <Marker position={[poi.latitude, poi.longitude]}>
                 <Popup>
                   <div key={key}>
                     <div className=''>
                       <div className='w-full h-[150px]'>
                         <img
                           className='w-full h-full rounded-t-2xl'
-                          src={p.picture}
+                          src={poi.picture}
                           alt='poi_image'
                         />
                       </div>
@@ -129,11 +133,11 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                       <div className='h-[305px] flex flex-col justify-between'>
                         <div>
                           <div className='py-[15px]'>
-                            <h1 className='text-xl font-bold'>{p.name}</h1>
+                            <h1 className='text-xl font-bold'>{poi.name}</h1>
                           </div>
                           <div>
                             <div className='pb-2 flex gap-1'>
-                              {p.categories.map((category) => {
+                              {poi.categories.map((category) => {
                                 return (
                                   <span
                                     key={category.id}
@@ -155,7 +159,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                           </div>
                           <div className='flex py-3 border-b border-[#1B2F02]'>
                             <div className='w-4/5'>
-                              <p className='!m-0'>{p.address}</p>
+                              <p className='!m-0'>{poi.address}</p>
                             </div>
                             <div className='w-1/5 flex justify-end items-end'>
                               <svg
@@ -180,7 +184,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
                             </div>
                           </div>
                           <div className='py-[25px]'>
-                            <p className=''>{p.description}</p>
+                            <p className=''>{poi.description}</p>
                           </div>
                         </div>
                       </div>

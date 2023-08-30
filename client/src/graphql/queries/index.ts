@@ -26,6 +26,7 @@ export const GET_ONE_CITY = gql(`
         address
         latitude
         longitude
+        gps_pin
         categories {
           id
           name
