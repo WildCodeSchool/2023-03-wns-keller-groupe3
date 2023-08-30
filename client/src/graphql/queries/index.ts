@@ -1,28 +1,29 @@
-import { gql } from "@apollo/client";
+import { gql } from "../__generated__/";
 
-export const GET_CITIES = gql`
-  query Query {
+export const GET_CITIES = gql(`
+  query GetAllCities {
     getAllCities {
       id
       name
       picture
     }
   }
-`;
+`);
 
-export const GET_ONE_CITY = gql`
-  query Query($id: String!) {
-    getCityBy(id: $id) {
+export const GET_ONE_CITY = gql(`
+  query GetCityBy($getCityById: String!) {
+    getCityBy(id: $getCityById) {
       id
       name
+      picture
       latitude
       longitude
       pointsOfInterest {
         id
+        name
         picture
         description
         address
-        name
         latitude
         longitude
         categories {
@@ -32,29 +33,29 @@ export const GET_ONE_CITY = gql`
       }
     }
   }
-`;
+`);
 
-export const GET_CATEGORIES = gql`
-  query getAllCategories {
+export const GET_CATEGORIES = gql(`
+  query GetAllCategories {
     getAllCategories {
       id
       name
     }
   }
-`;
-export const GET_USER = gql`
-  {
-    query
-    getUser {
+`);
+
+export const GET_USER = gql(`
+  query GetUserBy($getUserById: String!) {
+    getUserBy(id: $getUserById) {
       id
       name
-      mail
+      email
     }
   }
-`;
+`);
 
-export const LOGIN = gql`
-  query Query($password: String!, $email: String!) {
+export const LOGIN = gql(`
+  query Login($password: String!, $email: String!) {
     login(password: $password, email: $email)
   }
-`;
+`);

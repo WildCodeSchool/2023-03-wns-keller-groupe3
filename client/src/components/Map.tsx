@@ -33,21 +33,21 @@ interface MapProps {
 
 export default function Map({ id, lat, long, poi }: MapProps) {
   const [showModal, setShowModal] = useState(false);
-  const [clickedLat, setClikedLat] = useState<number>();
-  const [clickedLong, setClikedLong] = useState<number>();
+  const [clickedLat, setClikedLat] = useState(lat);
+  const [clickedLong, setClikedLong] = useState(long);
   const [name, setName] = useState("");
   const [address, setAdress] = useState("");
-  const [categories, setCategories] = useState([{}]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState("");
   const { data } = useQuery(GET_CATEGORIES);
-  const allCategories = data?.getAllCategories;
+  const allCategories = data!.getAllCategories;
   const [createPoi] = useMutation(ADD_POI);
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
-        setClikedLat(e?.latlng?.lat);
-        setClikedLong(e?.latlng?.lng);
+        setClikedLat(e.latlng.lat);
+        setClikedLong(e.latlng.lng);
         setShowModal(!showModal);
       },
     });
@@ -61,7 +61,7 @@ export default function Map({ id, lat, long, poi }: MapProps) {
         address,
         description,
         picture,
-        categories: categories,
+        categories: categories!,
         latitude: clickedLat,
         longitude: clickedLong,
         city: { id: id },

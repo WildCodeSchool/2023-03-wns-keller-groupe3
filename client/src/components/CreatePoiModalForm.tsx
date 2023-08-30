@@ -1,12 +1,14 @@
+import { CategoryInput } from "../graphql/__generated__/graphql";
+
 export interface Category {
   id: number;
   name: string;
 }
 interface CreatePoiFormProps {
-  allCategories: Category[];
+  allCategories: CategoryInput[];
   setName: React.Dispatch<React.SetStateAction<string>>;
   setAdress: React.Dispatch<React.SetStateAction<string>>;
-  setCategories: React.Dispatch<React.SetStateAction<{}[]>>;
+  setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
   setPicture: React.Dispatch<React.SetStateAction<string>>;
   showModal: boolean;
