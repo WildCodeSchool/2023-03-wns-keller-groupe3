@@ -60,7 +60,6 @@ export class POI {
   })
   picture: string;
 
-  @Field(() => City)
   @ManyToOne(() => City, (city) => city.pointsOfInterest)
   city: City;
 
