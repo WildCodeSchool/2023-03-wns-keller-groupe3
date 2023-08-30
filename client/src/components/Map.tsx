@@ -63,10 +63,10 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         address,
         description,
         picture,
-        categories: categories!,
+        categories: categories,
         latitude: clickedLat,
         longitude: clickedLong,
-        city: { id: id },
+        city: { id },
         gpsPin: "Default",
       },
       onCompleted({ createPOI }) {
