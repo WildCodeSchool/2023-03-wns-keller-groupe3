@@ -1,11 +1,7 @@
-export interface City {
-  id: string;
-  name: string;
-  picture: string;
-}
+import { City } from "../graphql/__generated__/graphql";
 
 interface CityCardProps {
-  city: City;
+  city: Partial<City>;
 }
 
 export function CityCard({ city }: CityCardProps) {

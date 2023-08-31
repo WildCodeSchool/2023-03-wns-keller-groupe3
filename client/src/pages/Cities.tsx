@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { CityCard, City } from "../components/CityCard";
+import { CityCard } from "../components/CityCard";
 import backgroundCity from "../assets/cityBackground.png";
 import useGetCities from "../graphql/hook/useGetCities";
 import useCreateCity from "../graphql/hook/useCreateCity";
@@ -27,7 +27,7 @@ export default function Cities() {
   };
   if (loading) return <p className='text-center'>Loading...</p>;
   if (error) return <p className='text-center'>Error : {error.message}</p>;
-  const filteredCities = cities.filter((city: City) =>
+  const filteredCities = cities.filter((city) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
   <CreateCityModalForm
@@ -78,7 +78,7 @@ export default function Cities() {
         </div>
       </div>
       <div className='pt-5 pb-16 flex flex-wrap justify-center md:max-w-xl lg:max-w-3xl xl:max-w-5xl mx-auto'>
-        {filteredCities?.map((city: City) => (
+        {filteredCities?.map((city) => (
           <Link
             key={city.id}
             to={`/city/${city.id}`}
@@ -88,7 +88,6 @@ export default function Cities() {
           </Link>
         ))}
       </div>
-
       <input type='checkbox' id='my_modal_6' className='modal-toggle' />
       <div className='modal'>
         <CreateCityModalForm
