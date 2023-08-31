@@ -1,5 +1,5 @@
 interface CreatCityModalFormProps {
-  handleSubmit: React.FormEventHandler<HTMLFormElement>;
+  createCitySubmit: React.FormEventHandler<HTMLFormElement>;
   setCreateCityState: React.Dispatch<
     React.SetStateAction<{
       name: string;
@@ -11,14 +11,14 @@ interface CreatCityModalFormProps {
 }
 
 export default function CreateCityModalForm({
-  handleSubmit,
+  createCitySubmit,
   setCreateCityState,
 }: CreatCityModalFormProps) {
   return (
     <div className='modal-box'>
       <h3 className='font-bold text-xl mb-4'>Ajouter une ville</h3>
       <hr></hr>
-      <form onSubmit={handleSubmit} className='py-6 flex flex-col'>
+      <form onSubmit={createCitySubmit} className='py-6 flex flex-col'>
         <label className='text-sm mb-2 font-bold' htmlFor='name'>
           Nom :
         </label>

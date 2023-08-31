@@ -16,7 +16,7 @@ export default function Cities() {
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const createCitySubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createCity({
       variables: {
@@ -86,8 +86,8 @@ export default function Cities() {
       <input type='checkbox' id='my_modal_6' className='modal-toggle' />
       <div className='modal'>
         <CreateCityModalForm
-          handleSubmit={handleSubmit}
           setCreateCityState={setCreateCityState}
+          createCitySubmit={createCitySubmit}
         />
       </div>
     </section>
