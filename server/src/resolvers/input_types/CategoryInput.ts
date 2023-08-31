@@ -7,4 +7,8 @@ export class CategoryInput implements Partial<Category> {
   @Field()
   @MaxLength(100)
   id: string;
+
+  @Field()
+  @MaxLength(100)
+  name: string;
 }

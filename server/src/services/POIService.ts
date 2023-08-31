@@ -20,13 +20,13 @@ export class POIService {
   async getAllPOIs(): Promise<POI[]> {
     return await dataSource
       .getRepository(POI)
-      .find({ relations: { categories: true, city: true } });
+      .find({ relations: { categories: true } });
   }
 
   async getPOIBy(id: string): Promise<POI> {
     return await dataSource.getRepository(POI).findOneOrFail({
       where: { id },
-      relations: { categories: true, city: true },
+      relations: { categories: true },
     });
   }
 

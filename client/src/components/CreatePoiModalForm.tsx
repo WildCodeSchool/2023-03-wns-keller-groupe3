@@ -1,12 +1,10 @@
-export interface Category {
-  id: number;
-  name: string;
-}
+import { Category } from "../graphql/__generated__/graphql";
+
 interface CreatePoiFormProps {
-  allCategories: Category[];
+  allCategories?: Category[];
   setName: React.Dispatch<React.SetStateAction<string>>;
   setAdress: React.Dispatch<React.SetStateAction<string>>;
-  setCategories: React.Dispatch<React.SetStateAction<{}[]>>;
+  setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
   setPicture: React.Dispatch<React.SetStateAction<string>>;
   showModal: boolean;
@@ -47,6 +45,7 @@ export default function CreatePoiModalForm({
           onChange={(e) => setAdress(e.target.value)}
         />
         <select
+          defaultValue={["disabled"]}
           id='category'
           className='select select-bordered w-full mb-4 bg-base-content text-base-100'
           multiple
@@ -54,15 +53,21 @@ export default function CreatePoiModalForm({
             setCategories(
               Array.from(e.target.selectedOptions).map((element) => ({
                 id: element.value,
+                name: element.label,
               }))
             );
           }}
         >
-          <option className='text-lg' value='disabled' disabled selected>
+          <option className='text-lg' value='disabled' disabled>
             Sélectionner une ou plusieurs catégories
           </option>
-          {allCategories.map((category: any) => (
-            <option className='text-lg' key={category.id} value={category.id}>
+          {allCategories?.map((category) => (
+            <option
+              className='text-lg'
+              label={category.name}
+              key={category.id}
+              value={category.id}
+            >
               {category.name}
             </option>
           ))}

@@ -1,17 +1,17 @@
-import { gql } from "@apollo/client";
+import { gql } from "../__generated__/";
 
-export const ADD_CITY = gql`
-  mutation Mutation(
-    $longitude: Float
-    $latitude: Float
-    $picture: String!
+export const ADD_CITY = gql(`
+  mutation CreateCity(
     $name: String!
+    $picture: String!
+    $latitude: Float
+    $longitude: Float
   ) {
     createCity(
-      longitude: $longitude
-      latitude: $latitude
-      picture: $picture
       name: $name
+      picture: $picture
+      latitude: $latitude
+      longitude: $longitude
     ) {
       id
       name
@@ -20,10 +20,10 @@ export const ADD_CITY = gql`
       longitude
     }
   }
-`;
+`);
 
-export const ADD_POI = gql`
-  mutation AddPOI(
+export const ADD_POI = gql(`
+  mutation CreatePOI(
     $address: String!
     $categories: [CategoryInput!]!
     $description: String!
@@ -49,9 +49,9 @@ export const ADD_POI = gql`
       name
     }
   }
-`;
+`);
 
-export const CREATE_USER = gql`
+export const CREATE_USER = gql(`
   mutation CreateUser($email: String!, $name: String!, $password: String!) {
     createUser(email: $email, name: $name, password: $password) {
       id
@@ -59,4 +59,4 @@ export const CREATE_USER = gql`
       name
     }
   }
-`;
+`);
