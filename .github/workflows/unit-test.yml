@@ -9,6 +9,6 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v3
       - name: Install npm dependencies
-        run: cd ./front && npm install
+        run: cd ./client && npm install
       - name: Launch unit tests
         run: npm run unit-test
