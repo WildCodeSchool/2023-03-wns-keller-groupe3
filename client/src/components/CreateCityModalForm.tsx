@@ -1,17 +1,18 @@
 interface CreatCityModalFormProps {
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  setPicture: React.Dispatch<React.SetStateAction<string>>;
-  setLat: React.Dispatch<React.SetStateAction<string>>;
-  setLong: React.Dispatch<React.SetStateAction<string>>;
+  setCreateCityState: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      picture: string;
+      lat: string;
+      long: string;
+    }>
+  >;
 }
 
 export default function CreateCityModalForm({
   handleSubmit,
-  setName,
-  setLat,
-  setLong,
-  setPicture,
+  setCreateCityState,
 }: CreatCityModalFormProps) {
   return (
     <div className='modal-box'>
@@ -26,7 +27,12 @@ export default function CreateCityModalForm({
           type='text'
           placeholder='Paris, Rome, Rio ...'
           className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) =>
+            setCreateCityState((prevState) => ({
+              ...prevState,
+              name: e.target.value,
+            }))
+          }
         />
         <label className='text-sm mb-2 font-bold' htmlFor='image'>
           Image :
@@ -36,7 +42,12 @@ export default function CreateCityModalForm({
           type='text'
           placeholder='url : https://...'
           className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-          onChange={(e) => setPicture(e.target.value)}
+          onChange={(e) =>
+            setCreateCityState((prevState) => ({
+              ...prevState,
+              picture: e.target.value,
+            }))
+          }
         />
         <label className='text-sm mb-2 font-bold' htmlFor='latitude'>
           Latitude :
@@ -49,7 +60,12 @@ export default function CreateCityModalForm({
           max={90}
           placeholder='43.2345'
           className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-          onChange={(e) => setLat(e.target.value)}
+          onChange={(e) =>
+            setCreateCityState((prevState) => ({
+              ...prevState,
+              lat: e.target.value,
+            }))
+          }
         />
         <label className='text-sm mb-2 font-bold' htmlFor='longitude'>
           Longitude :
@@ -62,7 +78,12 @@ export default function CreateCityModalForm({
           max={180}
           placeholder='2.5456'
           className='input input-bordered bg-base-content text-base-100 w-full max-w-xs'
-          onChange={(e) => setLong(e.target.value)}
+          onChange={(e) =>
+            setCreateCityState((prevState) => ({
+              ...prevState,
+              long: e.target.value,
+            }))
+          }
         />
         <div className='modal-action flex justify-between'>
           <label htmlFor='my_modal_6' className='btn'>

@@ -7,10 +7,12 @@ import useCreateCity from "../graphql/hook/useCreateCity";
 import CreateCityModalForm from "../components/CreateCityModalForm";
 
 export default function Cities() {
-  const [name, setName] = useState("");
-  const [picture, setPicture] = useState("");
-  const [lat, setLat] = useState("");
-  const [long, setLong] = useState("");
+  const [createCityState, setCreateCityState] = useState({
+    name: "",
+    picture: "",
+    lat: "",
+    long: "",
+  });
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
@@ -18,10 +20,10 @@ export default function Cities() {
     e.preventDefault();
     createCity({
       variables: {
-        name,
-        picture,
-        latitude: parseFloat(lat),
-        longitude: parseFloat(long),
+        name: createCityState.name,
+        picture: createCityState.picture,
+        latitude: parseFloat(createCityState.lat),
+        longitude: parseFloat(createCityState.long),
       },
     });
   };
@@ -30,13 +32,6 @@ export default function Cities() {
   const filteredCities = cities.filter((city) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
-  <CreateCityModalForm
-    handleSubmit={handleSubmit}
-    setName={setName}
-    setLat={setLat}
-    setLong={setLong}
-    setPicture={setPicture}
-  />;
   return (
     <section
       className='min-h-screen bg-base-content'
@@ -92,10 +87,7 @@ export default function Cities() {
       <div className='modal'>
         <CreateCityModalForm
           handleSubmit={handleSubmit}
-          setName={setName}
-          setLat={setLat}
-          setLong={setLong}
-          setPicture={setPicture}
+          setCreateCityState={setCreateCityState}
         />
       </div>
     </section>
