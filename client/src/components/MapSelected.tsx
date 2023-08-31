@@ -1,11 +1,11 @@
-import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { GET_ONE_CITY } from "../graphql/queries";
+
 import Map from "./Map";
+import useGetCityBy from "../graphql/hook/useGetCityBy";
 
 export default function MapSelected() {
   const { id } = useParams();
-  const { loading, error, data } = useQuery(GET_ONE_CITY, {
+  const { city, loading, error } = useGetCityBy({
     variables: { getCityById: id! },
   });
 
@@ -14,12 +14,12 @@ export default function MapSelected() {
 
   return (
     <div>
-      <div key={data?.getCityBy.id}>
+      <div key={city.id}>
         <Map
-          id={data!.getCityBy.id}
-          lat={data!.getCityBy.latitude}
-          long={data!.getCityBy.longitude}
-          allPoi={data!.getCityBy.pointsOfInterest.map((poi) => poi)}
+          id={city.id}
+          lat={city.latitude}
+          long={city.longitude}
+          allPoi={city.pointsOfInterest.map((poi) => poi)}
         />
       </div>
     </div>
