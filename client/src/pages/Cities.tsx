@@ -78,7 +78,7 @@ export default function Cities() {
         </div>
       </div>
       <div className='pt-5 pb-16 flex flex-wrap justify-center md:max-w-xl lg:max-w-3xl xl:max-w-5xl mx-auto'>
-        {filteredCities?.map((city) => (
+        {filteredCities.map((city) => (
           <Link
             key={city.id}
             to={`/city/${city.id}`}
