@@ -16,16 +16,6 @@ import CreatePoiModalForm from "./CreatePoiModalForm";
 import { Category, Poi } from "../graphql/__generated__/graphql";
 import PoiCard from "./PoiCard";
 
-export interface POI {
-  name: string;
-  categories: Category[];
-  description: string;
-  latitude: number;
-  longitude: number;
-  picture: string;
-  address: string;
-}
-
 interface MapProps {
   id: string;
   lat: number;
