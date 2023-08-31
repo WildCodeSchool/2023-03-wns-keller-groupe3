@@ -11,4 +11,4 @@ jobs:
       - name: Install npm dependencies
         run: cd ./client && npm install
       - name: Launch unit tests
-        run: npm run test
+        run: npm test
