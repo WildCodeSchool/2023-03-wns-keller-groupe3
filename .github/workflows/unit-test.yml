@@ -1,6 +1,6 @@
 name: unit-test
 
-on: push
+on: pull_request
 
 jobs:
   unit-test:
@@ -11,4 +11,4 @@ jobs:
       - name: Install npm dependencies
         run: cd ./client && npm install
       - name: Launch unit tests
-        run: npm run unit-test
+        run: npm run test
