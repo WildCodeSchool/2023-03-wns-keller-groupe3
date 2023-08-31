@@ -4,6 +4,7 @@ import { CityCard, City } from "../components/CityCard";
 import backgroundCity from "../assets/cityBackground.png";
 import useGetCities from "../graphql/hook/useGetCities";
 import useCreateCity from "../graphql/hook/useCreateCity";
+import CreateCityModalForm from "../components/CreateCityModalForm";
 
 export default function Cities() {
   const [name, setName] = useState("");
@@ -29,6 +30,13 @@ export default function Cities() {
   const filteredCities = cities.filter((city: City) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
+  <CreateCityModalForm
+    handleSubmit={handleSubmit}
+    setName={setName}
+    setLat={setLat}
+    setLong={setLong}
+    setPicture={setPicture}
+  />;
   return (
     <section
       className='min-h-screen bg-base-content'
@@ -80,71 +88,16 @@ export default function Cities() {
           </Link>
         ))}
       </div>
+
       <input type='checkbox' id='my_modal_6' className='modal-toggle' />
       <div className='modal'>
-        <div className='modal-box'>
-          <h3 className='font-bold text-xl mb-4'>Ajouter une ville</h3>
-          <hr></hr>
-          <form onSubmit={handleSubmit} className='py-6 flex flex-col'>
-            <label className='text-sm mb-2 font-bold' htmlFor='name'>
-              Nom :
-            </label>
-            <input
-              id='name'
-              type='text'
-              placeholder='Paris, Rome, Rio ...'
-              className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-              onChange={(e) => setName(e.target.value)}
-            />
-            <label className='text-sm mb-2 font-bold' htmlFor='image'>
-              Image :
-            </label>
-            <input
-              id='image'
-              type='text'
-              placeholder='url : https://...'
-              className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-              onChange={(e) => setPicture(e.target.value)}
-            />
-            <label className='text-sm mb-2 font-bold' htmlFor='latitude'>
-              Latitude :
-            </label>
-            <input
-              id='latitude'
-              type='number'
-              step='0.0001'
-              min={-90}
-              max={90}
-              placeholder='43.2345'
-              className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-              onChange={(e) => setLat(e.target.value)}
-            />
-            <label className='text-sm mb-2 font-bold' htmlFor='longitude'>
-              Longitude :
-            </label>
-            <input
-              id='longitude'
-              type='number'
-              step='0.0001'
-              min={-180}
-              max={180}
-              placeholder='2.5456'
-              className='input input-bordered bg-base-content text-base-100 w-full max-w-xs'
-              onChange={(e) => setLong(e.target.value)}
-            />
-            <div className='modal-action flex justify-between'>
-              <label htmlFor='my_modal_6' className='btn'>
-                Annuler
-              </label>
-              <input
-                id='submit'
-                type='submit'
-                className='btn btn-primary'
-                value='valider'
-              />
-            </div>
-          </form>
-        </div>
+        <CreateCityModalForm
+          handleSubmit={handleSubmit}
+          setName={setName}
+          setLat={setLat}
+          setLong={setLong}
+          setPicture={setPicture}
+        />
       </div>
     </section>
   );
