@@ -28,35 +28,35 @@ export default function Signup() {
   const handleSubmit = async () => {
     if (name.trim() === "") {
       toast(
-        <CustomToast message={`Veuillez ajoutez un nom`} color='text-error' />
+        <CustomToast message={`Veuillez ajoutez un nom`} color="text-error" />
       );
     } else if (!emailRegex.test(email)) {
       console.log("email", email);
       toast(
         <CustomToast
           message={`Votre email n'est pas valide`}
-          color='text-error'
+          color="text-error"
         />
       );
     } else if (email !== confirmEmail) {
       toast(
         <CustomToast
           message={`Les adresses email ne correspondent pas`}
-          color='text-error'
+          color="text-error"
         />
       );
     } else if (!passwordRegex.test(password)) {
       toast(
         <CustomToast
           message={`Votre mot de passe n'est pas valide`}
-          color='text-error'
+          color="text-error"
         />
       );
     } else if (password !== confirmPassword) {
       toast(
         <CustomToast
           message={`Les mots de passe ne correspondent pas`}
-          color='text-error'
+          color="text-error"
         />
       );
     } else {
@@ -66,7 +66,7 @@ export default function Signup() {
         toast(
           <CustomToast
             message={`Bienvenue ${name}, veuillez vous identifier pour profiter pleinement des fonctionnalités`}
-            color='text-success'
+            color="text-success"
           />
         );
       } catch (error) {
@@ -74,7 +74,7 @@ export default function Signup() {
         toast(
           <CustomToast
             message={`Une erreur s'est produite lors de l'inscription. Veuillez réessayer.`}
-            color='text-error'
+            color="text-error"
           />
         );
       }
@@ -83,111 +83,111 @@ export default function Signup() {
 
   return (
     <>
-      <h2 className='text-6xl text-base-content font-bold mb-10 text'>
+      <h2 className="text-3xl sm:text-4xl text-base-content font-bold mb-10 text">
         Inscription
       </h2>
-      <div className='mb-4'>
+      <div className="mb-4">
         <label
-          className='block text-base-content text-sm font-bold mb-2'
-          htmlFor='name'
+          className="block text-base-content text-sm font-bold mb-2"
+          htmlFor="name"
         >
           Nom
         </label>
         <input
-          className='input input-bordered w-full bg-base-content text-base-100'
-          type='text'
-          id='name'
+          className="input input-bordered w-full bg-base-content text-base-100"
+          type="text"
+          id="name"
           value={name}
           onChange={(e) => {
             setName(e.target.value);
           }}
-          placeholder='Entrez votre nom'
+          placeholder="Entrez votre nom"
         />
       </div>
-      <div className='mb-4'>
+      <div className="mb-4">
         <label
-          className='block text-base-content text-sm font-bold mb-2'
-          htmlFor='email'
+          className="block text-base-content text-sm font-bold mb-2"
+          htmlFor="email"
         >
           Email
         </label>
         <input
-          className='input input-bordered w-full bg-base-content text-base-100'
-          type='email'
-          id='email'
+          className="input input-bordered w-full bg-base-content text-base-100"
+          type="email"
+          id="email"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
           }}
-          placeholder='Entrez votre email'
+          placeholder="Entrez votre email"
         />
       </div>
-      <div className='mb-4'>
+      <div className="mb-4">
         <label
-          className='block text-base-content text-sm font-bold mb-2'
-          htmlFor='email'
+          className="block text-base-content text-sm font-bold mb-2"
+          htmlFor="email"
         >
           Confirmer votre email
         </label>
         <input
-          className='input input-bordered w-full bg-base-content text-base-100'
-          type='email'
-          id='confirmEmail'
+          className="input input-bordered w-full bg-base-content text-base-100"
+          type="email"
+          id="confirmEmail"
           value={confirmEmail}
           onChange={(e) => {
             setConfirmEmail(e.target.value);
           }}
-          placeholder='Confirmez votre email'
+          placeholder="Confirmez votre email"
         />
       </div>
-      <div className='mb-4'>
+      <div className="mb-4">
         <label
-          className='block text-base-content text-sm font-bold mb-2'
-          htmlFor='password'
+          className="block text-base-content text-sm font-bold mb-2"
+          htmlFor="password"
         >
           Mot de passe{" "}
           <span
-            className='text-primary text-xs cursor-help'
+            className="text-primary text-xs cursor-help"
             onClick={handleTogglePasswordDescription}
           >
             ?
           </span>
         </label>
         <input
-          className='input input-bordered w-full bg-base-content text-base-100'
-          type='password'
-          id='password'
+          className="input input-bordered w-full bg-base-content text-base-100"
+          type="password"
+          id="password"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
-          placeholder='Entrez votre mot de passe'
+          placeholder="Entrez votre mot de passe"
         />
         {showPasswordDescription && (
-          <p className='text-xs text-gray-500 mt-1'>{`Votre mot de passe doit comporter au moins 8 caractères et inclure au moins une lettre minuscule, une lettre majuscule et un chiffre.`}</p>
+          <p className="text-xs text-gray-500 mt-1">{`Votre mot de passe doit comporter au moins 8 caractères et inclure au moins une lettre minuscule, une lettre majuscule et un chiffre.`}</p>
         )}
       </div>
-      <div className='mb-4'>
+      <div className="mb-4">
         <label
-          className='block text-base-content text-sm font-bold mb-2'
-          htmlFor='password'
+          className="block text-base-content text-sm font-bold mb-2"
+          htmlFor="password"
         >
           Confirmer votre mot de passe
         </label>
         <input
-          className='input input-bordered w-full bg-base-content text-base-100'
-          type='password'
-          id='confirmPassword'
+          className="input input-bordered w-full bg-base-content text-base-100"
+          type="password"
+          id="confirmPassword"
           value={confirmPassword}
           onChange={(e) => {
             setConfirmPassword(e.target.value);
           }}
-          placeholder='Confirmez votre mot de passe'
+          placeholder="Confirmez votre mot de passe"
         />
       </div>
       <button
-        className='btn btn-active btn-primary mt-3'
-        type='button'
+        className="btn btn-active btn-primary mt-3"
+        type="button"
         onClick={handleSubmit}
       >
         S'inscrire
