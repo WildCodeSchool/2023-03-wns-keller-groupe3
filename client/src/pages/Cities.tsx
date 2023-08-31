@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
 import { CityCard, City } from "../components/CityCard";
-import { ADD_CITY } from "../graphql/mutations";
-import { GET_CITIES } from "../graphql/queries";
-import { toast } from "react-toastify";
-import CustomToast from "../utils/CustomToast";
 import backgroundCity from "../assets/cityBackground.png";
+import useGetCities from "../graphql/hook/useGetCities";
+import useCreateCity from "../graphql/hook/useCreateCity";
 
 export default function Cities() {
-  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [picture, setPicture] = useState("");
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
   const [searchText, setSearchText] = useState("");
-  const { loading, error, data } = useQuery(GET_CITIES);
-  const [createCity] = useMutation(ADD_CITY);
+  const { cities, loading, error } = useGetCities();
+  const { createCity } = useCreateCity();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createCity({
@@ -27,29 +22,13 @@ export default function Cities() {
         latitude: parseFloat(lat),
         longitude: parseFloat(long),
       },
-      onCompleted({ createCity }) {
-        toast(
-          <CustomToast
-            message={`La ville de "${createCity.name}" a été ajouté`}
-            color='text-success'
-          />
-        );
-        navigate(`/city/${createCity.id}`);
-      },
-      onError(error) {
-        toast(<CustomToast message={error.message} color='text-error' />);
-      },
-      refetchQueries: [GET_CITIES],
     });
   };
-
   if (loading) return <p className='text-center'>Loading...</p>;
   if (error) return <p className='text-center'>Error : {error.message}</p>;
-
-  const filteredCities = data?.getAllCities.filter((city: City) =>
+  const filteredCities = cities.filter((city: City) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
-
   return (
     <section
       className='min-h-screen bg-base-content'
