@@ -27,64 +27,64 @@ export default function Cities() {
       },
     });
   };
-  if (loading) return <p className='text-center'>Loading...</p>;
-  if (error) return <p className='text-center'>Error : {error.message}</p>;
+  if (loading) return <p className="text-center">Loading...</p>;
+  if (error) return <p className="text-center">Error : {error.message}</p>;
   const filteredCities = cities.filter((city) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
   return (
     <section
-      className='min-h-screen bg-base-content'
+      className="md:ml-[96px] min-h-screen bg-base-content"
       style={{
         backgroundImage: `url(${backgroundCity})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
     >
-      <div className='flex flex-col w-11/12 mx-auto pt-5 md:w-3/5'>
-        <h1 className='text-2xl text-base-100 font-bold py-5'>
+      <div className="flex flex-col max-w-xs min-[705px]:max-w-2xl md:max-w-[26rem] lg:max-w-[40rem] xl:max-w-[54rem] mx-auto pt-5">
+        <h1 className="text-2xl text-base-100 font-bold py-5">
           Choisissez votre ville
         </h1>
-        <div className='flex items-center'>
+        <div className="flex items-center">
           <input
-            className='input input-bordered bg-base-content text-accent-content w-full'
-            placeholder='Recherche'
+            className="input input-bordered bg-base-content text-accent-content w-full"
+            placeholder="Recherche"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <label htmlFor='my_modal_6' className='btn btn-primary ml-5'>
-            <div className='flex items-center'>
+          <label htmlFor="my_modal_6" className="btn btn-primary ml-5">
+            <div className="flex items-center">
               <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth='1.5'
-                stroke='currentColor'
-                className='w-6 h-6'
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
               >
                 <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M12 4.5v15m7.5-7.5h-15'
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
                 />
               </svg>
             </div>
           </label>
         </div>
       </div>
-      <div className='pt-5 pb-16 flex flex-wrap justify-center md:max-w-xl lg:max-w-3xl xl:max-w-5xl mx-auto'>
+      <div className="pt-5 pb-16 grid min-[705px]:grid-cols-2 min-[705px]:!max-[44rem] lg:grid-cols-3 xl:grid-cols-4 justify-center md:max-w-md lg:max-w-2xl xl:max-w-4xl mx-auto">
         {filteredCities.map((city) => (
           <Link
             key={city.id}
             to={`/city/${city.id}`}
-            className='m-4 w-80 md:w-48'
+            className="m-4 w-80 md:w-48"
           >
             <CityCard city={city} />
           </Link>
         ))}
       </div>
-      <input type='checkbox' id='my_modal_6' className='modal-toggle' />
-      <div className='modal'>
+      <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+      <div className="modal">
         <CreateCityModalForm
           setCreateCityState={setCreateCityState}
           createCitySubmit={createCitySubmit}
