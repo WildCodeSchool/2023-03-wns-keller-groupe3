@@ -1,6 +1,23 @@
 /* marker leaflet */
 @import url("https://unpkg.com/leaflet@1.5.1/dist/leaflet.css");
 
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ed9986;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(0, 0, 0);
+  border-radius: 20px;
+  border: 1px solid #ed9986;
+}
+
 .leaflet-container {
   height: 100dvh;
   z-index: 0;

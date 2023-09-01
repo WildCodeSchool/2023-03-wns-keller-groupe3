@@ -67,7 +67,7 @@ export default function PoiCard({ poi }: PoiCardProps) {
                 </svg>
               </div>
             </div>
-            <div className="py-[25px]">
+            <div className="py-2.5 my-2.5 h-[85px] overflow-y-auto pr-2 mr-1.5">
               <p className="text-white">{poi.description}</p>
             </div>
           </div>
