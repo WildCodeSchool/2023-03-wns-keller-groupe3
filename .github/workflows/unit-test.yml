@@ -3,7 +3,8 @@ name: unit-test
 on: pull_request
 
 jobs:
-  unit-test:
+  client-unit-test:
+    if: github.base_ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     defaults:
       run:
