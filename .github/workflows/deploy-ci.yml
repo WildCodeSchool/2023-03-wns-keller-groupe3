@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   client-unit-test:
-    if: github.base_ref == 'refs/heads/main'
+    if: github.base_ref == 'main'
     runs-on: ubuntu-latest
     defaults:
       run:
