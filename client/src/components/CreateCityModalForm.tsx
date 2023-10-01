@@ -4,8 +4,6 @@ interface CreatCityModalFormProps {
     React.SetStateAction<{
       name: string;
       picture: string;
-      lat: string;
-      long: string;
     }>
   >;
 }
@@ -46,42 +44,6 @@ export default function CreateCityModalForm({
             setCreateCityState((prevState) => ({
               ...prevState,
               picture: e.target.value,
-            }))
-          }
-        />
-        <label className='text-sm mb-2 font-bold' htmlFor='latitude'>
-          Latitude :
-        </label>
-        <input
-          id='latitude'
-          type='number'
-          step='0.0001'
-          min={-90}
-          max={90}
-          placeholder='43.2345'
-          className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-          onChange={(e) =>
-            setCreateCityState((prevState) => ({
-              ...prevState,
-              lat: e.target.value,
-            }))
-          }
-        />
-        <label className='text-sm mb-2 font-bold' htmlFor='longitude'>
-          Longitude :
-        </label>
-        <input
-          id='longitude'
-          type='number'
-          step='0.0001'
-          min={-180}
-          max={180}
-          placeholder='2.5456'
-          className='input input-bordered bg-base-content text-base-100 w-full max-w-xs'
-          onChange={(e) =>
-            setCreateCityState((prevState) => ({
-              ...prevState,
-              long: e.target.value,
             }))
           }
         />
