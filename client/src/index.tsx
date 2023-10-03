@@ -6,8 +6,13 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
+const graphqlUri =
+  process.env.NODE_ENV === "development"
+    ? process.env.GRAPHQL_URI_DEV
+    : process.env.GRAPHQL_URI_PROD;
+
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: graphqlUri,
   cache: new InMemoryCache(),
 });
 
@@ -17,7 +22,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <ApolloProvider client={client}>
     <ToastContainer
-      position='top-right'
+      position="top-right"
       autoClose={2000}
       hideProgressBar
       closeOnClick
