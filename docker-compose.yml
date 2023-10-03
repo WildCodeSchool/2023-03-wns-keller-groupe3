@@ -49,3 +49,4 @@ services:
 
 volumes:
   postgres:
+  web-client-build:

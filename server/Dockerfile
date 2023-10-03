@@ -2,7 +2,7 @@
 # RUN apk add make g++ python3 git
 # RUN npm i -g node-pre-gyp
 
-FROM node:lts-alpine
+FROM node:lts-alpine3.18
 
 WORKDIR /app
 
