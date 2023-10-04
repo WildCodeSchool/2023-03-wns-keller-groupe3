@@ -6,7 +6,8 @@ import useGetCities from "../graphql/hook/useGetCities";
 import useCreateCity from "../graphql/hook/useCreateCity";
 import CreateCityModalForm from "../components/CreateCityModalForm";
 import { getLatAndLongByCityName } from "../utils/getLatAndLongByCityName";
-import { GeocodingFeature } from "@maptiler/client";
+import CustomToast from "../utils/CustomToast";
+import { toast } from "react-toastify";
 
 export default function Cities() {
   const [createCityState, setCreateCityState] = useState({
@@ -16,42 +17,41 @@ export default function Cities() {
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
-  const [position, setPosition] = useState<GeocodingFeature[]>([]);
 
-  useEffect(() => {
-    if (createCityState.name) {
-      getLatAndLongByCityName(createCityState.name)
-        .then((result) => {
-          setPosition(result.features);
-        })
-        .catch((error) => {
-          console.error(error);
-          setPosition([]);
-        });
-    }
-  }, [createCityState.name]);
-
-  const createCitySubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const createCitySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (position.length > 0) {
+    if (!createCityState.name) {
+      toast(
+        <CustomToast
+          message='Veuillez entrer un nom de ville'
+          color='text-warning'
+        />
+      );
+      return;
+    }
+    try {
+      const position = await getLatAndLongByCityName(createCityState.name);
       createCity({
         variables: {
           name: createCityState.name,
           picture: createCityState.picture,
-          latitude: position[0].center[1],
-          longitude: position[0].center[0],
+          latitude: position.latitude,
+          longitude: position.longitude,
         },
       });
-    } else {
-      alert("Les coordonnées GPS pour cette ville n'ont pas pu être trouvées.");
+    } catch (error) {
+      console.error(error);
+      toast(<CustomToast message='Nom de ville invalide' color='text-error' />);
     }
   };
 
   if (loading) return <p className='text-center'>Loading...</p>;
   if (error) return <p className='text-center'>Error : {error.message}</p>;
+
   const filteredCities = cities.filter((city) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
   return (
     <section
       className='md:ml-[96px] min-h-screen bg-base-content'
