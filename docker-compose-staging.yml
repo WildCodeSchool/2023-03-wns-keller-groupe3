@@ -1,9 +1,7 @@
-version: "1"
+version: "3"
 
 services:
   server:
-    # build: ./server
-    # To replace with the correct path of your server image
     image: cityguide655/cityguide-server
     command: sh -c "npm run build && npm run prod"
     env_file:
@@ -13,10 +11,11 @@ services:
     environment:
       - NODE_ENV=production
       - SERVER_PORT=4000
+    depends_on:
+      db:
+        condition: service_healthy
 
   client:
-    # build: ./client
-    # To replace with the correct path of your client image
     image: cityguide655/cityguide-client
     command: sh -c "npm run build"
     env_file:
@@ -29,8 +28,17 @@ services:
   db:
     image: postgis/postgis:15-3.4-alpine
     restart: always
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
     env_file:
       - vars.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -d postgres -U postgres"]
+      interval: 5s
+      timeout: 15s
+      retries: 100
 
   nginx:
     image: nginx:1.21.3
