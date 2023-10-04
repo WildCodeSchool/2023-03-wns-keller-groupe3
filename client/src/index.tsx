@@ -6,12 +6,12 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-console.log("env===>", process.env.GRAPHQL_URI_DEV);
+console.log("env===>", process.env.REACT_APP_GRAPHQL_URI_DEV);
 
 const graphqlUri =
   process.env.NODE_ENV === "production"
-    ? process.env.GRAPHQL_URI_PROD
-    : process.env.GRAPHQL_URI_DEV;
+    ? process.env.REACT_APP_GRAPHQL_URI_PROD
+    : process.env.REACT_APP_GRAPHQL_URI_DEV;
 
 const client = new ApolloClient({
   uri: graphqlUri,
