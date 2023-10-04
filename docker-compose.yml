@@ -13,7 +13,7 @@ services:
     ports:
       - 3000:3000
     env_file:
-      - ./client/.env
+      - vars.env
     volumes:
       - ./client/src:/app/src
 
