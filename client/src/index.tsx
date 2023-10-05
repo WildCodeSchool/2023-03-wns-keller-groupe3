@@ -10,7 +10,7 @@ console.log("env===>", process.env.REACT_APP_GRAPHQL_URI_DEV);
 
 const graphqlUri =
   process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_GRAPHQL_URI_PROD
+    ? "/graphql"
     : process.env.REACT_APP_GRAPHQL_URI_DEV;
 
 const client = new ApolloClient({
