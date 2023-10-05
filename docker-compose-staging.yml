@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  server:
+    image: cityguide655/cityguide-server
+    command: sh -c "npm run build && npm run prod"
+    env_file:
+      - vars.env
+    expose:
+      - 4000
+    environment:
+      - NODE_ENV=production
+      - SERVER_PORT=4000
+    depends_on:
+      db:
+        condition: service_healthy
+
+  client:
+    image: cityguide655/cityguide-client
+    command: sh -c "npm run build"
+    env_file:
+      - vars.env
+    volumes:
+      - web-client-build-staging:/app/build
+    environment:
+      - NODE_ENV=production
+
+  db:
+    image: postgis/postgis:15-3.4-alpine
+    restart: always
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    env_file:
+      - vars.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -d postgres -U postgres"]
+      interval: 5s
+      timeout: 15s
+      retries: 100
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  nginx:
+    image: nginx:1.21.3
+    depends_on:
+      - server
+      - client
+    restart: always
+    ports:
+      - ${GATEWAY_PORT:-8001}:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - web-client-build-staging:/web-client-build-staging
+      - ./logs:/var/log/nginx
+
+volumes:
+  web-client-build-staging:

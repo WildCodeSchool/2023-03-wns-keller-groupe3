@@ -6,8 +6,13 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
+const graphqlUri =
+  process.env.NODE_ENV === "production"
+    ? "/graphql"
+    : process.env.REACT_APP_GRAPHQL_URI_DEV;
+
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: graphqlUri,
   cache: new InMemoryCache(),
 });
 
