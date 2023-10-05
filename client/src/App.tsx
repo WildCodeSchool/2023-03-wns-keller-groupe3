@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import User from "./pages/User";
 
 function App() {
-  console.log("------------UPDATED VIA WEBHOOK-------------");
+  console.log("------------UPDATED VIA PUSH-------------");
   return (
     <Router>
       <div>
