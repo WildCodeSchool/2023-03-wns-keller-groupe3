@@ -1,0 +1,14 @@
+name: Merge staging to production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-updater:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Updater
+        run: |
+          curl -X GET ${{ secrets.WEBHOOK_PROD }}

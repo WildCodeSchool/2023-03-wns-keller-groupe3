@@ -2,5 +2,5 @@
 postgres
 node_modules
 build
-nginx.conf
+nginx.production.conf
 nginx.staging.conf
