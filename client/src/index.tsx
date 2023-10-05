@@ -6,8 +6,6 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-console.log("env===>", process.env.REACT_APP_GRAPHQL_URI_DEV);
-
 const graphqlUri =
   process.env.NODE_ENV === "production"
     ? "/graphql"
