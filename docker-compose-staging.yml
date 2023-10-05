@@ -40,6 +40,12 @@ services:
       timeout: 15s
       retries: 100
 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
   nginx:
     image: nginx:1.21.3
     depends_on:
