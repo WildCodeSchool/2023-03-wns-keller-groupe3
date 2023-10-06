@@ -1,0 +1,15 @@
+name: Update production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-production:
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Updater
+        run: |
+          curl -X GET ${{ secrets.WEBHOOK_PROD }}
