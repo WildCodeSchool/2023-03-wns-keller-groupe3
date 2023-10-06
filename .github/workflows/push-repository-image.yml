@@ -1,4 +1,4 @@
-name: deploy-ci
+name: Compile and push repository image
 
 on: pull_request
 

@@ -1,0 +1,15 @@
+name: Update main via webhook
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  update-production:
+    # TODO : add a condition staging to main
+    # TODO : (if: github.ref == 'refs/heads/staging')
+    runs-on: ubuntu-latest
+    steps:
+      - name: update-production
+        run: |
+          curl -X GET ${{ secrets.WEBHOOK_PROD }}
