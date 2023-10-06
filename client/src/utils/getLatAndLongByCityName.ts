@@ -1,10 +1,11 @@
 import * as maptilerClient from "@maptiler/client";
+maptilerClient.config.apiKey = process.env.REACT_APP_MAP_TILER_KEY!;
 
-maptilerClient.config.apiKey = process.env.MAP_TILER_KEY!;
-
+//  * https://docs.maptiler.com/client-js/geocoding#forward
 async function getLatAndLongByCityName(cityName: string) {
   try {
     const position = await maptilerClient.geocoding.forward(cityName);
+    console.log(position);
     if (position.features && position.features[0]) {
       const { center } = position.features[0];
       if (center && center.length === 2) {
