@@ -6,7 +6,8 @@ on:
 
 jobs:
   update-production:
-    if: github.ref == 'refs/heads/staging'
+    # TODO : add a condition staging to main
+    # TODO : (if: github.ref == 'refs/heads/staging')
     runs-on: ubuntu-latest
     steps:
       - name: update-production
