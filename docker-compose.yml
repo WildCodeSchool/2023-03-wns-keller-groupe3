@@ -1,9 +1,6 @@
-version: "1"
-
 services:
   server:
     build: ./server
-    command: sh -c "npm run build && npm run prod"
     env_file:
       - vars.env
     ports:
@@ -13,33 +10,20 @@ services:
 
   client:
     build: ./client
-    command: sh -c "npm run build"
     ports:
       - 3000:3000
+    env_file:
+      - vars.env
     volumes:
       - ./client/src:/app/src
-      - web-client-build:/app/build
 
   db:
-    image: postgis/postgis
+    image: postgis/postgis:15-3.4-alpine
     restart: always
     env_file:
       - vars.env
     volumes:
       - postgres:/var/lib/postgresql/data
-
-  nginx:
-    image: nginx:1.21.3
-    depends_on:
-      - server
-      - client
-    restart: always
-    ports:
-      - ${GATEWAY_PORT:-8000}:80
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - web-client-build:/web-client-build
-      - ./logs:/var/log/nginx
 
   adminer:
     image: adminer
@@ -49,4 +33,3 @@ services:
 
 volumes:
   postgres:
-  web-client-build:

@@ -1,3 +1,6 @@
 *.env
 postgres
 node_modules
+build
+nginx.production.conf
+nginx.staging.conf
