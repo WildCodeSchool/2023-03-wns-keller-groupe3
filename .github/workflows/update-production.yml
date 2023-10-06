@@ -1,4 +1,4 @@
-name: Merge staging to production
+name: Update production
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
       - main
 
 jobs:
-  run-updater:
+  update-production:
+    if: github.base_ref == 'main'
     runs-on: ubuntu-latest
     steps:
       - name: Run Updater
