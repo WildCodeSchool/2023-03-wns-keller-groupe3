@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CityCard } from "../components/CityCard";
 import backgroundCity from "../assets/cityBackground.png";
