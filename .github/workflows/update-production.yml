@@ -1,15 +1,14 @@
-name: Update production
+name: Update main via webhook
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
 
 jobs:
   update-production:
-    if: github.base_ref == 'staging'
+    if: github.ref == 'refs/heads/staging'
     runs-on: ubuntu-latest
     steps:
-      - name: Run Updater
+      - name: update-production
         run: |
           curl -X GET ${{ secrets.WEBHOOK_PROD }}
