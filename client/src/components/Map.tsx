@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import CreatePoiModalForm from "./CreatePoiModalForm";
 import { Category, Poi } from "../graphql/__generated__/graphql";
 import PoiCard from "./PoiCard";
+import { getAddressByLatAndLong } from "../utils/getAddressByLatAndLong";
 
 interface MapProps {
   id: string;
@@ -28,7 +29,6 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const [clickedLat, setClikedLat] = useState(lat);
   const [clickedLong, setClikedLong] = useState(long);
   const [name, setName] = useState("");
-  const [address, setAdress] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState("");
@@ -45,12 +45,18 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
     });
     return null;
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const addressByPostion = await getAddressByLatAndLong([
+      clickedLong,
+      clickedLat,
+    ]);
+    console.log(addressByPostion);
     createPoi({
       variables: {
         name,
-        address,
+        address: addressByPostion!,
         description,
         picture,
         categories: categories,
@@ -80,7 +86,6 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         <CreatePoiModalForm
           allCategories={allCategories}
           handleSubmit={handleSubmit}
-          setAdress={setAdress}
           setDescription={setDescription}
           setCategories={setCategories}
           setName={setName}
