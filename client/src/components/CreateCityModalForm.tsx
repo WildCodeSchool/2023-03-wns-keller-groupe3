@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { suggestedCities } from "../utils/suggestedCities";
-import SuggestionList from "./SuggestionList";
+import { suggestedCities } from "../functions/suggestedCities";
+import SuggestedCities from "./SuggestedCities";
 
 interface CreatCityModalFormProps {
   createCitySubmit: React.FormEventHandler<HTMLFormElement>;
@@ -54,7 +54,7 @@ export default function CreateCityModalForm({
             onChange={(e) => handleSuggestion(e)}
             list='suggestions'
           />
-          <SuggestionList suggestions={suggestions} onClick={onClick} />
+          <SuggestedCities suggestions={suggestions} onClick={onClick} />
         </div>
         <label className='text-sm mb-2 font-bold' htmlFor='image'>
           Image :

@@ -3,7 +3,7 @@ interface Props {
   onClick: (city: string) => void;
 }
 
-export default function SuggestionList({ suggestions, onClick }: Props) {
+export default function SuggestedCities({ suggestions, onClick }: Props) {
   if (!suggestions || suggestions.length === 0) {
     return null;
   }

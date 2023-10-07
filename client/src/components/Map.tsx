@@ -10,12 +10,12 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import CustomToast from "../utils/CustomToast";
+import CustomToast from "./CustomToast";
 import { toast } from "react-toastify";
 import CreatePoiModalForm from "./CreatePoiModalForm";
 import { Category, Poi } from "../graphql/__generated__/graphql";
 import PoiCard from "./PoiCard";
-import { getAddressByLatAndLong } from "../utils/getAddressByLatAndLong";
+import { getAddressByLatAndLong } from "../functions/getAddressByLatAndLong";
 import { marker } from "../utils/marker";
 
 interface MapProps {

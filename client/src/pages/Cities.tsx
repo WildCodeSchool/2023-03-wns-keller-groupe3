@@ -5,8 +5,8 @@ import backgroundCity from "../assets/cityBackground.png";
 import useGetCities from "../graphql/hook/useGetCities";
 import useCreateCity from "../graphql/hook/useCreateCity";
 import CreateCityModalForm from "../components/CreateCityModalForm";
-import { getLatAndLongByCityName } from "../utils/getLatAndLongByCityName";
-import CustomToast from "../utils/CustomToast";
+import { getLatAndLongByCityName } from "../functions/getLatAndLongByCityName";
+import CustomToast from "../components/CustomToast";
 import { toast } from "react-toastify";
 
 export default function Cities() {

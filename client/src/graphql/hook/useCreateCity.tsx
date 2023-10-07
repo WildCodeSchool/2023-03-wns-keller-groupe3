@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { ADD_CITY } from "../mutations";
-import CustomToast from "../../utils/CustomToast";
+import CustomToast from "../../components/CustomToast";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { GET_CITIES } from "../queries";
