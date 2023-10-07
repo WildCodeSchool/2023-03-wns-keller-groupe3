@@ -7,7 +7,6 @@ interface CreatCityModalFormProps {
   setCreateCityState: React.Dispatch<
     React.SetStateAction<{
       name: string;
-      picture: string;
     }>
   >;
 }
@@ -62,21 +61,6 @@ export default function CreateCityModalForm({
           />
           <AutoComplete data={suggestions} onClick={onClick} />
         </div>
-        <label className='text-sm mb-2 font-bold' htmlFor='image'>
-          Image :
-        </label>
-        <input
-          id='image'
-          type='text'
-          placeholder='url : https://...'
-          className='input input-bordered bg-base-content text-base-100 w-full mb-4'
-          onChange={(e) =>
-            setCreateCityState((prevState) => ({
-              ...prevState,
-              picture: e.target.value,
-            }))
-          }
-        />
         <div className='modal-action flex justify-between'>
           <label htmlFor='my_modal_6' className='btn'>
             Annuler

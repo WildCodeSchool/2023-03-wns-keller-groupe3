@@ -8,11 +8,19 @@ import CreateCityModalForm from "../components/CreateCityModalForm";
 import { getLatAndLongByCityName } from "../functions/getLatAndLongByCityName";
 import CustomToast from "../components/CustomToast";
 import { toast } from "react-toastify";
+import { getCityCardPhoto } from "../functions/getCityCardPhoto";
 
 export default function Cities() {
+  async function getPhoto(value: string) {
+    try {
+      const photo = await getCityCardPhoto(value);
+      console.log(photo);
+      return photo;
+    } catch (error) {}
+  }
+
   const [createCityState, setCreateCityState] = useState({
     name: "",
-    picture: "",
   });
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
@@ -30,11 +38,12 @@ export default function Cities() {
       return;
     }
     try {
+      const picture = await getPhoto(createCityState.name);
       const position = await getLatAndLongByCityName(createCityState.name);
       createCity({
         variables: {
           name: createCityState.name,
-          picture: createCityState.picture,
+          picture: picture!,
           latitude: position.latitude,
           longitude: position.longitude,
         },
