@@ -16,6 +16,7 @@ import CreatePoiModalForm from "./CreatePoiModalForm";
 import { Category, Poi } from "../graphql/__generated__/graphql";
 import PoiCard from "./PoiCard";
 import { getAddressByLatAndLong } from "../utils/getAddressByLatAndLong";
+import { marker } from "../utils/marker";
 
 interface MapProps {
   id: string;
@@ -52,7 +53,6 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
       clickedLong,
       clickedLat,
     ]);
-    console.log(addressByPostion);
     createPoi({
       variables: {
         name,
@@ -110,7 +110,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
           {allPoi.map((poi) => {
             return (
               <div key={poi.id}>
-                <Marker position={[poi.latitude, poi.longitude]}>
+                <Marker icon={marker} position={[poi.latitude, poi.longitude]}>
                   <Popup>
                     <PoiCard poi={poi} />
                   </Popup>
