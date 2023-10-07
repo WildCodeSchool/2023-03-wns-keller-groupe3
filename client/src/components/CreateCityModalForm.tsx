@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { suggestedCities } from "../functions/suggestedCities";
-import SuggestedCities from "./SuggestedCities";
+import AutoComplete from "./AutoComplete";
 
 interface CreatCityModalFormProps {
   createCitySubmit: React.FormEventHandler<HTMLFormElement>;
@@ -60,7 +60,7 @@ export default function CreateCityModalForm({
             }
             onChange={(e) => handleSuggestions(e)}
           />
-          <SuggestedCities suggestions={suggestions} onClick={onClick} />
+          <AutoComplete data={suggestions} onClick={onClick} />
         </div>
         <label className='text-sm mb-2 font-bold' htmlFor='image'>
           Image :
