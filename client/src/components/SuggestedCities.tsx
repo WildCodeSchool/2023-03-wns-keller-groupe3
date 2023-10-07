@@ -8,7 +8,7 @@ export default function SuggestedCities({ suggestions, onClick }: Props) {
     return null;
   }
   return (
-    <ul className='absolute w-full bg-base-content text-base-100 h-24 overflow-y-scroll'>
+    <ul className='absolute w-full bg-base-content text-base-100 h-34 overflow-y-scroll border rounded-b-lg'>
       {suggestions.map((city, index) => (
         <li
           onClick={() => onClick(city)}

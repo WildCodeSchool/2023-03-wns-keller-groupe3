@@ -18,22 +18,25 @@ export default function CreateCityModalForm({
 }: CreatCityModalFormProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [cityName, setCityName] = useState("");
-  const onClick = (city: string) => {
-    setCityName(city);
-    setSuggestions([]);
-  };
-  const handleSuggestion = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCityName(e.target.value);
-    setCreateCityState((prevState) => ({
-      ...prevState,
-      name: e.target.value,
-    }));
-    if (!e.target.value) {
+
+  const handleSuggestions = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cityName = e.target.value;
+    setCityName(cityName);
+    if (!cityName) {
       setSuggestions([]);
       return;
     }
-    const result = await suggestedCities(e.target.value);
+    const result = await suggestedCities(cityName.trim());
     setSuggestions(result);
+  };
+
+  const onClick = (selectedCity: string) => {
+    setCreateCityState((prevState) => ({
+      ...prevState,
+      name: selectedCity,
+    }));
+    setCityName(selectedCity);
+    setSuggestions([]);
   };
 
   return (
@@ -50,9 +53,12 @@ export default function CreateCityModalForm({
             id='name'
             type='text'
             placeholder='Paris, Rome, Rio ...'
-            className='input bg-base-content text-base-100 w-full'
-            onChange={(e) => handleSuggestion(e)}
-            list='suggestions'
+            className={
+              suggestions.length
+                ? "input bg-base-content text-base-100 w-full rounded-b-none"
+                : "input bg-base-content text-base-100 w-full"
+            }
+            onChange={(e) => handleSuggestions(e)}
           />
           <SuggestedCities suggestions={suggestions} onClick={onClick} />
         </div>
