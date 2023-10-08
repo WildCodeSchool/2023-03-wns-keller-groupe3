@@ -4,36 +4,28 @@ import AutoComplete from "./AutoComplete";
 
 interface CreatCityModalFormProps {
   createCitySubmit: React.FormEventHandler<HTMLFormElement>;
-  setCreateCityState: React.Dispatch<
-    React.SetStateAction<{
-      name: string;
-    }>
-  >;
+  setCityName: React.Dispatch<React.SetStateAction<string>>;
+  cityName: string;
 }
 
 export default function CreateCityModalForm({
   createCitySubmit,
-  setCreateCityState,
+  setCityName,
+  cityName,
 }: CreatCityModalFormProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [cityName, setCityName] = useState("");
 
   const handleSuggestions = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cityName = e.target.value;
-    setCityName(cityName);
-    if (!cityName) {
+    setCityName(e.target.value);
+    if (!e.target.value) {
       setSuggestions([]);
       return;
     }
-    const result = await suggestedCities(cityName.trim());
+    const result = await suggestedCities(e.target.value.trim());
     setSuggestions(result);
   };
 
   const onClick = (selectedCity: string) => {
-    setCreateCityState((prevState) => ({
-      ...prevState,
-      name: selectedCity,
-    }));
     setCityName(selectedCity);
     setSuggestions([]);
   };

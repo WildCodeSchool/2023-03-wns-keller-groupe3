@@ -12,16 +12,14 @@ import { getCityCardPhoto } from "../functions/getCityCardPhoto";
 import { deleteAfterComma } from "../scripts/deleteAfterComma";
 
 export default function Cities() {
-  const [createCityState, setCreateCityState] = useState({
-    name: "",
-  });
+  const [cityName, setCityName] = useState("");
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
 
   const createCitySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!createCityState.name) {
+    if (!cityName) {
       toast(
         <CustomToast
           message='Veuillez selectionner un nom de ville dans la liste'
@@ -31,9 +29,9 @@ export default function Cities() {
       return;
     }
     try {
-      const cleanedCityName = deleteAfterComma(createCityState.name);
+      const cleanedCityName = deleteAfterComma(cityName);
       const picture = await getCityCardPhoto(cleanedCityName);
-      const position = await getLatAndLongByCityName(createCityState.name);
+      const position = await getLatAndLongByCityName(cityName);
       createCity({
         variables: {
           name: cleanedCityName,
@@ -109,7 +107,8 @@ export default function Cities() {
       <input type='checkbox' id='my_modal_6' className='modal-toggle' />
       <div className='modal'>
         <CreateCityModalForm
-          setCreateCityState={setCreateCityState}
+          cityName={cityName}
+          setCityName={setCityName}
           createCitySubmit={createCitySubmit}
         />
       </div>
