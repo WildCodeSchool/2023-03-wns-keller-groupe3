@@ -5,7 +5,8 @@ async function suggestedCities(cityName: string) {
   if (!cityName) return [];
   try {
     const suggestions = await maptilerClient.geocoding.forward(cityName, {
-      types: ["municipality"],
+      country: ["fr", "es", "de", "it", "eng"],
+      types: ["municipality", "county"],
       limit: 5,
       language: ["fr"],
     });

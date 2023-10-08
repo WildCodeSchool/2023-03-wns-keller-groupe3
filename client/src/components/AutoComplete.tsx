@@ -8,7 +8,7 @@ export default function AutoComplete({ data, onClick }: Props) {
     return null;
   }
   return (
-    <ul className='absolute w-full bg-base-content text-base-100 h-24 overflow-y-scroll border rounded-b-lg'>
+    <ul className='absolute w-full bg-base-content text-base-100 max-h-24 overflow-y-scroll border rounded-b-lg'>
       {data.map((value, index) => (
         <li
           onClick={() => onClick(value)}
