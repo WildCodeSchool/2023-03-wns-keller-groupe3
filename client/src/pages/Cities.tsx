@@ -9,6 +9,7 @@ import { getLatAndLongByCityName } from "../functions/getLatAndLongByCityName";
 import CustomToast from "../components/CustomToast";
 import { toast } from "react-toastify";
 import { getCityCardPhoto } from "../functions/getCityCardPhoto";
+import { deleteAfterComma } from "../scripts/deleteAfterComma";
 
 export default function Cities() {
   const [createCityState, setCreateCityState] = useState({
@@ -23,18 +24,19 @@ export default function Cities() {
     if (!createCityState.name) {
       toast(
         <CustomToast
-          message='Veuillez entrer un nom de ville'
+          message='Veuillez selectionner un nom de ville dans la liste'
           color='text-warning'
         />
       );
       return;
     }
     try {
-      const picture = await getCityCardPhoto(createCityState.name);
+      const cleanedCityName = deleteAfterComma(createCityState.name);
+      const picture = await getCityCardPhoto(cleanedCityName);
       const position = await getLatAndLongByCityName(createCityState.name);
       createCity({
         variables: {
-          name: createCityState.name,
+          name: cleanedCityName,
           picture: picture!,
           latitude: position.latitude,
           longitude: position.longitude,
