@@ -12,11 +12,13 @@ services:
     build: ./client
     ports:
       - 3000:3000
+    env_file:
+      - vars.env
     volumes:
       - ./client/src:/app/src
 
   db:
-    image: postgis/postgis
+    image: postgis/postgis:15-3.4-alpine
     restart: always
     env_file:
       - vars.env
