@@ -16,7 +16,6 @@ export default function CreateCityModalForm({
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const handleSuggestions = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCityName(e.target.value);
     if (!e.target.value) {
       setSuggestions([]);
       return;
@@ -40,7 +39,6 @@ export default function CreateCityModalForm({
         </label>
         <div className='relative mb-4'>
           <input
-            value={cityName}
             id='name'
             type='text'
             placeholder='Paris, Rome, Rio ...'

@@ -1,12 +1,11 @@
 import * as maptilerClient from "@maptiler/client";
 maptilerClient.config.apiKey = process.env.REACT_APP_MAP_TILER_KEY!;
 
+//  * https://docs.maptiler.com/client-js/geocoding#forward
 async function suggestedCities(cityName: string) {
   if (!cityName) return [];
   try {
     const suggestions = await maptilerClient.geocoding.forward(cityName, {
-      country: ["fr", "es", "de", "it", "eng"],
-      types: ["municipality", "county"],
       limit: 5,
       language: ["fr"],
     });
