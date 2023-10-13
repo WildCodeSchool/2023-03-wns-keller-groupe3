@@ -62,7 +62,7 @@ export default function Signup() {
     } else {
       try {
         await addUser({ variables: { email, name, password } });
-        navigate("/user");
+        navigate("/");
         toast(
           <CustomToast
             message={`Bienvenue ${name}, veuillez vous identifier pour profiter pleinement des fonctionnalités`}
