@@ -6,7 +6,7 @@ const client = createClient(process.env.REACT_APP_PEXELS_API!);
 async function getCityCardPhoto(cityName: string) {
   try {
     const result = await client.photos.search({
-      query: `${cityName} + city`,
+      query: `${cityName}`,
       per_page: 1,
     });
     //@ts-ignore

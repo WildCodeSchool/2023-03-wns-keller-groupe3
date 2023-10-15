@@ -17,12 +17,24 @@ export default function Cities() {
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
 
-  const createCitySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const createCitySubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+    savedSuggestions: string[]
+  ) => {
     e.preventDefault();
-    if (!cityName) {
+    if (!cityName.trim()) {
       toast(
         <CustomToast
-          message='Veuillez selectionner un nom de ville dans la liste'
+          message='Le nom de la ville est vide'
+          color='text-warning'
+        />
+      );
+      return;
+    }
+    if (!savedSuggestions.includes(cityName)) {
+      toast(
+        <CustomToast
+          message='Choisissez une ville dans la liste'
           color='text-warning'
         />
       );
@@ -30,7 +42,7 @@ export default function Cities() {
     }
     try {
       const cleanedCityName = deleteAfterComma(cityName);
-      const picture = await getCityCardPhoto(cleanedCityName);
+      const picture = await getCityCardPhoto(cityName);
       const position = await getLatAndLongByCityName(cityName);
       createCity({
         variables: {
