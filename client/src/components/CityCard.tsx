@@ -15,7 +15,7 @@ export function CityCard({ city }: CityCardProps) {
         />
       </figure>
       <div className='card-body border-t-2 border-primary'>
-        <p className='card-title text-base-content md:h-8 w-auto'>
+        <p className='card-title text-base-content md:h-8 w-auto break-words'>
           {city.name}
         </p>
       </div>
