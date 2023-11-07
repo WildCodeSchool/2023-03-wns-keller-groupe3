@@ -3,7 +3,6 @@ import { Category } from "../graphql/__generated__/graphql";
 interface CreatePoiFormProps {
   allCategories?: Category[];
   setName: React.Dispatch<React.SetStateAction<string>>;
-  setAdress: React.Dispatch<React.SetStateAction<string>>;
   setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
   setPicture: React.Dispatch<React.SetStateAction<string>>;
@@ -15,7 +14,6 @@ interface CreatePoiFormProps {
 export default function CreatePoiModalForm({
   allCategories,
   setName,
-  setAdress,
   setCategories,
   setDescription,
   setPicture,
@@ -36,13 +34,6 @@ export default function CreatePoiModalForm({
           placeholder='Nom'
           className='input input-bordered mt-4 mb-4 bg-base-content text-base-100'
           onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          id='address'
-          type='text'
-          placeholder='Adresse'
-          className='input input-bordered mb-4 bg-base-content text-base-100'
-          onChange={(e) => setAdress(e.target.value)}
         />
         <select
           defaultValue={["disabled"]}
