@@ -10,7 +10,9 @@ const city = new CityService();
 export class CityResolver {
   @Query(() => [City])
   async getAllCities(): Promise<City[]> {
-    return await dataSource.getRepository(City).find();
+    return await dataSource
+      .getRepository(City)
+      .find({ order: { name: "ASC" } });
   }
 
   @Query(() => City)
