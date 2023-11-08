@@ -1,12 +1,14 @@
-import "reflect-metadata";
-import * as jwt from "jsonwebtoken";
 import { ApolloServer } from "apollo-server";
-import dataSource from "./utils";
 import { buildSchema } from "type-graphql";
+
 import { CategoryResolver } from "./resolvers/CategoryResolver";
 import { CityResolver } from "./resolvers/CityResolver";
 import { POIResolver } from "./resolvers/POIResolver";
 import { UserResolver } from "./resolvers/UserResolver";
+
+import dataSource from "./utils";
+import "reflect-metadata";
+import * as jwt from "jsonwebtoken";
 
 const start = async (): Promise<void> => {
   await dataSource.initialize();
@@ -33,7 +35,7 @@ const start = async (): Promise<void> => {
       ) {
         const payload = jwt.verify(
           req.headers.authorization.split("Bearer")[1],
-          "supersecretkey"
+          process.env.JWT_SECRET_KEY as jwt.Secret
         );
         return payload;
       }

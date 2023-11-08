@@ -1,9 +1,13 @@
 import { Arg, Mutation, Resolver, Query } from "type-graphql";
+
 import { User } from "../entities/User";
 import { UserService } from "../services/UserService";
-import * as argon2 from "argon2";
+
 import dataSource from "../utils";
+
+import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const user = new UserService();
 
@@ -79,7 +83,7 @@ export class UserResolver {
 
     try {
       if (await argon2.verify(user.hashedPassword, password)) {
-        const token = jwt.sign({ email }, "supersecretkey");
+        const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY as jwt.Secret);
         return token;
       } else {
         return "error";

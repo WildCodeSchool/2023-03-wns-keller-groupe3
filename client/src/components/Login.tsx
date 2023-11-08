@@ -12,6 +12,7 @@ export default function Login() {
     variables: { email, password },
   });
   if (data) {
+    // TODO wrong credentials still redirect here
     console.log("data from query", data.login);
     localStorage.setItem("token", data.login);
     return <Navigate to="/" />;
