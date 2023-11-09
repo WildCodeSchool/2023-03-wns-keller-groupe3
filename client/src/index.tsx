@@ -7,10 +7,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { setContext } from '@apollo/client/link/context';
 
+const graphqlUri =
+  process.env.NODE_ENV === "production"
+    ? "/graphql"
+    : process.env.REACT_APP_GRAPHQL_URI_DEV;
+
 const httpLink = createHttpLink({
-  // TODO manage uri depending on environement
-  // uri: '/graphql', // for production
-  uri: 'http://localhost:4000/', // for local dev
+  uri: graphqlUri,
   credentials: 'same-origin'
 });
 
@@ -26,14 +29,8 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
-const graphqlUri =
-  process.env.NODE_ENV === "production"
-    ? "/graphql"
-    : process.env.REACT_APP_GRAPHQL_URI_DEV;
-
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  // uri: graphqlUri,
   cache: new InMemoryCache(),
 });
 
