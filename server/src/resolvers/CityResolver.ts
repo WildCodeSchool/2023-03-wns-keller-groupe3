@@ -1,15 +1,18 @@
-import { Arg, Mutation, Resolver, Query, Float } from "type-graphql";
+import { Arg, Mutation, Resolver, Query, Float, Ctx, Authorized } from "type-graphql";
 import { City } from "../entities/City";
 import dataSource from "../utils";
 import { CityService } from "../services/CityService";
 import { ApolloError } from "apollo-server-errors";
+import { Role } from "../entities/User";
 
 const city = new CityService();
 
 @Resolver(City)
 export class CityResolver {
   @Query(() => [City])
-  async getAllCities(): Promise<City[]> {
+  // TODO find a better type for context
+  async getAllCities(@Ctx() context: any): Promise<City[]> {
+    console.log('this is context', context);
     return await dataSource.getRepository(City).find();
   }
 

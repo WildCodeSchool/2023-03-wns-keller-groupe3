@@ -28,15 +28,16 @@ const start = async (): Promise<void> => {
   const server = new ApolloServer({
     schema: typeGraphQLgeneratedSchema,
     context: ({ req }) => {
-      console.log("req", req.headers.authorization);
+      console.log("request of context : ", req.headers.authorization)
       if (
         req.headers.authorization !== undefined &&
         req.headers.authorization !== ""
       ) {
         const payload = jwt.verify(
-          req.headers.authorization.split("Bearer")[1],
+          req.headers.authorization.split(" ")[1],
           process.env.JWT_SECRET_KEY as jwt.Secret
         );
+        console.log("payload is :", payload)
         return payload;
       }
       return {};

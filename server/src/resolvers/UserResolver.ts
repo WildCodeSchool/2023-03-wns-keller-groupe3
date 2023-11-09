@@ -76,21 +76,20 @@ export class UserResolver {
   async login(
     @Arg("email") email: string,
     @Arg("password") password: string
-  ): Promise<String> {
+  ): Promise<String | undefined> {
     const user = await dataSource
       .getRepository(User)
       .findOneByOrFail({ email });
 
     try {
       if (await argon2.verify(user.hashedPassword, password)) {
-        const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY as jwt.Secret);
+        const token = jwt.sign({ email, role: user.role }, process.env.JWT_SECRET_KEY as jwt.Secret);
         return token;
       } else {
-        return "error";
+        throw new Error("error");
       }
     } catch (err) {
-      console.log(err);
-      return "error";
+        console.error(err);
     }
   }
 }
