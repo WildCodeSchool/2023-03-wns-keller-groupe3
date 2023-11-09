@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, View, Pressable } from "react-native";
+import { Text, View, Pressable, Button } from "react-native";
+import type { HomeTabScreenProps } from "../navigation/types";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 
-// Créez un type pour la stack de navigation
-
-function Home({ navigation }) {
+function Home({ navigation }: HomeTabScreenProps<"Accueil">) {
+  // TODO Trouver un type correct pour la prop navigation
   return (
     <View className="hero-content text-center text-neutral-content">
       <View className="max-w-2-xl text-base-content">
@@ -13,12 +13,10 @@ function Home({ navigation }) {
           Parcourir une ville comme un local. Aller droit au but. Découvrir des
           perles rares.
         </Text>
-        <Pressable
-          className="btn"
+        <Button
           onPress={() => navigation.navigate("Villes")}
-        >
-          <Text>Explorez maintenant !</Text>
-        </Pressable>
+          title="Explorez maintenant !"
+        />
       </View>
     </View>
   );
