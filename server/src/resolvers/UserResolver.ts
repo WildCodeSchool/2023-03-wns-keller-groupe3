@@ -1,4 +1,4 @@
-import { Arg, Mutation, Resolver, Query } from "type-graphql";
+import { Arg, Mutation, Resolver, Query, Ctx } from "type-graphql";
 
 import { User } from "../entities/User";
 import { UserService } from "../services/UserService";
@@ -8,6 +8,7 @@ import dataSource from "../utils";
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
 import "dotenv/config";
+import { Context } from "../context.type";
 
 const user = new UserService();
 
@@ -24,11 +25,11 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async getUserBy(@Arg("id") id: string): Promise<User> {
+  async getUserBy(@Ctx() context: Context): Promise<User> {
     try {
-      return await user.getUserBy(id);
+      return await user.getUserBy(context.user?.id);
     } catch (error) {
-      console.error(`User with ID : ${id} not found`);
+      console.error(`User with ID : ${context.user.id} not found`);
       throw new Error(`User not found`);
     }
   }
@@ -83,13 +84,16 @@ export class UserResolver {
 
     try {
       if (await argon2.verify(user.hashedPassword, password)) {
-        const token = jwt.sign({ email, role: user.role }, process.env.JWT_SECRET_KEY as jwt.Secret);
+        const token = jwt.sign(
+          { email, role: user.role },
+          process.env.JWT_SECRET_KEY as jwt.Secret
+        );
         return token;
       } else {
         throw new Error("error");
       }
     } catch (err) {
-        console.error(err);
+      console.error(err);
     }
   }
 }

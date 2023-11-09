@@ -1,11 +1,16 @@
 import ReactDOM from "react-dom/client";
-import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  ApolloProvider,
+} from "@apollo/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { setContext } from '@apollo/client/link/context';
+import { setContext } from "@apollo/client/link/context";
 
 const graphqlUri =
   process.env.NODE_ENV === "production"
@@ -19,14 +24,14 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
-    }
-  }
+    },
+  };
 });
 
 const client = new ApolloClient({
@@ -48,6 +53,7 @@ root.render(
       draggable
       pauseOnHover
     />
+
     <App />
   </ApolloProvider>
 );

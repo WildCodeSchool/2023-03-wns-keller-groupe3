@@ -1,6 +1,5 @@
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
-
 import { CategoryResolver } from "./resolvers/CategoryResolver";
 import { CityResolver } from "./resolvers/CityResolver";
 import { POIResolver } from "./resolvers/POIResolver";
@@ -19,7 +18,10 @@ const start = async (): Promise<void> => {
     authChecker: ({ context },  authorizedRoles: Role[]) => {
       console.log("roles is", authorizedRoles);
       console.log("context from authchecker", context);
-      if (authorizedRoles.includes(context.role) || authorizedRoles.length === 0 ) {
+      if (
+        authorizedRoles.includes(context.role) ||
+        authorizedRoles.length === 0
+      ) {
         return true;
       } else {
         return false;
@@ -30,7 +32,7 @@ const start = async (): Promise<void> => {
   const server = new ApolloServer({
     schema: typeGraphQLgeneratedSchema,
     context: ({ req }) => {
-      console.log("request of context : ", req.headers.authorization)
+      console.log("request of context : ", req.headers.authorization);
       if (
         req.headers.authorization !== undefined &&
         req.headers.authorization !== ""
@@ -39,7 +41,7 @@ const start = async (): Promise<void> => {
           req.headers.authorization.split(" ")[1],
           process.env.JWT_SECRET_KEY as jwt.Secret
         );
-        console.log("payload is :", payload)
+        console.log("payload is :", payload);
         return payload;
       }
       return {};
