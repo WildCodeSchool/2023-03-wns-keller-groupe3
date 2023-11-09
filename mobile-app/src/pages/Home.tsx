@@ -1,10 +1,8 @@
 import React from "react";
-import { Text, View, Pressable, Button } from "react-native";
+import { Text, View, Button } from "react-native";
 import type { HomeTabScreenProps } from "../navigation/types";
-import { NavigationContainer, RouteProp } from "@react-navigation/native";
 
 function Home({ navigation }: HomeTabScreenProps<"Accueil">) {
-  // TODO Trouver un type correct pour la prop navigation
   return (
     <View className="hero-content text-center text-neutral-content">
       <View className="max-w-2-xl text-base-content">
