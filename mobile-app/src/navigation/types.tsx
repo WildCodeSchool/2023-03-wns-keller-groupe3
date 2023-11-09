@@ -16,6 +16,8 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 
 export type HomeTabParamList = {
   Accueil: undefined;
+  Villes: undefined;
+  Profil: undefined;
   Popular: undefined;
   Latest: undefined;
 };
