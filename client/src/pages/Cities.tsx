@@ -10,12 +10,17 @@ import CustomToast from "../components/CustomToast";
 import { toast } from "react-toastify";
 import { getCityCardPhoto } from "../functions/getCityCardPhoto";
 import { deleteAfterComma } from "../scripts/deleteAfterComma";
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "../graphql/queries";
+import { Role } from "../utils/RoleEnum";
 
 export default function Cities() {
   const [cityName, setCityName] = useState("");
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
+  const { data } = useQuery(GET_USER);
+  const isAdmin = data?.getUserBy.role === Role.SUPERADMIN;
 
   const createCitySubmit = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -85,7 +90,7 @@ export default function Cities() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          {false && (
+          {isAdmin && (
             <label htmlFor='my_modal_6' className='btn btn-primary ml-5'>
               <div className='flex items-center'>
                 <svg

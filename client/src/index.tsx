@@ -53,6 +53,7 @@ root.render(
       draggable
       pauseOnHover
     />
+
     <App />
   </ApolloProvider>
 );

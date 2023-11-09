@@ -31,9 +31,10 @@ export class CityResolver {
     return await city.getCityBy(id);
   }
 
-  @Authorized(Role.SUPERADMIN)
+  @Authorized([Role.SUPERADMIN])
   @Mutation(() => City)
   async createCity(
+    @Ctx() context: any,
     @Arg("name") name: string,
     @Arg("picture") picture: string,
     @Arg("latitude", () => Float, { nullable: true }) latitude: number,

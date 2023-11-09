@@ -15,7 +15,7 @@ export default function AutoComplete({ data, onClick }: Props) {
           key={index}
           className='p-1 cursor-pointer hover:bg-primary'
         >
-          <p className='text-base-100'>{value}</p>
+          {value}
         </li>
       ))}
     </ul>
