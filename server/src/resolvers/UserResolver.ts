@@ -83,13 +83,16 @@ export class UserResolver {
 
     try {
       if (await argon2.verify(user.hashedPassword, password)) {
-        const token = jwt.sign({ email, role: user.role }, process.env.JWT_SECRET_KEY as jwt.Secret);
+        const token = jwt.sign(
+          { email, role: user.role },
+          process.env.JWT_SECRET_KEY as jwt.Secret
+        );
         return token;
       } else {
         throw new Error("error");
       }
     } catch (err) {
-        console.error(err);
+      console.error(err);
     }
   }
 }

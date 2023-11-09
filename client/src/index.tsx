@@ -1,39 +1,41 @@
 import ReactDOM from "react-dom/client";
-import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  ApolloProvider,
+} from "@apollo/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { setContext } from '@apollo/client/link/context';
-
-const httpLink = createHttpLink({
-  // TODO manage uri depending on environement
-  // uri: '/graphql', // for production
-  uri: 'http://localhost:4000/', // for local dev
-  credentials: 'same-origin'
-});
-
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    }
-  }
-});
+import { setContext } from "@apollo/client/link/context";
 
 const graphqlUri =
   process.env.NODE_ENV === "production"
     ? "/graphql"
     : process.env.REACT_APP_GRAPHQL_URI_DEV;
 
+const httpLink = createHttpLink({
+  uri: graphqlUri,
+  credentials: "same-origin",
+});
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem("token");
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  // uri: graphqlUri,
   cache: new InMemoryCache(),
 });
 

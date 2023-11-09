@@ -64,3 +64,8 @@
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
   transition: 250ms;
 }
+
+.leaflet-marker-icon {
+  background-color: transparent;
+  border: none;
+}

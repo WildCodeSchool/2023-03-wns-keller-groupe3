@@ -1,90 +1,66 @@
+import { useState } from "react";
+import { suggestedCities } from "../functions/suggestedCities";
+import AutoComplete from "./AutoComplete";
+
 interface CreatCityModalFormProps {
-  createCitySubmit: React.FormEventHandler<HTMLFormElement>;
-  setCreateCityState: React.Dispatch<
-    React.SetStateAction<{
-      name: string;
-      picture: string;
-      lat: string;
-      long: string;
-    }>
-  >;
+  createCitySubmit: (
+    e: React.FormEvent<HTMLFormElement>,
+    suggestions: string[]
+  ) => Promise<void>;
+  setCityName: React.Dispatch<React.SetStateAction<string>>;
+  cityName: string;
 }
 
 export default function CreateCityModalForm({
   createCitySubmit,
-  setCreateCityState,
+  setCityName,
+  cityName,
 }: CreatCityModalFormProps) {
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [savedSuggestions, setSavedSuggestions] = useState<string[]>([]);
+
+  const handleSuggestions = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCityName(e.target.value);
+    if (!e.target.value) {
+      setSuggestions([]);
+      return;
+    }
+    const result = await suggestedCities(e.target.value.trim());
+    setSuggestions(result);
+    setSavedSuggestions(result);
+  };
+
+  const selectSuggestion = (selectedCity: string) => {
+    setCityName(selectedCity);
+    setSuggestions([]);
+  };
+
   return (
     <div className='modal-box'>
       <h3 className='font-bold text-xl mb-4'>Ajouter une ville</h3>
       <hr></hr>
-      <form onSubmit={createCitySubmit} className='py-6 flex flex-col'>
+      <form
+        onSubmit={(e) => createCitySubmit(e, savedSuggestions)}
+        className='py-6 flex flex-col'
+      >
         <label className='text-sm mb-2 font-bold' htmlFor='name'>
           Nom :
         </label>
-        <input
-          id='name'
-          type='text'
-          placeholder='Paris, Rome, Rio ...'
-          className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-          onChange={(e) =>
-            setCreateCityState((prevState) => ({
-              ...prevState,
-              name: e.target.value,
-            }))
-          }
-        />
-        <label className='text-sm mb-2 font-bold' htmlFor='image'>
-          Image :
-        </label>
-        <input
-          id='image'
-          type='text'
-          placeholder='url : https://...'
-          className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-          onChange={(e) =>
-            setCreateCityState((prevState) => ({
-              ...prevState,
-              picture: e.target.value,
-            }))
-          }
-        />
-        <label className='text-sm mb-2 font-bold' htmlFor='latitude'>
-          Latitude :
-        </label>
-        <input
-          id='latitude'
-          type='number'
-          step='0.0001'
-          min={-90}
-          max={90}
-          placeholder='43.2345'
-          className='input input-bordered bg-base-content text-base-100 w-full max-w-xs mb-4'
-          onChange={(e) =>
-            setCreateCityState((prevState) => ({
-              ...prevState,
-              lat: e.target.value,
-            }))
-          }
-        />
-        <label className='text-sm mb-2 font-bold' htmlFor='longitude'>
-          Longitude :
-        </label>
-        <input
-          id='longitude'
-          type='number'
-          step='0.0001'
-          min={-180}
-          max={180}
-          placeholder='2.5456'
-          className='input input-bordered bg-base-content text-base-100 w-full max-w-xs'
-          onChange={(e) =>
-            setCreateCityState((prevState) => ({
-              ...prevState,
-              long: e.target.value,
-            }))
-          }
-        />
+        <div className='relative mb-4'>
+          <input
+            value={cityName}
+            id='name'
+            type='text'
+            placeholder='Paris, Rome, Rio ...'
+            className={
+              suggestions.length
+                ? "input bg-base-content text-base-100 w-full rounded-b-none"
+                : "input bg-base-content text-base-100 w-full"
+            }
+            onChange={(e) => handleSuggestions(e)}
+          />
+          <AutoComplete data={suggestions} onClick={selectSuggestion} />
+        </div>
         <div className='modal-action flex justify-between'>
           <label htmlFor='my_modal_6' className='btn'>
             Annuler
