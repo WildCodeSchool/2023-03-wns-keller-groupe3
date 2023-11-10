@@ -61,6 +61,40 @@ export default function Cities() {
       console.error(error);
       toast(<CustomToast message='Nom de ville invalide' color='text-error' />);
     }
+    if (!cityName.trim()) {
+      toast(
+        <CustomToast
+          message='Le nom de la ville est vide'
+          color='text-warning'
+        />
+      );
+      return;
+    }
+    if (!savedSuggestions.includes(cityName)) {
+      toast(
+        <CustomToast
+          message='Choisissez une ville dans la liste'
+          color='text-warning'
+        />
+      );
+      return;
+    }
+    try {
+      const cleanedCityName = deleteAfterComma(cityName);
+      const picture = await getCityCardPhoto(cityName);
+      const position = await getLatAndLongByCityName(cityName);
+      createCity({
+        variables: {
+          name: cleanedCityName,
+          picture: picture!,
+          latitude: position.latitude,
+          longitude: position.longitude,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      toast(<CustomToast message='Nom de ville invalide' color='text-error' />);
+    }
   };
 
   if (loading) return <p className='text-center'>Loading...</p>;
@@ -69,6 +103,7 @@ export default function Cities() {
   const filteredCities = cities.filter((city) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
 
   return (
     <section
