@@ -4,7 +4,7 @@ import type { HomeTabScreenProps } from "../navigation/types";
 
 function Home({ navigation }: HomeTabScreenProps<"Accueil">) {
   return (
-    <View className="hero-content text-center text-neutral-content">
+    <View className="hero-content text-center text-neutral-content p-5">
       <View className="max-w-2-xl text-base-content">
         <Text className="mb-5 text-5xl font-bold">City Guide</Text>
         <Text className="mb-5">

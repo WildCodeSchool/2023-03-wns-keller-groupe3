@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import CityCard from "../components/CityCard";
 import useGetCities from "../graphql/hook/useGetCities";
-import { Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 
 function Cities({ navigation }) {
   const [searchText, setSearchText] = useState("");
@@ -33,13 +33,13 @@ function Cities({ navigation }) {
       </View>
       <View className="pt-5 pb-16 grid min-[705px]:grid-cols-2 min-[705px]:!max-[44rem] lg:grid-cols-3 xl:grid-cols-4 justify-center md:max-w-md lg:max-w-2xl xl:max-w-4xl mx-auto">
         {filteredCities.map((city) => (
-          <View
+          <Pressable
             key={city.id}
             onPress={() => navigation.navigate("Map")}
             className="m-4 w-80 md:w-48"
           >
             <CityCard city={city} />
-          </View>
+          </Pressable>
         ))}
       </View>
     </View>

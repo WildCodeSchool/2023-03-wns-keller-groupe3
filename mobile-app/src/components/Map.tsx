@@ -1,4 +1,5 @@
 import "leaflet/dist/leaflet.css";
+import { View } from "react-native";
 import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_POI } from "../graphql/mutations";
@@ -63,14 +64,14 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         toast(
           <CustomToast
             message={`"${createPOI.name}" a été ajouté`}
-            color='text-success'
+            color="text-success"
           />
         );
         setShowModal(!showModal);
       },
       refetchQueries: [GET_ONE_CITY],
       onError(error) {
-        toast(<CustomToast message={error.message} color='text-error' />);
+        toast(<CustomToast message={error.message} color="text-error" />);
       },
     });
   };
@@ -89,7 +90,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
           showModal={showModal}
         />
       )}
-      <div id='map'>
+      <View id="map">
         <MapContainer
           id={id}
           center={[lat, long]}
@@ -99,7 +100,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <OpenModalWithPosition />
           {allPoi.map((poi) => {
@@ -114,7 +115,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
             );
           })}
         </MapContainer>
-      </div>
+      </View>
     </>
   );
 }
