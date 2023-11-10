@@ -27,21 +27,21 @@ function Home() {
 
     <div className="md:ml-24">
       <div
-        className="homeback flex relative justify-center xl:h-[30vh] bg-cover bg-no-repeat bg-center items-center"
+        className="homeback h-[290px] md:h-[260px] flex relative justify-center xl:h-[30vh] bg-cover bg-no-repeat bg-center items-center"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <h1 className="text-[#1f1b23] text-5xl relative z-10 font-bold">
+        <h1 className="mx-6 text-[#1f1b23] text-4xl xl:text-5xl relative z-10 font-bold">
           Bienvenue sur City Guide !
         </h1>
       </div>
       <div
-        className="xl:py-8 xl:px-4 2xl:p-9 xl:h-[36vh]"
+        className="py-14 px-7 xl:py-8 xl:px-4 2xl:p-9 xl:h-[36vh]"
         style={{
           background: "linear-gradient(180deg, #EFEFEF 0%, #C3C3C3 100%)",
         }}
       >
-        <div className="flex justify-around h-full items-center 2xl:justify-center">
-          <div className="card-home xl:w-[33%] 2xl:w-[388px] 2xl:max-h-[176px] 2xl:mx-10">
+        <div className="flex flex-col justify-around h-full items-center xl:flex-row 2xl:justify-center">
+          <div className="card-home mb-8 md:w-[88%] xl:mb-0 xl:w-[33%] xl:max-h-[200px] 2xl:w-[388px] 2xl:mx-10">
             <div>
               <h3 className="text-[#1f1b23] text-center">
                 <b>Laissez-vous guider</b> par notre site : trouvez facilement
@@ -53,7 +53,7 @@ function Home() {
               <img src={icon1} alt="icon mountain" />
             </div>
           </div>
-          <div className="card-home xl:w-[33%] 2xl:w-[388px] 2xl:max-h-[176px] 2xl:mx-10">
+          <div className="card-home mb-8 md:w-[88%] xl:mb-0 xl:w-[33%] xl:max-h-[200px] 2xl:w-[388px] 2xl:mx-10">
             <div>
               <h3 className="text-[#1f1b23] text-center">
                 <b>Explorez les villes</b> où vous souhaitez vous rendre :
@@ -65,7 +65,7 @@ function Home() {
               <img src={icon3} alt="icon explore" />
             </div>
           </div>
-          <div className="card-home xl:w-[33%] 2xl:w-[388px] 2xl:max-h-[176px] 2xl:mx-10">
+          <div className="card-home mb-8 md:w-[88%] xl:mb-0 xl:w-[33%] xl:max-h-[200px] 2xl:w-[388px] 2xl:mx-10">
             <div>
               <h3 className="text-[#1f1b23] text-center">
                 <b>Faites des rencontres</b> mémorables : rencontrez les
@@ -78,7 +78,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="xl:h-[33vh] flex justify-center items-center">
+      <div className="pb-[140px] pt-[80px] md:pb-[80px] xl:h-[33vh] flex justify-center items-center">
         <Link to="/cities">
           <button className="btn btn-primary">Explorez maintenant !</button>
         </Link>
