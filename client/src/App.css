@@ -30,12 +30,17 @@
   background-color: white;
   opacity: 0.88;
 }
+
 .card-home {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   height: 100%;
+
+  @media screen and (max-width: 1600px) {
+    max-height: 176px;
+  }
 }
 
 /* -------------modal in page city ---------------*/
