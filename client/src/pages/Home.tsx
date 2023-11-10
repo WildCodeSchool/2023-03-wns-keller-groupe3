@@ -40,8 +40,8 @@ function Home() {
           background: "linear-gradient(180deg, #EFEFEF 0%, #C3C3C3 100%)",
         }}
       >
-        <div className="flex justify-around h-full items-center">
-          <div className="card-home xl:w-[33%] 2xl:w-[388px] 2xl:max-h-[176px]">
+        <div className="flex justify-around h-full items-center 2xl:justify-center">
+          <div className="card-home xl:w-[33%] 2xl:w-[388px] 2xl:max-h-[176px] 2xl:mx-10">
             <div>
               <h3 className="text-[#1f1b23] text-center">
                 <b>Laissez-vous guider</b> par notre site : trouvez facilement
@@ -53,7 +53,7 @@ function Home() {
               <img src={icon1} alt="icon mountain" />
             </div>
           </div>
-          <div className="card-home xl:w-[33%] 2xl:w-[388px] 2xl:max-h-[176px]">
+          <div className="card-home xl:w-[33%] 2xl:w-[388px] 2xl:max-h-[176px] 2xl:mx-10">
             <div>
               <h3 className="text-[#1f1b23] text-center">
                 <b>Explorez les villes</b> où vous souhaitez vous rendre :
@@ -65,7 +65,7 @@ function Home() {
               <img src={icon3} alt="icon explore" />
             </div>
           </div>
-          <div className="card-home xl:w-[33%] 2xl:w-[388px] 2xl:max-h-[176px]">
+          <div className="card-home xl:w-[33%] 2xl:w-[388px] 2xl:max-h-[176px] 2xl:mx-10">
             <div>
               <h3 className="text-[#1f1b23] text-center">
                 <b>Faites des rencontres</b> mémorables : rencontrez les
