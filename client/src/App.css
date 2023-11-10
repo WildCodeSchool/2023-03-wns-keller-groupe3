@@ -18,6 +18,28 @@
   border: 1px solid #ed9986;
 }
 
+/*----------------------home----------------------*/
+
+.homeback {
+  position: relative;
+}
+.homeback::after {
+  position: absolute;
+  content: "";
+  inset: 0;
+  background-color: white;
+  opacity: 0.88;
+}
+.card-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* -------------modal in page city ---------------*/
+
 .leaflet-container {
   height: 100dvh;
   z-index: 0;
