@@ -26,7 +26,8 @@ export class POIResolver {
 
   // https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
   // TODO Make class-validations
-  @Authorized(Role.SUPERADMIN)
+  // TODO make sure to restrict SUPERUSER and ADMIN by city (i.e : ADMIN from Toulouse cannot create POI in Paris)
+  @Authorized([Role.SUPERUSER, Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => POI)
   async createPOI(
     @Arg("latitude") latitude: number,
@@ -72,13 +73,8 @@ export class POIResolver {
     }
   }
 
-  @Authorized(Role.SUPERADMIN)
-  @Mutation(() => Boolean)
-  async deletePOI(@Arg("id") id: string): Promise<boolean> {
-    return await pointOfInterest.deletePOI(id);
-  }
-
-  @Authorized(Role.SUPERADMIN)
+  // TODO make sure to restrict SUPERUSER and ADMIN by city (i.e : ADMIN from Toulouse cannot update POI in Paris)
+  @Authorized([Role.SUPERUSER, Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => POI)
   async updatePOI(
     @Arg("id") id: string,
@@ -109,5 +105,12 @@ export class POIResolver {
       console.error(`Failed to update POI with ID: ${id}`);
       throw new Error(`Something went wrong when updating the POI`);
     }
+  }
+  
+  // TODO make sure to restrict SUPERUSER and ADMIN by city (i.e : ADMIN from Toulouse cannot delete POI in Paris)
+  @Authorized([Role.SUPERUSER, Role.ADMIN, Role.SUPERADMIN])
+  @Mutation(() => Boolean)
+  async deletePOI(@Arg("id") id: string): Promise<boolean> {
+    return await pointOfInterest.deletePOI(id);
   }
 }
