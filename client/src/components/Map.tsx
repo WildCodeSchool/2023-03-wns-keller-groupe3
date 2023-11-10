@@ -36,6 +36,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const { data } = useQuery(GET_CATEGORIES);
   const allCategories = data?.getAllCategories;
   const [createPoi] = useMutation(ADD_POI);
+  // TODO only open the modal if user has permission to create a POI
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
