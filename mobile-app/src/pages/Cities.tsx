@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-native";
 import CityCard from "../components/CityCard";
 import useGetCities from "../graphql/hook/useGetCities";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Text, TextInput, View } from "react-native";
 
-function Cities({ navigation }) {
+function Cities() {
+  const navigation = useNavigation<any>();
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
   if (loading) return <Text className="text-center">Loading...</Text>;
@@ -34,13 +36,7 @@ function Cities({ navigation }) {
       </View>
       <View className="pt-5 pb-16 grid min-[705px]:grid-cols-2 min-[705px]:!max-[44rem] lg:grid-cols-3 xl:grid-cols-4 justify-center md:max-w-md lg:max-w-2xl xl:max-w-4xl mx-auto">
         {filteredCities.map((city) => (
-          <Pressable
-            key={city.id}
-            onPress={() => navigation.navigate("Map")}
-            className="m-4 w-80 md:w-48"
-          >
-            <CityCard city={city} />
-          </Pressable>
+          <CityCard city={city} navigation={navigation} />
         ))}
       </View>
     </View>

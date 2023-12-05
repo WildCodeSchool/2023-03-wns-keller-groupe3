@@ -6,9 +6,16 @@ import HomeScreen from "./src/pages/Home";
 import CitiesScreen from "./src/pages/Cities";
 import UserScreen from "./src/pages/User";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import Constants from "expo-constants";
+
+const { manifest2 } = Constants;
+
+const graphqlUri =
+  "http://" + manifest2?.extra?.expoGo?.debuggerHost?.split(":")[0] + ":4000/";
 
 const client = new ApolloClient({
-  uri: "https://staging.keller3.wns.wilders.dev/graphql",
+  // uri: "https://staging.keller3.wns.wilders.dev/graphql",
+  uri: graphqlUri,
   cache: new InMemoryCache(),
 });
 

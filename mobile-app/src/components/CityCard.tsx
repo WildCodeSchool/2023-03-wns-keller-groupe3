@@ -1,15 +1,19 @@
 import { View, Image, Text, Pressable } from "react-native";
 import { City } from "../graphql/__generated__/graphql";
+import { CitiesProps } from "../navigation/types";
+import { useNavigation } from "@react-navigation/native";
+// import type { HomeTabScreenProps } from './navigation/types';
 
 interface CityCardProps {
   city: Partial<City>;
-  navigation: any;
+  navigation: CitiesProps["navigation"];
 }
 
-function CityCard({ city, navigation }: CityCardProps) {
+function CityCard({ city }: any) {
+  const navigation = useNavigation<any>();
   return (
     <Pressable
-      onPress={() => navigation.navigate("Accueil")}
+      onPress={() => navigation.navigate("Map", { cityId: city.id })}
       className="CardShadowHover max-w-sm rounded-lg border-b-[6px] border-primary bg-base-100 shadow-xl"
     >
       <View className="h-48 md:h-28">

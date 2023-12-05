@@ -1,8 +1,9 @@
 import React from "react";
 import { Text, View, Button } from "react-native";
-import type { HomeTabScreenProps } from "../navigation/types";
+import { useNavigation } from "@react-navigation/native";
 
-function Home({ navigation }: HomeTabScreenProps<"Accueil">) {
+function Home() {
+  const navigation = useNavigation<any>();
   return (
     <View className="hero-content text-center text-neutral-content p-5">
       <View className="max-w-2-xl text-base-content">
@@ -12,7 +13,7 @@ function Home({ navigation }: HomeTabScreenProps<"Accueil">) {
           perles rares.
         </Text>
         <Button
-          onPress={() => navigation.navigate("Villes")}
+          onPress={() => navigation.navigate("Cities")}
           title="Explorez maintenant !"
         />
       </View>
