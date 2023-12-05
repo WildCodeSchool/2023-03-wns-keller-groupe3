@@ -20,6 +20,7 @@ import { marker } from "../utils/marker";
 import useGetUser from "../graphql/hook/useGetUser";
 import { Role } from "../utils/RoleEnum";
 import { useParams } from "react-router-dom";
+import checkIfPositionIsInCity from "../scripts/checkIfPositionIsInCity";
 
 interface MapProps {
   id: string;
@@ -47,19 +48,19 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
-        const latitudeRange =
-          lat + 0.05 > e.latlng.lat && lat - 0.05 < e.latlng.lat;
-        const longitudeRange =
-          long + 0.05 > e.latlng.lng && long - 0.05 < e.latlng.lng;
+        // const latitudeRange =
+        //   lat + 0.05 > e.latlng.lat && lat - 0.05 < e.latlng.lat;
+        // const longitudeRange =
+        //   long + 0.05 > e.latlng.lng && long - 0.05 < e.latlng.lng;
         if (isSuperAdmin || isSuperUser) {
           setClikedLat(e.latlng.lat);
           setClikedLong(e.latlng.lng);
           setShowModal(!showModal);
-          if (!latitudeRange || !longitudeRange) {
+          if (!checkIfPositionIsInCity(lat, long, e.latlng.lat, e.latlng.lng)) {
             toast(
               <CustomToast
                 message={"Le point d'intêret est en dehors de la ville"}
-                color='text-error'
+                color="text-error"
               />
             );
             setClikedLat(lat);
@@ -96,14 +97,14 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         toast(
           <CustomToast
             message={`"${createPOI.name}" a été ajouté`}
-            color='text-success'
+            color="text-success"
           />
         );
         setShowModal(!showModal);
       },
       refetchQueries: [GET_ONE_CITY],
       onError(error) {
-        toast(<CustomToast message={error.message} color='text-error' />);
+        toast(<CustomToast message={error.message} color="text-error" />);
       },
     });
   };
@@ -121,7 +122,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
           showModal={showModal}
         />
       )}
-      <div id='map'>
+      <div id="map">
         <MapContainer
           id={id}
           center={[lat, long]}
@@ -131,7 +132,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <OpenModalWithPosition />
           {allPoi.map((poi) => {
