@@ -10,18 +10,57 @@ import CustomToast from "../components/CustomToast";
 import { toast } from "react-toastify";
 import { getCityCardPhoto } from "../functions/getCityCardPhoto";
 import { deleteAfterComma } from "../scripts/deleteAfterComma";
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "../graphql/queries";
+import { Role } from "../utils/RoleEnum";
 
 export default function Cities() {
   const [cityName, setCityName] = useState("");
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
+  const { data } = useQuery(GET_USER);
+  const isAdmin = data?.getUserBy.role === Role.SUPERADMIN;
 
   const createCitySubmit = async (
     e: React.FormEvent<HTMLFormElement>,
     savedSuggestions: string[]
   ) => {
     e.preventDefault();
+    if (!cityName.trim()) {
+      toast(
+        <CustomToast
+          message='Le nom de la ville est vide'
+          color='text-warning'
+        />
+      );
+      return;
+    }
+    if (!savedSuggestions.includes(cityName)) {
+      toast(
+        <CustomToast
+          message='Choisissez une ville dans la liste'
+          color='text-warning'
+        />
+      );
+      return;
+    }
+    try {
+      const cleanedCityName = deleteAfterComma(cityName);
+      const picture = await getCityCardPhoto(cityName);
+      const position = await getLatAndLongByCityName(cityName);
+      createCity({
+        variables: {
+          name: cleanedCityName,
+          picture: picture!,
+          latitude: position.latitude,
+          longitude: position.longitude,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      toast(<CustomToast message='Nom de ville invalide' color='text-error' />);
+    }
     if (!cityName.trim()) {
       toast(
         <CustomToast
@@ -65,6 +104,7 @@ export default function Cities() {
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
+
   return (
     <section
       className='md:ml-[96px] min-h-screen bg-base-content'
@@ -85,24 +125,26 @@ export default function Cities() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <label htmlFor='my_modal_6' className='btn btn-primary ml-5'>
-            <div className='flex items-center'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth='1.5'
-                stroke='currentColor'
-                className='w-6 h-6'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M12 4.5v15m7.5-7.5h-15'
-                />
-              </svg>
-            </div>
-          </label>
+          {isAdmin && (
+            <label htmlFor='my_modal_6' className='btn btn-primary ml-5'>
+              <div className='flex items-center'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth='1.5'
+                  stroke='currentColor'
+                  className='w-6 h-6'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M12 4.5v15m7.5-7.5h-15'
+                  />
+                </svg>
+              </div>
+            </label>
+          )}
         </div>
       </div>
       <div className='pt-5 pb-16 grid min-[705px]:grid-cols-2 min-[705px]:!max-[44rem] lg:grid-cols-3 xl:grid-cols-4 justify-center md:max-w-md lg:max-w-2xl xl:max-w-4xl mx-auto'>
