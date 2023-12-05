@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router-native";
 import { View, Text } from "react-native";
 import Map from "./Map";
 import useGetCityBy from "../graphql/hook/useGetCityBy";
