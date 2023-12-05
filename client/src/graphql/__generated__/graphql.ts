@@ -40,6 +40,8 @@ export type City = {
 
 export type CityInput = {
   id: Scalars['String']['input'];
+  latitude: Scalars['Float']['input'];
+  longitude: Scalars['Float']['input'];
 };
 
 export type Mutation = {

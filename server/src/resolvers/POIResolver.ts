@@ -39,6 +39,12 @@ export class POIResolver {
     @Arg("categories", () => [CategoryInput]) categories: Category[],
     @Arg("city", () => CityInput) city: City
   ): Promise<POI | string> {
+    const latitudeRange =
+      city.latitude + 0.05 > latitude && city.latitude - 0.05 < latitude;
+    const longitudeRange =
+      city.longitude + 0.05 > longitude && city.longitude - 0.05 < longitude;
+    if (!latitudeRange || !longitudeRange)
+      throw new ApolloError("Le point d'intêret est en dehors de la ville");
     if (
       name.length === 0 ||
       picture.length === 0 ||
@@ -72,16 +78,13 @@ export class POIResolver {
     }
   }
 
-  @Authorized(Role.ADMIN)
-  @Authorized(Role.SUPERADMIN)
+  @Authorized([Role.SUPERADMIN, Role.ADMIN])
   @Mutation(() => Boolean)
   async deletePOI(@Arg("id") id: string): Promise<boolean> {
     return await pointOfInterest.deletePOI(id);
   }
 
-  @Authorized(Role.ADMIN)
-  @Authorized(Role.SUPERUSER)
-  @Authorized(Role.SUPERADMIN)
+  @Authorized([Role.SUPERADMIN, Role.ADMIN, Role.SUPERUSER])
   @Mutation(() => POI)
   async updatePOI(
     @Arg("id") id: string,

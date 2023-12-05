@@ -29,13 +29,13 @@ interface MapProps {
 }
 
 export default function Map({ id, lat, long, allPoi }: MapProps) {
-  const { id: cityId } = useParams();
   const { userRole, superUsercityId } = useGetUser();
   const isSuperAdmin = userRole === Role.SUPERADMIN;
-  const isSuperUser = userRole === Role.SUPERUSER && cityId === superUsercityId;
+  const isSuperUser = userRole === Role.SUPERUSER && id === superUsercityId;
   const [showModal, setShowModal] = useState(false);
   const [clickedLat, setClikedLat] = useState(lat);
   const [clickedLong, setClikedLong] = useState(long);
+
   const [name, setName] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [description, setDescription] = useState("");
@@ -71,7 +71,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         categories: categories,
         latitude: clickedLat,
         longitude: clickedLong,
-        city: { id },
+        city: { id, latitude: lat, longitude: long },
         gpsPin: "Default",
       },
       onCompleted({ createPOI }) {
