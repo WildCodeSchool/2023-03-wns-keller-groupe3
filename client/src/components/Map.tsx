@@ -17,6 +17,8 @@ import { Category, Poi } from "../graphql/__generated__/graphql";
 import PoiCard from "./PoiCard";
 import { getAddressByLatAndLong } from "../functions/getAddressByLatAndLong";
 import { marker } from "../utils/marker";
+import useGetUser from "../graphql/hook/useGetUser";
+import { Role } from "../utils/RoleEnum";
 
 interface MapProps {
   id: string;
@@ -26,6 +28,8 @@ interface MapProps {
 }
 
 export default function Map({ id, lat, long, allPoi }: MapProps) {
+  const { userRole } = useGetUser();
+  const isSuperAdmin = userRole === Role.SUPERADMIN;
   const [showModal, setShowModal] = useState(false);
   const [clickedLat, setClikedLat] = useState(lat);
   const [clickedLong, setClikedLong] = useState(long);
@@ -39,9 +43,11 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
-        setClikedLat(e.latlng.lat);
-        setClikedLong(e.latlng.lng);
-        setShowModal(!showModal);
+        if (isSuperAdmin) {
+          setClikedLat(e.latlng.lat);
+          setClikedLong(e.latlng.lng);
+          setShowModal(!showModal);
+        }
       },
     });
     return null;
