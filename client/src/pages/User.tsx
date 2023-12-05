@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 function UserPage() {
   const navigate = useNavigate();
   const client = useApolloClient();
-  const { isLogged } = useGetUser();
+  const { isLogged, userRole } = useGetUser();
   const [isRegisterMode, setIsRegisterMode] = useState(false);
 
   const toggleMode = () => {
@@ -30,13 +30,16 @@ function UserPage() {
      ${isRegisterMode ? "mb-[160px] md:pb-8 md:mb-0" : ""}`}
     >
       {isLogged && (
-        <button
-          type='button'
-          className='btn btn-primary'
-          onClick={handleLogout}
-        >
-          Deconnexion
-        </button>
+        <>
+          {userRole}
+          <button
+            type='button'
+            className='btn btn-primary'
+            onClick={handleLogout}
+          >
+            Deconnexion
+          </button>
+        </>
       )}
       {!isLogged && (
         <>
