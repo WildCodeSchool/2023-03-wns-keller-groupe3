@@ -4,11 +4,12 @@ const checkIfPositionIsInCity = (
   poiLat: number,
   poiLong: number
 ) => {
+  const range = 0.05;
   if (
-    cityLat + 0.05 > poiLat &&
-    cityLat - 0.05 < poiLat &&
-    cityLong + 0.05 > poiLong &&
-    cityLong - 0.05 < poiLong
+    cityLat + range > poiLat &&
+    cityLat - range < poiLat &&
+    cityLong + range > poiLong &&
+    cityLong - range < poiLong
   ) {
     return true;
   }

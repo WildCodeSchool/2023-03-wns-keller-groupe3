@@ -22,10 +22,6 @@ export class POIResolver {
     return await pointOfInterest.getPOIBy(id);
   }
 
-  // TODO Queries "getAllPOIsByCategory" and "getAllPOIsByCity"
-
-  // https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
-  // TODO Make class-validations
   @Authorized([Role.SUPERADMIN, Role.ADMIN, Role.SUPERUSER])
   @Mutation(() => POI)
   async createPOI(
