@@ -1,8 +1,9 @@
-import { Arg, Mutation, Resolver, Query } from "type-graphql";
+import { Arg, Mutation, Resolver, Query, Authorized } from "type-graphql";
 import { Category } from "../entities/Category";
 import dataSource from "../utils";
 import { CategoryService } from "../services/CategoryService";
 import { POI } from "../entities/POI";
+import { Role } from "../entities/User";
 
 const category = new CategoryService();
 
@@ -18,11 +19,13 @@ export class CategoryResolver {
     return await category.getCategoryBy(id);
   }
 
+  @Authorized(Role.SUPERADMIN)
   @Mutation(() => Category)
   async createCategory(@Arg("name") name: string): Promise<Category> {
     return await category.createCategory(name);
   }
 
+  @Authorized(Role.SUPERADMIN)
   @Mutation(() => String)
   async updateCategory(
     @Arg("id") id: string,
@@ -37,6 +40,7 @@ export class CategoryResolver {
     }
   }
 
+  @Authorized(Role.SUPERADMIN)
   @Mutation(() => String)
   async deleteCategory(@Arg("id") id: string): Promise<string> {
     const categoryToDelete = await dataSource

@@ -26,7 +26,7 @@ export class POIResolver {
 
   // https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
   // TODO Make class-validations
-  @Authorized(Role.SUPERADMIN)
+  @Authorized([Role.SUPERADMIN, Role.ADMIN, Role.SUPERUSER])
   @Mutation(() => POI)
   async createPOI(
     @Arg("latitude") latitude: number,
@@ -72,12 +72,15 @@ export class POIResolver {
     }
   }
 
+  @Authorized(Role.ADMIN)
   @Authorized(Role.SUPERADMIN)
   @Mutation(() => Boolean)
   async deletePOI(@Arg("id") id: string): Promise<boolean> {
     return await pointOfInterest.deletePOI(id);
   }
 
+  @Authorized(Role.ADMIN)
+  @Authorized(Role.SUPERUSER)
   @Authorized(Role.SUPERADMIN)
   @Mutation(() => POI)
   async updatePOI(

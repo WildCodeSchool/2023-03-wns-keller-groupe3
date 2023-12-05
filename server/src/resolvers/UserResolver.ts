@@ -1,5 +1,5 @@
-import { Arg, Mutation, Resolver, Query, Ctx } from "type-graphql";
-import { User } from "../entities/User";
+import { Arg, Mutation, Resolver, Query, Ctx, Authorized } from "type-graphql";
+import { Role, User } from "../entities/User";
 import { UserService } from "../services/UserService";
 import dataSource from "../utils";
 import * as argon2 from "argon2";
@@ -11,6 +11,7 @@ const user = new UserService();
 
 @Resolver(User)
 export class UserResolver {
+  @Authorized(Role.SUPERADMIN)
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
     try {
@@ -33,6 +34,7 @@ export class UserResolver {
     }
   }
 
+  @Authorized(Role.SUPERADMIN)
   @Mutation(() => User)
   async updateUser(
     @Arg("id") id: string,
@@ -48,6 +50,7 @@ export class UserResolver {
     }
   }
 
+  @Authorized(Role.SUPERADMIN)
   @Mutation(() => String)
   async deleteUser(@Arg("id") id: string): Promise<string> {
     try {
