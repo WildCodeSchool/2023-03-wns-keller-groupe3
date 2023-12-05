@@ -22,7 +22,8 @@ export class POIResolver {
     return await pointOfInterest.getPOIBy(id);
   }
 
-  @Authorized([Role.SUPERADMIN, Role.ADMIN, Role.SUPERUSER])
+  // https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
+  @Authorized([Role.SUPERUSER, Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => POI)
   async createPOI(
     @Arg("latitude") latitude: number,
@@ -74,13 +75,7 @@ export class POIResolver {
     }
   }
 
-  @Authorized([Role.SUPERADMIN, Role.ADMIN])
-  @Mutation(() => Boolean)
-  async deletePOI(@Arg("id") id: string): Promise<boolean> {
-    return await pointOfInterest.deletePOI(id);
-  }
-
-  @Authorized([Role.SUPERADMIN, Role.ADMIN, Role.SUPERUSER])
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => POI)
   async updatePOI(
     @Arg("id") id: string,
@@ -112,4 +107,12 @@ export class POIResolver {
       throw new Error(`Something went wrong when updating the POI`);
     }
   }
+
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
+  @Mutation(() => Boolean)
+  async deletePOI(@Arg("id") id: string): Promise<boolean> {
+    return await pointOfInterest.deletePOI(id);
+  }
+
+  // TODO Queries "getAllPOIsByCategory"
 }

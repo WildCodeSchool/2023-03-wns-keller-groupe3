@@ -11,7 +11,7 @@ const user = new UserService();
 
 @Resolver(User)
 export class UserResolver {
-  @Authorized(Role.SUPERADMIN)
+  @Authorized([Role.SUPERADMIN])
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
     try {
@@ -32,47 +32,6 @@ export class UserResolver {
       console.error(`User ${userEmail} not found`);
       throw new Error(`User not found`);
     }
-  }
-
-  @Authorized(Role.SUPERADMIN)
-  @Mutation(() => User)
-  async updateUser(
-    @Arg("id") id: string,
-    @Arg("name", { nullable: true }) name: string,
-    @Arg("email", { nullable: true }) email: string
-  ): Promise<User> {
-    try {
-      await user.update(id, { name, email });
-      return await user.getUserBy(id);
-    } catch (error) {
-      console.error(`Failed to update user with ID : ${id}`);
-      throw new Error(`Something went wrong when updating settings`);
-    }
-  }
-
-  @Authorized(Role.SUPERADMIN)
-  @Mutation(() => String)
-  async deleteUser(@Arg("id") id: string): Promise<string> {
-    try {
-      await user.delete(id);
-      return `User with ID : ${id} deleted`;
-    } catch (error) {
-      console.error(`Failed to delete user with ID : ${id}`);
-      throw new Error(`Something went wrong`);
-    }
-  }
-
-  @Mutation(() => User)
-  async createUser(
-    @Arg("email") email: string,
-    @Arg("name") name: string,
-    @Arg("password") password: string
-  ): Promise<User> {
-    if (password.trim() === "") {
-      console.error(`Password can't be empty`);
-      throw new Error("Password can't be empty");
-    }
-    return await user.create(email, name, password);
   }
 
   @Query(() => String)
@@ -96,6 +55,49 @@ export class UserResolver {
       }
     } catch (err) {
       console.error(err);
+    }
+  }
+
+  @Mutation(() => User)
+  async createUser(
+    @Arg("email") email: string,
+    @Arg("name") name: string,
+    @Arg("password") password: string
+  ): Promise<User> {
+    if (password.trim() === "") {
+      console.error(`Password can't be empty`);
+      throw new Error("Password can't be empty");
+    }
+    return await user.create(email, name, password);
+  }
+
+  // TODO make sure to restrict USER by ID (only this user can update himself)
+  @Authorized([Role.USER, Role.SUPERADMIN])
+  @Mutation(() => User)
+  async updateUser(
+    @Arg("id") id: string,
+    @Arg("name", { nullable: true }) name: string,
+    @Arg("email", { nullable: true }) email: string
+  ): Promise<User> {
+    try {
+      await user.update(id, { name, email });
+      return await user.getUserBy(id);
+    } catch (error) {
+      console.error(`Failed to update user with ID : ${id}`);
+      throw new Error(`Something went wrong when updating settings`);
+    }
+  }
+
+  // TODO make sure to restrict USER by ID (only this user can delete himself)
+  @Authorized([Role.USER, Role.SUPERADMIN])
+  @Mutation(() => String)
+  async deleteUser(@Arg("id") id: string): Promise<string> {
+    try {
+      await user.delete(id);
+      return `User with ID : ${id} deleted`;
+    } catch (error) {
+      console.error(`Failed to delete user with ID : ${id}`);
+      throw new Error(`Something went wrong`);
     }
   }
 }

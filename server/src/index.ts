@@ -4,17 +4,18 @@ import { CategoryResolver } from "./resolvers/CategoryResolver";
 import { CityResolver } from "./resolvers/CityResolver";
 import { POIResolver } from "./resolvers/POIResolver";
 import { UserResolver } from "./resolvers/UserResolver";
+import { Role } from "./entities/User";
+
 import dataSource from "./utils";
 import "reflect-metadata";
 import * as jwt from "jsonwebtoken";
-import { Role } from "./entities/User";
 
 const start = async (): Promise<void> => {
   await dataSource.initialize();
 
   const typeGraphQLgeneratedSchema = await buildSchema({
     resolvers: [CategoryResolver, CityResolver, POIResolver, UserResolver],
-    authChecker: ({ context }, authorizedRoles: Role[]) => {
+    authChecker: ({ context },  authorizedRoles: Role[]) => {
       console.log("roles is", authorizedRoles);
       console.log("context from authchecker", context);
       if (

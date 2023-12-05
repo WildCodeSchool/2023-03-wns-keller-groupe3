@@ -20,7 +20,6 @@ const city = new CityService();
 export class CityResolver {
   @Query(() => [City])
   async getAllCities(@Ctx() context: Context): Promise<City[]> {
-    console.log("this is context", context);
     return await dataSource
       .getRepository(City)
       .find({ order: { name: "ASC" } });
@@ -57,7 +56,7 @@ export class CityResolver {
     }
   }
 
-  @Authorized(Role.SUPERADMIN)
+  @Authorized([Role.SUPERADMIN])
   @Mutation(() => String)
   async deleteCity(@Arg("id") id: string): Promise<string> {
     try {
@@ -68,7 +67,7 @@ export class CityResolver {
     }
   }
 
-  @Authorized(Role.SUPERADMIN)
+  @Authorized([Role.SUPERADMIN])
   @Mutation(() => City)
   async UpdateCity(
     @Arg("id") id: string,

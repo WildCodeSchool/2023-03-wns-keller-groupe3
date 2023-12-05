@@ -19,7 +19,6 @@ import { getAddressByLatAndLong } from "../functions/getAddressByLatAndLong";
 import { marker } from "../utils/marker";
 import useGetUser from "../graphql/hook/useGetUser";
 import { Role } from "../utils/RoleEnum";
-import { useParams } from "react-router-dom";
 import checkIfPositionIsInCity from "../scripts/checkIfPositionIsInCity";
 
 interface MapProps {
@@ -33,6 +32,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const { userRole, superUsercityId } = useGetUser();
   const isSuperAdmin = userRole === Role.SUPERADMIN;
   const isSuperUser = userRole === Role.SUPERUSER && id === superUsercityId;
+
   const [showModal, setShowModal] = useState(false);
   const [clickedLat, setClikedLat] = useState(lat);
   const [clickedLong, setClikedLong] = useState(long);
@@ -40,9 +40,11 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState("");
+
   const { data } = useQuery(GET_CATEGORIES);
   const allCategories = data?.getAllCategories;
   const [createPoi] = useMutation(ADD_POI);
+
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
@@ -54,10 +56,9 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
                 color='text-error'
               />
             );
-            setClikedLat(lat);
-            setClikedLong(long);
-            setShowModal(false);
           } else {
+            setClikedLat(e.latlng.lat);
+            setClikedLong(e.latlng.lng);
             setShowModal(!showModal);
           }
         }
@@ -99,6 +100,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
       },
     });
   };
+
   return (
     <>
       {showModal && clickedLat && clickedLong && (
