@@ -10,17 +10,17 @@ import CustomToast from "../components/CustomToast";
 import { toast } from "react-toastify";
 import { getCityCardPhoto } from "../functions/getCityCardPhoto";
 import { deleteAfterComma } from "../scripts/deleteAfterComma";
-import { useQuery } from "@apollo/client";
-import { GET_USER } from "../graphql/queries";
 import { Role } from "../utils/RoleEnum";
+import useGetUser from "../graphql/hook/useGetUser";
 
 export default function Cities() {
   const [cityName, setCityName] = useState("");
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
-  const { data } = useQuery(GET_USER);
-  const isAdmin = data?.getUserBy.role === Role.SUPERADMIN;
+  // SKIP LA QUERY SI LE USER N'EST PAS LOGGER
+  const { userRole } = useGetUser();
+  const isAdmin = userRole === Role.SUPERADMIN;
 
   const createCitySubmit = async (
     e: React.FormEvent<HTMLFormElement>,
