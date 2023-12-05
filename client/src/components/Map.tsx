@@ -43,13 +43,31 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const { data } = useQuery(GET_CATEGORIES);
   const allCategories = data?.getAllCategories;
   const [createPoi] = useMutation(ADD_POI);
+
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
+        const latitudeRange =
+          lat + 0.05 > e.latlng.lat && lat - 0.05 < e.latlng.lat;
+        const longitudeRange =
+          long + 0.05 > e.latlng.lng && long - 0.05 < e.latlng.lng;
         if (isSuperAdmin || isSuperUser) {
           setClikedLat(e.latlng.lat);
           setClikedLong(e.latlng.lng);
           setShowModal(!showModal);
+          if (!latitudeRange || !longitudeRange) {
+            toast(
+              <CustomToast
+                message={"Le point d'intêret est en dehors de la ville"}
+                color='text-error'
+              />
+            );
+            setClikedLat(lat);
+            setClikedLong(long);
+            setShowModal(false);
+          } else {
+            setShowModal(!showModal);
+          }
         }
       },
     });
