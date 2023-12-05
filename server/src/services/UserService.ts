@@ -16,7 +16,13 @@ export class UserService {
     return await dataSource.getRepository(User).findOneOrFail({
       where: { email },
       relations: { city: true },
-      select: { id: true, name: true, role: true, email: true },
+      select: {
+        id: true,
+        name: true,
+        role: true,
+        email: true,
+        city: { id: true },
+      },
     });
   }
 
