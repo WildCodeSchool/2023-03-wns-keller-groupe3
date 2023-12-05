@@ -6,7 +6,6 @@ import Cities from "./pages/Cities";
 import Home from "./pages/Home";
 import User from "./pages/User";
 
-// METTRE EN PLACE UN CONTEXT POUR LE GETUSER
 function App() {
   return (
     <Router>
