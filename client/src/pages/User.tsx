@@ -12,7 +12,6 @@ function UserPage() {
   const navigate = useNavigate();
   const client = useApolloClient();
   const { isLogged } = useGetUser();
-  console.log("isLogged=>", isLogged);
   const [isRegisterMode, setIsRegisterMode] = useState(false);
 
   const toggleMode = () => {
