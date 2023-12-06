@@ -13,7 +13,7 @@ function Home() {
           perles rares.
         </Text>
         <Button
-          onPress={() => navigation.navigate("Cities")}
+          onPress={() => navigation.navigate("Villes")}
           title="Explorez maintenant !"
         />
       </View>
