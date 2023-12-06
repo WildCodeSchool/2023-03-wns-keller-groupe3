@@ -1,22 +1,15 @@
 // import "leaflet/dist/leaflet.css";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_POI } from "../graphql/mutations";
 import { GET_CATEGORIES, GET_ONE_CITY } from "../graphql/queries";
-// import { LatLng, LeafletView } from "react-native-leaflet-view";
 import MapView from "react-native-maps";
-// import {
-//   MapContainer,
-//   TileLayer,
-//   Marker,
-//   Popup,
-//   useMapEvents,
-// } from "react-leaflet";
 import CustomToast from "../utils/CustomToast";
 import { toast } from "react-toastify";
 import CreatePoiModalForm from "./CreatePoiModalForm";
 import { Category, Poi } from "../graphql/__generated__/graphql";
+import useGetCityBy from "../graphql/hook/useGetCityBy";
 import PoiCard from "./PoiCard";
 
 interface MapProps {
@@ -24,20 +17,32 @@ interface MapProps {
   lat: number;
   long: number;
   allPoi: Poi[];
+  route: any;
 }
 
-export default function Map({ id, lat, long, allPoi }: MapProps) {
-  const [showModal, setShowModal] = useState(false);
-  const [clickedLat, setClikedLat] = useState(lat);
-  const [clickedLong, setClikedLong] = useState(long);
-  const [name, setName] = useState("");
-  const [address, setAdress] = useState("");
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [description, setDescription] = useState("");
-  const [picture, setPicture] = useState("");
-  const { data } = useQuery(GET_CATEGORIES);
-  const allCategories = data?.getAllCategories;
-  const [createPoi] = useMutation(ADD_POI);
+export default function Map({ id, lat, long, allPoi, route }: MapProps) {
+  console.log(route.params);
+
+  const { city, loading, error } = useGetCityBy({
+    variables: { getCityById: route.params.cityId! },
+  });
+
+  console.log(city);
+
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error : {error.message}</Text>;
+
+  // const [showModal, setShowModal] = useState(false);
+  // const [clickedLat, setClikedLat] = useState(lat);
+  // const [clickedLong, setClikedLong] = useState(long);
+  // const [name, setName] = useState("");
+  // const [address, setAdress] = useState("");
+  // const [categories, setCategories] = useState<Category[]>([]);
+  // const [description, setDescription] = useState("");
+  // const [picture, setPicture] = useState("");
+  // const { data } = useQuery(GET_CATEGORIES);
+  // const allCategories = data?.getAllCategories;
+  // const [createPoi] = useMutation(ADD_POI);
   // const OpenModalWithPosition = () => {
   //   useMapEvents({
   //     dblclick: (e) => {
@@ -48,38 +53,38 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   //   });
   //   return null;
   // };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    createPoi({
-      variables: {
-        name,
-        address,
-        description,
-        picture,
-        categories: categories,
-        latitude: clickedLat,
-        longitude: clickedLong,
-        city: { id },
-        gpsPin: "Default",
-      },
-      onCompleted({ createPOI }) {
-        toast(
-          <CustomToast
-            message={`"${createPOI.name}" a été ajouté`}
-            color="text-success"
-          />
-        );
-        setShowModal(!showModal);
-      },
-      refetchQueries: [GET_ONE_CITY],
-      onError(error) {
-        toast(<CustomToast message={error.message} color="text-error" />);
-      },
-    });
-  };
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   createPoi({
+  //     variables: {
+  //       name,
+  //       address,
+  //       description,
+  //       picture,
+  //       categories: categories,
+  //       latitude: clickedLat,
+  //       longitude: clickedLong,
+  //       city: { id },
+  //       gpsPin: "Default",
+  //     },
+  //     onCompleted({ createPOI }) {
+  //       toast(
+  //         <CustomToast
+  //           message={`"${createPOI.name}" a été ajouté`}
+  //           color="text-success"
+  //         />
+  //       );
+  //       setShowModal(!showModal);
+  //     },
+  //     refetchQueries: [GET_ONE_CITY],
+  //     onError(error) {
+  //       toast(<CustomToast message={error.message} color="text-error" />);
+  //     },
+  //   });
+  // };
   return (
     <>
-      {showModal && clickedLat && clickedLong && (
+      {/* {showModal && clickedLat && clickedLong && (
         <CreatePoiModalForm
           allCategories={allCategories}
           handleSubmit={handleSubmit}
@@ -91,13 +96,13 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
           setShowModal={setShowModal}
           showModal={showModal}
         />
-      )}
+      )} */}
       <View id="map">
         <MapView
           className="w-full h-full"
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: city.latitude,
+            longitude: city.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
