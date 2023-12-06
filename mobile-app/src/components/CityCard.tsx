@@ -1,13 +1,9 @@
 import { View, Image, Text, Pressable } from "react-native";
+import MapScreen from "../components/Map";
 import { City } from "../graphql/__generated__/graphql";
 import { CitiesProps } from "../navigation/types";
 import { useNavigation } from "@react-navigation/native";
 // import type { HomeTabScreenProps } from './navigation/types';
-
-interface CityCardProps {
-  city: Partial<City>;
-  navigation: CitiesProps["navigation"];
-}
 
 function CityCard({ city }: any) {
   const navigation = useNavigation<any>();

@@ -1,16 +1,18 @@
-import "leaflet/dist/leaflet.css";
+// import "leaflet/dist/leaflet.css";
 import { View } from "react-native";
 import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_POI } from "../graphql/mutations";
 import { GET_CATEGORIES, GET_ONE_CITY } from "../graphql/queries";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from "react-leaflet";
+// import { LatLng, LeafletView } from "react-native-leaflet-view";
+import MapView from "react-native-maps";
+// import {
+//   MapContainer,
+//   TileLayer,
+//   Marker,
+//   Popup,
+//   useMapEvents,
+// } from "react-leaflet";
 import CustomToast from "../utils/CustomToast";
 import { toast } from "react-toastify";
 import CreatePoiModalForm from "./CreatePoiModalForm";
@@ -36,16 +38,16 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const { data } = useQuery(GET_CATEGORIES);
   const allCategories = data?.getAllCategories;
   const [createPoi] = useMutation(ADD_POI);
-  const OpenModalWithPosition = () => {
-    useMapEvents({
-      dblclick: (e) => {
-        setClikedLat(e.latlng.lat);
-        setClikedLong(e.latlng.lng);
-        setShowModal(!showModal);
-      },
-    });
-    return null;
-  };
+  // const OpenModalWithPosition = () => {
+  //   useMapEvents({
+  //     dblclick: (e) => {
+  //       setClikedLat(e.latlng.lat);
+  //       setClikedLong(e.latlng.lng);
+  //       setShowModal(!showModal);
+  //     },
+  //   });
+  //   return null;
+  // };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createPoi({
@@ -91,7 +93,16 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         />
       )}
       <View id="map">
-        <MapContainer
+        <MapView
+          className="w-full h-full"
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+        {/* <MapContainer
           id={id}
           center={[lat, long]}
           zoom={14}
@@ -114,7 +125,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
               </div>
             );
           })}
-        </MapContainer>
+        </MapContainer> */}
       </View>
     </>
   );
