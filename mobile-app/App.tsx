@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -5,10 +6,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./src/pages/Home";
 import CitiesScreen from "./src/pages/Cities";
 import UserScreen from "./src/pages/User";
-import MapScreen from "./src/components/Map";
+import { MyStack } from "./src/components/CityCard";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Constants from "expo-constants";
-import { StyleSheet } from "react-native";
 
 const { manifest2 } = Constants;
 
@@ -46,7 +46,6 @@ export default function App() {
           })}
         >
           <Tab.Screen name="Accueil" component={HomeScreen} />
-          <Tab.Screen name="Map" component={MapScreen} />
           <Tab.Screen name="Villes" component={CitiesScreen} />
           <Tab.Screen name="Profil" component={UserScreen} />
         </Tab.Navigator>

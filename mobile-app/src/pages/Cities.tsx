@@ -1,6 +1,5 @@
 // import backgroundImage from "../../assets/europeMap.png";
 import React, { useState } from "react";
-import { Link } from "react-router-native";
 import CityCard from "../components/CityCard";
 import useGetCities from "../graphql/hook/useGetCities";
 import { useNavigation } from "@react-navigation/native";
