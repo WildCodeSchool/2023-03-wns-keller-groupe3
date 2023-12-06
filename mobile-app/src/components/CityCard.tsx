@@ -8,10 +8,12 @@ function CityCard({ city }: any) {
   return (
     <Pressable
       onPress={() => navigation.navigate("Map", { cityId: city.id })}
-      className='h-72 w-56 m-4 p-4'
+      className='h-80 w-64 m-4 p-4'
     >
       <Image source={{ uri: city.picture }} className='rounded-lg h-full ' />
-      <Text className='text-center text-lg font-bold'>{city.name}</Text>
+      <Text className='text-center text-lg font-bold text-gray-600'>
+        {city.name}
+      </Text>
     </Pressable>
   );
 }

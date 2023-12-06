@@ -13,8 +13,6 @@ export default function Map({ route }: MapProps) {
     variables: { getCityById: route.params.cityId! },
   });
 
-  console.log(city?.pointsOfInterest);
-
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error : {error.message}</Text>;
 
