@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import HomeScreen from "../pages/Home";
-import CitiesScreen from "../pages/Cities";
 import UserScreen from "../pages/User";
 import StackNavigator from "./StackNavigator";
 

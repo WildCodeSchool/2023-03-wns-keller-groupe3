@@ -1,7 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import StackNavigator from "./src/components/StackNavigator";
 import TabBar from "./src/components/TabBar";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Constants from "expo-constants";
