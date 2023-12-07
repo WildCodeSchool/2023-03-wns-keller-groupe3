@@ -7,6 +7,7 @@ export interface updateArgs {
   name: string;
   email: string;
   role: Role;
+  city: string;
 }
 export class UserService {
   async getAllUsers(): Promise<User[]> {
@@ -30,8 +31,12 @@ export class UserService {
     return userFromDB;
   }
 
-  async update(id: string, { name, email, role }: updateArgs): Promise<User> {
-    return await dataSource.getRepository(User).save({ id, name, email, role });
+  async update(id: string, userUpdate: Partial<User> ): Promise<User> {
+  // return await dataSource.getRepository(User).update( id , { role, city: { id }  } );
+    const userRepository = dataSource.getRepository(User);
+    const user = await userRepository.findOneByOrFail({ id });
+    Object.assign(user, userUpdate);
+    return await userRepository.save(user);
   }
 
   async delete(id: string): Promise<DeleteResult> {

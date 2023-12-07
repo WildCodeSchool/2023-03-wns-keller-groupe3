@@ -4,7 +4,8 @@ import Login from "../components/Login";
 import useGetUsers from "../graphql/hook/useGetUsers";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER } from "../graphql/mutations";
-import { ApolloError } from "@apollo/client/errors";
+import useGetCities from "../graphql/hook/useGetCities";
+import { ApolloError } from "@apollo/client";
 import pinkCity from "../assets/picture/pink.png";
 import greenCity from "../assets/picture/green.png";
 import snowCity from "../assets/picture/snow.png";
@@ -12,29 +13,39 @@ import snowCity from "../assets/picture/snow.png";
 function UserPage() {
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [updateUserMutation] = useMutation(UPDATE_USER);
+  const { cities } = useGetCities();
   const { users, loading, error } = useGetUsers();
+  console.log("cities", cities);
 
   const toggleMode = () => {
     setIsRegisterMode(!isRegisterMode);
   };
+  console.log("users", users);
 
-  const handleRoleChange = async (userId: string, newRole: string) => {
+  const handleChange = async (
+    userId: string,
+    newValue: string,
+    property: string
+  ) => {
     try {
       // Call the UPDATE_USER mutation here
       const { data } = await updateUserMutation({
         variables: {
           id: userId,
-          role: newRole,
+          [property]: newValue, // Utilisation de la propriété dynamique
         },
       });
 
       if (data) {
-        console.log("Utilisateur mis à jour :", data.updateUser);
+        console.log(
+          `Utilisateur mis à jour pour ${property} :`,
+          data.updateUser
+        );
       } else {
         console.error("La réponse de la mutation est null ou undefined.");
       }
     } catch (error: ApolloError | any) {
-      console.error("Failed to update user:", error.message);
+      console.error(`Failed to update user for ${property}:`, error.message);
     }
   };
 
@@ -67,6 +78,7 @@ function UserPage() {
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
+              <th>Ville</th>
             </tr>
           </thead>
           <tbody>
@@ -79,15 +91,36 @@ function UserPage() {
                   <select
                     className="select select-ghost w-full max-w-xs"
                     value={user.role || ""}
-                    onChange={(e) => {
-                      const newRole = e.target.value;
-                      handleRoleChange(user.id, newRole);
-                    }}
+                    name="role"
+                    onChange={(e) =>
+                      handleChange(user.id, e.target.value, "role")
+                    }
                   >
-                    <option disabled selected>Attribuer un rôle</option>
+                    <option disabled selected>
+                      Attribuer un rôle
+                    </option>
                     <option value="user">user</option>
                     <option value="superuser">superuser</option>
                     <option value="admin">admin</option>
+                  </select>
+                </td>
+                <td>
+                  <select
+                    className="select select-ghost w-full max-w-xs"
+                    value={user.city?.id || ""}
+                    name="city"
+                    onChange={(e) =>
+                      handleChange(user.id, e.target.value, "city")
+                    }
+                  >
+                    <option disabled selected>
+                      Attribuer une ville
+                    </option>
+                    {cities.map((city) => (
+                      <option key={city.id} value={city.id}>
+                        {city.name}
+                      </option>
+                    ))}
                   </select>
                 </td>
               </tr>

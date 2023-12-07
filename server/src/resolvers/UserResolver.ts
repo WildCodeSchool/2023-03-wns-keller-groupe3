@@ -2,9 +2,8 @@ import { Arg, Mutation, Resolver, Query, Ctx, Authorized } from "type-graphql";
 
 import { Role, User } from "../entities/User";
 import { UserService } from "../services/UserService";
-
+import { City } from "../entities/City";
 import dataSource from "../utils";
-
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
 import "dotenv/config";
@@ -12,19 +11,27 @@ import { Context } from "../context.type";
 
 const user = new UserService();
 
+
 @Resolver(User)
 export class UserResolver {
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
+    console.log("in getAllUsers");
     try {
-      return await dataSource
-      .getRepository(User)
-      .find({ order: { name: "ASC" } });
+      console.log("in try");
+      const userRepository = dataSource.getRepository(User);
+      const users = await userRepository.find({
+        relations: ['city'], // Inclure la relation avec la ville
+        order: { name: 'ASC' },
+      });
+      console.log("e",users);
+      return users;
     } catch (error) {
       console.error("Something went wrong when fetching users");
       throw new Error("Something went wrong when fetching users");
     }
   }
+
 
   @Query(() => User)
   async getUserBy(@Ctx() context: Context): Promise<User> {
@@ -80,10 +87,11 @@ export class UserResolver {
     @Arg("id") id: string,
     @Arg("name", { nullable: true }) name: string,
     @Arg("email", { nullable: true }) email: string,
-    @Arg("role", { nullable: true }) role: Role
+    @Arg("role", { nullable: true }) role: Role,
+    @Arg("city", { nullable: true }) city: City
   ): Promise<User> {
     try {
-      await user.update(id, { name, email, role });
+      await user.update(id, { name, email, role, city });
       return await user.getUserBy(id);
     } catch (error) {
       console.error(`Failed to update user with ID : ${id}`);
