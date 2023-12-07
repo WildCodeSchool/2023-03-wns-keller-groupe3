@@ -17,7 +17,9 @@ export class UserResolver {
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
     try {
-      return await user.getAllUsers();
+      return await dataSource
+      .getRepository(User)
+      .find({ order: { name: "ASC" } });
     } catch (error) {
       console.error("Something went wrong when fetching users");
       throw new Error("Something went wrong when fetching users");
@@ -72,15 +74,16 @@ export class UserResolver {
   }
 
   // TODO make sure to restrict USER by ID (only this user can update himself)
-  @Authorized([Role.USER, Role.SUPERADMIN])
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => User)
   async updateUser(
     @Arg("id") id: string,
     @Arg("name", { nullable: true }) name: string,
-    @Arg("email", { nullable: true }) email: string
+    @Arg("email", { nullable: true }) email: string,
+    @Arg("role", { nullable: true }) role: Role
   ): Promise<User> {
     try {
-      await user.update(id, { name, email });
+      await user.update(id, { name, email, role });
       return await user.getUserBy(id);
     } catch (error) {
       console.error(`Failed to update user with ID : ${id}`);
@@ -89,7 +92,7 @@ export class UserResolver {
   }
 
   // TODO make sure to restrict USER by ID (only this user can delete himself)
-  @Authorized([Role.USER, Role.SUPERADMIN])
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => String)
   async deleteUser(@Arg("id") id: string): Promise<string> {
     try {
