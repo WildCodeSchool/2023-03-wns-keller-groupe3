@@ -7,24 +7,23 @@ function Cities() {
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
 
-  if (loading) return <Text className="text-center">Loading...</Text>;
-  if (error) return <Text className="text-center">Error: {error.message}</Text>;
+  if (loading) return <Text className='text-center'>Loading...</Text>;
+  if (error) return <Text className='text-center'>Error: {error.message}</Text>;
 
   const filteredCities = cities.filter((city) =>
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
-    <View className="h-screen pt-6">
-      <View className="w-full py-2 px-4">
-        <TextInput
-          className="border border-gray-400 w-full py-2 px-3 rounded-lg bg-white"
-          placeholder="Recherche"
-          value={searchText}
-          onChangeText={(e) => setSearchText(e)}
-        />
-      </View>
+    <View className='h-screen py-8 flex flex-col justify-center'>
+      <TextInput
+        className='border border-gray-400 mx-2 rounded-lg p-2 bg-white'
+        placeholder='Recherche'
+        value={searchText}
+        onChangeText={(e) => setSearchText(e)}
+      />
       <FlatList
+        className=''
         horizontal
         data={filteredCities}
         keyExtractor={(city) => city.id.toString()}
