@@ -15,20 +15,20 @@ function Cities() {
   );
 
   return (
-    <ScrollView className='' scrollEnabled>
+    <ScrollView className='relative' scrollEnabled>
+      <TextInput
+        className='border border-gray-400 w-5/6 p-4 mx-auto rounded-lg bg-white absolute z-10'
+        placeholder='Recherche'
+        value={searchText}
+        onChangeText={(e) => setSearchText(e)}
+      />
       <FlatList
+        className=''
         horizontal
         data={filteredCities}
         keyExtractor={(city) => city.id.toString()}
         renderItem={({ item }) => <CityCard city={item} />}
-      >
-        <TextInput
-          className='border border-gray-400 w-5/6 p-4 m-2 rounded-lg bg-white z-10'
-          placeholder='Recherche'
-          value={searchText}
-          onChangeText={(e) => setSearchText(e)}
-        />
-      </FlatList>
+      />
     </ScrollView>
   );
 }
