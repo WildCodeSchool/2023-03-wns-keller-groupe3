@@ -10,11 +10,13 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import CustomToast from "../utils/CustomToast";
+import CustomToast from "./CustomToast";
 import { toast } from "react-toastify";
 import CreatePoiModalForm from "./CreatePoiModalForm";
 import { Category, Poi } from "../graphql/__generated__/graphql";
 import PoiCard from "./PoiCard";
+import { getAddressByLatAndLong } from "../functions/getAddressByLatAndLong";
+import { marker } from "../utils/marker";
 
 interface MapProps {
   id: string;
@@ -28,13 +30,13 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const [clickedLat, setClikedLat] = useState(lat);
   const [clickedLong, setClikedLong] = useState(long);
   const [name, setName] = useState("");
-  const [address, setAdress] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState("");
   const { data } = useQuery(GET_CATEGORIES);
   const allCategories = data?.getAllCategories;
   const [createPoi] = useMutation(ADD_POI);
+  // TODO only open the modal if user has permission to create a POI
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
@@ -45,12 +47,17 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
     });
     return null;
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const addressByPostion = await getAddressByLatAndLong([
+      clickedLong,
+      clickedLat,
+    ]);
     createPoi({
       variables: {
         name,
-        address,
+        address: addressByPostion!,
         description,
         picture,
         categories: categories,
@@ -80,7 +87,6 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         <CreatePoiModalForm
           allCategories={allCategories}
           handleSubmit={handleSubmit}
-          setAdress={setAdress}
           setDescription={setDescription}
           setCategories={setCategories}
           setName={setName}
@@ -105,7 +111,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
           {allPoi.map((poi) => {
             return (
               <div key={poi.id}>
-                <Marker position={[poi.latitude, poi.longitude]}>
+                <Marker icon={marker} position={[poi.latitude, poi.longitude]}>
                   <Popup>
                     <PoiCard poi={poi} />
                   </Popup>
