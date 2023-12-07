@@ -4,8 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 function Home() {
   const navigation = useNavigation<any>();
   return (
-    <View className='h-screen'>
-      <Text className='text-4xl font-bold text-gray-600 mt-16 mx-auto'>
+    <View className='h-screen flex flex-col justify-center'>
+      <Text className='text-4xl font-bold text-gray-600 mx-auto'>
         City Guide
       </Text>
       <Text className='text-gray-600 text-lg mt-4 p-2 mx-auto'>
@@ -13,7 +13,7 @@ function Home() {
         perles rares.
       </Text>
       <Image
-        className='h-80 w-64 mx-auto mt-8'
+        className='h-80 w-64 mx-auto mt-4'
         source={require("../../assets/logo.png")}
       />
     </View>
