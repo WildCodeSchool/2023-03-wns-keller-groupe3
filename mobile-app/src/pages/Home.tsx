@@ -1,21 +1,22 @@
-import { Text, ImageBackground } from "react-native";
+import { Text, ImageBackground, Image, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 function Home() {
   const navigation = useNavigation<any>();
   return (
-    <ImageBackground
-      source={require("../../assets/backgroundHome.jpg")}
-      className='h-full border-t border-gray-600'
-    >
-      <Text className='text-4xl font-bold mt-16 ml-5 text-gray-600'>
+    <View className='h-screen'>
+      <Text className='text-4xl font-bold text-gray-600 mt-16 mx-auto'>
         City Guide
       </Text>
-      <Text className='ml-5 mt-8 text-gray-600 text-lg'>
+      <Text className='text-gray-600 text-lg mt-4 p-2 mx-auto'>
         Parcourir une ville comme un local. Aller droit au but. Découvrir des
         perles rares.
       </Text>
-    </ImageBackground>
+      <Image
+        className='h-80 w-64 mx-auto mt-8'
+        source={require("../../assets/logo.png")}
+      />
+    </View>
   );
 }
 
