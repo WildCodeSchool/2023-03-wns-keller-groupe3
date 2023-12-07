@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  ScrollView,
-  Text,
-  TextInput,
-  View,
-  FlatList,
-  ImageBackground,
-} from "react-native";
+import { ScrollView, Text, TextInput, FlatList } from "react-native";
 import CityCard from "../components/CityCard";
 import useGetCities from "../graphql/hook/useGetCities";
 
@@ -22,27 +15,21 @@ function Cities() {
   );
 
   return (
-    <ImageBackground
-      source={require("../../assets/logo.png")}
-      className='h-full border-t border-gray-600'
-    >
-      <ScrollView className=''>
-        <View className='flex items-center mx-auto w-full'>
-          <TextInput
-            className='border border-gray-400 w-5/6 p-4 m-2 rounded-lg bg-white'
-            placeholder='Recherche'
-            value={searchText}
-            onChangeText={(e) => setSearchText(e)}
-          />
-          <FlatList
-            horizontal
-            data={filteredCities}
-            keyExtractor={(city) => city.id.toString()}
-            renderItem={({ item }) => <CityCard city={item} />}
-          />
-        </View>
-      </ScrollView>
-    </ImageBackground>
+    <ScrollView className='' scrollEnabled>
+      <FlatList
+        horizontal
+        data={filteredCities}
+        keyExtractor={(city) => city.id.toString()}
+        renderItem={({ item }) => <CityCard city={item} />}
+      >
+        <TextInput
+          className='border border-gray-400 w-5/6 p-4 m-2 rounded-lg bg-white z-10'
+          placeholder='Recherche'
+          value={searchText}
+          onChangeText={(e) => setSearchText(e)}
+        />
+      </FlatList>
+    </ScrollView>
   );
 }
 

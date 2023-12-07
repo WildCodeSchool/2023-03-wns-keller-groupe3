@@ -1,4 +1,4 @@
-import { Text, View, Button, ImageBackground } from "react-native";
+import { Text, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 function Home() {

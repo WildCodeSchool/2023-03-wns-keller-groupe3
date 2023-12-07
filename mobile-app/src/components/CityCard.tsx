@@ -1,20 +1,20 @@
-import { View, Image, Text, Pressable } from "react-native";
-import { City } from "../graphql/__generated__/graphql";
-import { CitiesProps } from "../navigation/types";
+import { Image, Text, Pressable, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 function CityCard({ city }: any) {
   const navigation = useNavigation<any>();
   return (
-    <Pressable
-      onPress={() => navigation.navigate("Map", { cityId: city.id })}
-      className='h-80 w-64 m-4 p-4'
-    >
-      <Image source={{ uri: city.picture }} className='rounded-lg h-full ' />
+    <View>
+      <Pressable
+        onPress={() => navigation.navigate("Map", { cityId: city.id })}
+        className='w-screen'
+      >
+        <Image source={{ uri: city.picture }} className='h-screen z-0 ' />
+      </Pressable>
       <Text className='text-center text-lg font-bold text-gray-600'>
         {city.name}
       </Text>
-    </Pressable>
+    </View>
   );
 }
 

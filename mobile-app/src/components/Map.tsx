@@ -7,8 +7,6 @@ interface MapProps {
 }
 
 export default function Map({ route }: MapProps) {
-  console.log(route.params);
-
   const { city, loading, error } = useGetCityBy({
     variables: { getCityById: route.params.cityId! },
   });
