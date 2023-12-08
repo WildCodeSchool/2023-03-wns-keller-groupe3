@@ -11,16 +11,19 @@ export default function Login() {
   const [login, { data, error }] = useLazyQuery(LOGIN, {
     variables: { email, password },
   });
+
   if (data) {
-    console.log("data from query", data.login);
+    console.log("I'm logged in : ", data);
     localStorage.setItem("token", data.login);
     return <Navigate to='/' />;
   }
-  if (error) {
+  if (error) {    
+    console.log("Wrong credentials : ", data);
     console.log("error", error);
   }
 
   const handleSubmitLogin = async () => {
+    // TODO trouble of state on the login page (this function plays automatically on each state update, both email and password)
     if (error) {
       toast(
         <CustomToast

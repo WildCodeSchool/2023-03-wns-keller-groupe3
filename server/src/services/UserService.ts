@@ -12,10 +12,18 @@ export class UserService {
     return await dataSource.getRepository(User).find();
   }
 
-  async getUserBy(id: string): Promise<User> {
-    return await dataSource
-      .getRepository(User)
-      .findOneOrFail({ where: { id }, relations: { city: true } });
+  async getUserBy(email: string): Promise<User> {
+    return await dataSource.getRepository(User).findOneOrFail({
+      where: { email },
+      relations: { city: true },
+      select: {
+        id: true,
+        name: true,
+        role: true,
+        email: true,
+        city: { id: true },
+      },
+    });
   }
 
   async create(email: string, name: string, password: string): Promise<User> {
