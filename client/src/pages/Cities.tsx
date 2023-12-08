@@ -20,7 +20,7 @@ export default function Cities() {
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
   const { data } = useQuery(GET_USER);
-  const isAdmin = data?.getUserBy.role === Role.SUPERADMIN;
+  const isSuperAdmin = data?.getUserBy.role === Role.SUPERADMIN;
 
   const createCitySubmit = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -125,7 +125,7 @@ export default function Cities() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          {isAdmin && (
+          {isSuperAdmin && (
             <label htmlFor='my_modal_6' className='btn btn-primary ml-5'>
               <div className='flex items-center'>
                 <svg

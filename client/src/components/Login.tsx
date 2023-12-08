@@ -17,7 +17,7 @@ export default function Login() {
     localStorage.setItem("token", data.login);
     return <Navigate to='/' />;
   }
-  if (error) {    
+  if (error) {
     console.log("Wrong credentials : ", data);
     console.log("error", error);
   }
