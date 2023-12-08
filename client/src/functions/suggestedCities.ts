@@ -8,6 +8,7 @@ async function suggestedCities(cityName: string) {
     const suggestions = await maptilerClient.geocoding.forward(cityName, {
       limit: 5,
       language: ["fr"],
+      types: ["county", "locality", "municipality"],
     });
     return suggestions.features.map((o) => o.place_name);
   } catch (error) {

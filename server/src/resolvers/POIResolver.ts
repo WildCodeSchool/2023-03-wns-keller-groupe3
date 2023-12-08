@@ -1,4 +1,4 @@
-import { Arg, Mutation, Resolver, Query } from "type-graphql";
+import { Arg, Mutation, Resolver, Query, Authorized } from "type-graphql";
 import { GpsPin, POI } from "../entities/POI";
 import { POIService } from "../services/POIService";
 import { Category } from "../entities/Category";
@@ -6,6 +6,7 @@ import { City } from "../entities/City";
 import { CityInput } from "./input_types/CityInputType";
 import { CategoryInput } from "./input_types/CategoryInput";
 import { ApolloError } from "apollo-server";
+import { Role } from "../entities/User";
 
 const pointOfInterest = new POIService();
 
@@ -21,10 +22,8 @@ export class POIResolver {
     return await pointOfInterest.getPOIBy(id);
   }
 
-  // TODO Queries "getAllPOIsByCategory" and "getAllPOIsByCity"
-
   // https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
-  // TODO Make class-validations
+  @Authorized([Role.SUPERUSER, Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => POI)
   async createPOI(
     @Arg("latitude") latitude: number,
@@ -37,6 +36,12 @@ export class POIResolver {
     @Arg("categories", () => [CategoryInput]) categories: Category[],
     @Arg("city", () => CityInput) city: City
   ): Promise<POI | string> {
+    const latitudeRange =
+      city.latitude + 0.05 > latitude && city.latitude - 0.05 < latitude;
+    const longitudeRange =
+      city.longitude + 0.05 > longitude && city.longitude - 0.05 < longitude;
+    if (!latitudeRange || !longitudeRange)
+      throw new ApolloError("Le point d'intêret est en dehors de la ville");
     if (
       name.length === 0 ||
       picture.length === 0 ||
@@ -70,11 +75,7 @@ export class POIResolver {
     }
   }
 
-  @Mutation(() => Boolean)
-  async deletePOI(@Arg("id") id: string): Promise<boolean> {
-    return await pointOfInterest.deletePOI(id);
-  }
-
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => POI)
   async updatePOI(
     @Arg("id") id: string,
@@ -106,4 +107,12 @@ export class POIResolver {
       throw new Error(`Something went wrong when updating the POI`);
     }
   }
+
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
+  @Mutation(() => Boolean)
+  async deletePOI(@Arg("id") id: string): Promise<boolean> {
+    return await pointOfInterest.deletePOI(id);
+  }
+
+  // TODO Queries "getAllPOIsByCategory"
 }
