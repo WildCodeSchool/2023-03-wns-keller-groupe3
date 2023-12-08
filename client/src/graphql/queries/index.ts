@@ -52,6 +52,9 @@ export const GET_USER = gql(`
       name
       email
       role
+      city {
+        id
+      }
     }
   }
 `);

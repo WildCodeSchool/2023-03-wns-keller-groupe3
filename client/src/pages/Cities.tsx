@@ -10,57 +10,22 @@ import CustomToast from "../components/CustomToast";
 import { toast } from "react-toastify";
 import { getCityCardPhoto } from "../functions/getCityCardPhoto";
 import { deleteAfterComma } from "../scripts/deleteAfterComma";
-import { useQuery } from "@apollo/client";
-import { GET_USER } from "../graphql/queries";
 import { Role } from "../utils/RoleEnum";
+import useGetUser from "../graphql/hook/useGetUser";
 
 export default function Cities() {
   const [cityName, setCityName] = useState("");
   const [searchText, setSearchText] = useState("");
   const { cities, loading, error } = useGetCities();
   const { createCity } = useCreateCity();
-  const { data } = useQuery(GET_USER);
-  const isAdmin = data?.getUserBy.role === Role.SUPERADMIN;
+  const { userRole } = useGetUser();
+  const isSuperAdmin = userRole === Role.SUPERADMIN;
 
   const createCitySubmit = async (
     e: React.FormEvent<HTMLFormElement>,
     savedSuggestions: string[]
   ) => {
     e.preventDefault();
-    if (!cityName.trim()) {
-      toast(
-        <CustomToast
-          message='Le nom de la ville est vide'
-          color='text-warning'
-        />
-      );
-      return;
-    }
-    if (!savedSuggestions.includes(cityName)) {
-      toast(
-        <CustomToast
-          message='Choisissez une ville dans la liste'
-          color='text-warning'
-        />
-      );
-      return;
-    }
-    try {
-      const cleanedCityName = deleteAfterComma(cityName);
-      const picture = await getCityCardPhoto(cityName);
-      const position = await getLatAndLongByCityName(cityName);
-      createCity({
-        variables: {
-          name: cleanedCityName,
-          picture: picture!,
-          latitude: position.latitude,
-          longitude: position.longitude,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-      toast(<CustomToast message='Nom de ville invalide' color='text-error' />);
-    }
     if (!cityName.trim()) {
       toast(
         <CustomToast
@@ -104,7 +69,6 @@ export default function Cities() {
     city.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
-
   return (
     <section
       className='md:ml-[96px] min-h-screen bg-base-content'
@@ -125,7 +89,7 @@ export default function Cities() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          {isAdmin && (
+          {isSuperAdmin && (
             <label htmlFor='my_modal_6' className='btn btn-primary ml-5'>
               <div className='flex items-center'>
                 <svg

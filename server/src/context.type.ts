@@ -1,5 +1,5 @@
-import { User } from "./entities/User";
-
 export interface Context {
-  user: User;
+  email: string;
+  role: string;
+  iat: number;
 }

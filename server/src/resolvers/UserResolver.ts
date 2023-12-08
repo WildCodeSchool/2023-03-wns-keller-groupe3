@@ -1,10 +1,7 @@
 import { Arg, Mutation, Resolver, Query, Ctx, Authorized } from "type-graphql";
-
 import { Role, User } from "../entities/User";
 import { UserService } from "../services/UserService";
-
 import dataSource from "../utils";
-
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
 import "dotenv/config";
@@ -14,6 +11,7 @@ const user = new UserService();
 
 @Resolver(User)
 export class UserResolver {
+  @Authorized([Role.SUPERADMIN])
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
     try {
@@ -25,11 +23,13 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async getUserBy(@Ctx() context: Context): Promise<User> {
+  async getUserBy(@Ctx() context?: Context): Promise<User | {}> {
+    const userEmail = context?.email;
+    if (userEmail === undefined) return {};
     try {
-      return await user.getUserBy(context.user?.id);
+      return await user.getUserBy(userEmail);
     } catch (error) {
-      console.error(`User with ID : ${context.user.id} not found`);
+      console.error(`User ${userEmail} not found`);
       throw new Error(`User not found`);
     }
   }
