@@ -46,30 +46,11 @@ export const GET_CATEGORIES = gql(`
 `);
 
 export const GET_USER = gql(`
-  query GetUserBy {
-    getUserBy {
+  query GetUserBy($getUserById: String!) {
+    getUserBy(id: $getUserById) {
       id
       name
       email
-      role
-      city {
-        id
-      }
-    }
-  }
-`);
-
-export const GET_ALL_USERS = gql(`
-  query GetAllUsers {
-    getAllUsers {
-      id
-      name
-      email
-      role
-      city {
-        id
-        name
-      }
     }
   }
 `);

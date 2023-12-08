@@ -12,8 +12,14 @@ import { Role } from "../utils/RoleEnum";
 import pinkCity from "../assets/picture/pink.png";
 import greenCity from "../assets/picture/green.png";
 import snowCity from "../assets/picture/snow.png";
+import { useApolloClient } from "@apollo/client";
+import useGetUser from "../graphql/hook/useGetUser";
+import { useNavigate } from "react-router-dom";
 
 function UserPage() {
+  const navigate = useNavigate();
+  const client = useApolloClient();
+  const { isLogged, userRole } = useGetUser();
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [updateUserMutation] = useMutation(UPDATE_USER);
   const { cities } = useGetCities();
@@ -50,6 +56,10 @@ function UserPage() {
     } catch (error: ApolloError | any) {
       console.error(`Failed to update user for ${property}:`, error.message);
     }
+  const handleLogout = async () => {
+    localStorage.removeItem("token");
+    await client.clearStore();
+    navigate("/");
   };
 
   return (
@@ -148,10 +158,23 @@ function UserPage() {
       <div className="absolute left-0 bottom-0 h-auto md:w-[388px] hidden md:block lg:w-[341px] xl:w-[420px] 2xl:w-[510px] opacity-50">
       <img src={pinkCity} alt="" />
       </div>
+      {isLogged && (
+        <>
+          {userRole}
+          <button
+            type='button'
+            className='btn btn-primary'
+            onClick={handleLogout}
+          >
+            Deconnexion
+          </button>
+        </>
+      )}
     </div>
     </>
     );
   }
+}
 
 
     export default UserPage;

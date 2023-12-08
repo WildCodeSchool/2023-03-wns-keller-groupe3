@@ -48,8 +48,7 @@ export class CategoryResolver {
       .findOneByOrFail({ id });
     const poisRelated = await dataSource
       .getRepository(POI)
-      .findBy({ categories: categoryToDelete });
-
+      .findBy({ categories: { id: categoryToDelete.id } });
     // TODO would be better to remove the category from the POIs
     if (poisRelated.length > 0) {
       return `This category contains points of interest. Please remove the category from these points before, then try again.`;

@@ -17,6 +17,9 @@ import { Category, Poi } from "../graphql/__generated__/graphql";
 import PoiCard from "./PoiCard";
 import { getAddressByLatAndLong } from "../functions/getAddressByLatAndLong";
 import { marker } from "../utils/marker";
+import useGetUser from "../graphql/hook/useGetUser";
+import { Role } from "../utils/RoleEnum";
+import checkIfPositionIsInCity from "../scripts/checkIfPositionIsInCity";
 
 interface MapProps {
   id: string;
@@ -26,6 +29,10 @@ interface MapProps {
 }
 
 export default function Map({ id, lat, long, allPoi }: MapProps) {
+  const { userRole, superUsercityId } = useGetUser();
+  const isSuperAdmin = userRole === Role.SUPERADMIN;
+  const isSuperUser = userRole === Role.SUPERUSER && id === superUsercityId;
+
   const [showModal, setShowModal] = useState(false);
   const [clickedLat, setClikedLat] = useState(lat);
   const [clickedLong, setClikedLong] = useState(long);
@@ -33,16 +40,28 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState("");
+
   const { data } = useQuery(GET_CATEGORIES);
   const allCategories = data?.getAllCategories;
   const [createPoi] = useMutation(ADD_POI);
-  // TODO only open the modal if user has permission to create a POI
+
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
-        setClikedLat(e.latlng.lat);
-        setClikedLong(e.latlng.lng);
-        setShowModal(!showModal);
+        if (isSuperAdmin || isSuperUser) {
+          if (!checkIfPositionIsInCity(lat, long, e.latlng.lat, e.latlng.lng)) {
+            toast(
+              <CustomToast
+                message={"Le point d'intêret est en dehors de la ville"}
+                color='text-error'
+              />
+            );
+          } else {
+            setClikedLat(e.latlng.lat);
+            setClikedLong(e.latlng.lng);
+            setShowModal(!showModal);
+          }
+        }
       },
     });
     return null;
@@ -63,7 +82,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
         categories: categories,
         latitude: clickedLat,
         longitude: clickedLong,
-        city: { id },
+        city: { id, latitude: lat, longitude: long },
         gpsPin: "Default",
       },
       onCompleted({ createPOI }) {
@@ -81,6 +100,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
       },
     });
   };
+
   return (
     <>
       {showModal && clickedLat && clickedLong && (

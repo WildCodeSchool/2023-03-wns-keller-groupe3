@@ -46,6 +46,6 @@ export class User {
   role: Role;
 
   @Field(() => City, { nullable: true })
-  @ManyToOne(() => City, (city) => city.users)
-  city: City;
+  @ManyToOne(() => City, (city) => city.users, { nullable: true })
+  city: City | null;
 }
