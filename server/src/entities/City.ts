@@ -38,6 +38,6 @@ export class City {
   pointsOfInterest: POI[];
 
   @Field(() => [User])
-  @OneToMany(() => User, (user) => user.city)
+  @OneToMany(() => User, (user) => user.city, { nullable: true })
   users: User[];
 }

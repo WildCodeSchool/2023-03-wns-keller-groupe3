@@ -1,14 +1,17 @@
-import { Arg, Mutation, Resolver, Query } from "type-graphql";
-import { User } from "../entities/User";
+import { Arg, Mutation, Resolver, Query, Ctx, Authorized } from "type-graphql";
+import { Role, User } from "../entities/User";
 import { UserService } from "../services/UserService";
-import * as argon2 from "argon2";
 import dataSource from "../utils";
+import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
+import "dotenv/config";
+import { Context } from "../context.type";
 
 const user = new UserService();
 
 @Resolver(User)
 export class UserResolver {
+  @Authorized([Role.SUPERADMIN])
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
     try {
@@ -20,38 +23,38 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async getUserBy(@Arg("id") id: string): Promise<User> {
+  async getUserBy(@Ctx() context?: Context): Promise<User | {}> {
+    const userEmail = context?.email;
+    if (userEmail === undefined) return {};
     try {
-      return await user.getUserBy(id);
+      return await user.getUserBy(userEmail);
     } catch (error) {
-      console.error(`User with ID : ${id} not found`);
+      console.error(`User ${userEmail} not found`);
       throw new Error(`User not found`);
     }
   }
 
-  @Mutation(() => User)
-  async updateUser(
-    @Arg("id") id: string,
-    @Arg("name", { nullable: true }) name: string,
-    @Arg("email", { nullable: true }) email: string
-  ): Promise<User> {
-    try {
-      await user.update(id, { name, email });
-      return await user.getUserBy(id);
-    } catch (error) {
-      console.error(`Failed to update user with ID : ${id}`);
-      throw new Error(`Something went wrong when updating settings`);
-    }
-  }
+  @Query(() => String)
+  async login(
+    @Arg("email") email: string,
+    @Arg("password") password: string
+  ): Promise<String | undefined> {
+    const user = await dataSource
+      .getRepository(User)
+      .findOneByOrFail({ email });
 
-  @Mutation(() => String)
-  async deleteUser(@Arg("id") id: string): Promise<string> {
     try {
-      await user.delete(id);
-      return `User with ID : ${id} deleted`;
-    } catch (error) {
-      console.error(`Failed to delete user with ID : ${id}`);
-      throw new Error(`Something went wrong`);
+      if (await argon2.verify(user.hashedPassword, password)) {
+        const token = jwt.sign(
+          { email, role: user.role },
+          process.env.JWT_SECRET_KEY as jwt.Secret
+        );
+        return token;
+      } else {
+        throw new Error("error");
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -68,25 +71,33 @@ export class UserResolver {
     return await user.create(email, name, password);
   }
 
-  @Query(() => String)
-  async login(
-    @Arg("email") email: string,
-    @Arg("password") password: string
-  ): Promise<String> {
-    const user = await dataSource
-      .getRepository(User)
-      .findOneByOrFail({ email });
-
+  // TODO make sure to restrict USER by ID (only this user can update himself)
+  @Authorized([Role.USER, Role.SUPERADMIN])
+  @Mutation(() => User)
+  async updateUser(
+    @Arg("id") id: string,
+    @Arg("name", { nullable: true }) name: string,
+    @Arg("email", { nullable: true }) email: string
+  ): Promise<User> {
     try {
-      if (await argon2.verify(user.hashedPassword, password)) {
-        const token = jwt.sign({ email }, "supersecretkey");
-        return token;
-      } else {
-        return "error";
-      }
-    } catch (err) {
-      console.log(err);
-      return "error";
+      await user.update(id, { name, email });
+      return await user.getUserBy(id);
+    } catch (error) {
+      console.error(`Failed to update user with ID : ${id}`);
+      throw new Error(`Something went wrong when updating settings`);
+    }
+  }
+
+  // TODO make sure to restrict USER by ID (only this user can delete himself)
+  @Authorized([Role.USER, Role.SUPERADMIN])
+  @Mutation(() => String)
+  async deleteUser(@Arg("id") id: string): Promise<string> {
+    try {
+      await user.delete(id);
+      return `User with ID : ${id} deleted`;
+    } catch (error) {
+      console.error(`Failed to delete user with ID : ${id}`);
+      throw new Error(`Something went wrong`);
     }
   }
 }
