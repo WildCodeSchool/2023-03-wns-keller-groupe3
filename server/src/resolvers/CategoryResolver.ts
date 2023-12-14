@@ -4,6 +4,7 @@ import dataSource from "../utils";
 import { CategoryService } from "../services/CategoryService";
 import { POI } from "../entities/POI";
 import { Role } from "../entities/User";
+import SecureInput from "../security/SecureInput";
 
 const category = new CategoryService();
 
@@ -22,7 +23,7 @@ export class CategoryResolver {
   @Authorized([Role.SUPERADMIN])
   @Mutation(() => Category)
   async createCategory(@Arg("name") name: string): Promise<Category> {
-    return await category.createCategory(name);
+    return await category.createCategory(SecureInput(name));
   }
 
   @Authorized([Role.SUPERADMIN])
@@ -32,7 +33,7 @@ export class CategoryResolver {
     @Arg("name") name: string
   ): Promise<string> {
     try {
-      await category.updateCategory(id, name);
+      await category.updateCategory(id, SecureInput(name));
       return `Category with ID : ${id} has been successfully updated`;
     } catch (err) {
       console.error(err);
