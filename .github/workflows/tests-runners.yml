@@ -21,8 +21,11 @@ jobs:
   e2e-tests:
     if: github.base_ref == 'dev'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
     steps:
       - name: Check out the code
         uses: actions/checkout@v3
-      - name: Run Playwright Tests
-        uses: ./e2e/.github/workflows/playwright.yml
+      - name: Run tests
+        uses: ./.github/workflows/playwright.yml
