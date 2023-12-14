@@ -94,7 +94,7 @@ function UserPage() {
                 <p>Email: {currentUser.email}</p>
                 <p>Name: {currentUser.name}</p>
                 <p>Role: {userRole}</p>
-                {(userRole === Role.ADMIN || userRole === Role.SUPERUSER) && (
+                {(userRole !== Role.SUPERADMIN) && (
                   <button
                     type="button"
                     className="btn btn-primary"
