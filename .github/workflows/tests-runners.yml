@@ -21,14 +21,9 @@ jobs:
   e2e-tests:
     if: github.base_ref == 'dev'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: e2e
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v3
-      - name: Install npm dependencies
-        run: npm install
-      - name: Launch E2E tests
-        run: npm run test
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Playwright Tests
+        uses: ./e2e/.github/workflows/playwright.yml
