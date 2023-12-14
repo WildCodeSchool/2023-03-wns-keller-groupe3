@@ -47,7 +47,6 @@ export class UserService {
       userToUpdate.city = (Args.cityId !== undefined) ? await dataSource.getRepository(City).findOneBy({ id: Args.cityId }) : userToUpdate.city;
 
       const updatedUser = await dataSource.getRepository(User).save(userToUpdate);
-      console.log('updatedUser =================>', updatedUser)
       return updatedUser;
     } catch {
       throw new Error("User not found");

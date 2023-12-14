@@ -27,7 +27,6 @@ function UserPage() {
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [updateUserMutation] = useMutation(UPDATE_USER, {
     onCompleted: ({ updateUser }) => {
-      console.log('updateUser ============>', updateUser)
       toast(
         <CustomToast
           message={`L'utilisateur "${updateUser.name}" a été modifié`}
@@ -53,8 +52,6 @@ function UserPage() {
     property: string
   ) => {
     try {
-      console.log("property", property);
-      console.log("newValue", newValue);
       const { data } = await updateUserMutation({
         variables: {
           id: id,
@@ -62,7 +59,6 @@ function UserPage() {
         },
       });
       if (data) {
-        console.log('User.tsx data =================>', data)
         console.log(
           `Utilisateur mis à jour pour ${property} : ${newValue}`
         )
