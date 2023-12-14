@@ -13,7 +13,7 @@ export function SecureEmail(input: string): string {
 }
 
 export function SecurePassword(input: string): string {
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).\S{8,}$/;
 
   if (input.trim() !== "" && passwordRegex.test(input)) {
     return input.trim();
