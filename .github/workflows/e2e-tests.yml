@@ -21,9 +21,9 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run Playwright tests with environment variable
         env:
-          SUPER_SECRET: ${{ secrets.STAGING_URL }}
+          STAGING_URL: ${{ secrets.STAGING_URL }}
           run: |
-            example-command "$SUPER_SECRET"
+            example-command "$STAGING_URL"
         run: npm test
       - uses: actions/upload-artifact@v3
         if: always()
