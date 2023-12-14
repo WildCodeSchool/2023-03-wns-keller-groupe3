@@ -11,6 +11,11 @@ jobs:
         shell: bash
         working-directory: e2e
     steps:
+      - shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.STAGING_URL }}
+        run: |
+          example-command "$SUPER_SECRET"
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -19,8 +24,6 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: "Create env file"
-        run: echo "STAGING_URL=${{ secrets.STAGING_URL }}" > .env
       - name: Run Playwright tests with environment variable
         run: npm test
       - uses: actions/upload-artifact@v3
