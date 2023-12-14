@@ -6,8 +6,6 @@ import dataSource from "../utils";
 import * as argon2 from "argon2";
 
 export interface updateArgs {
-  name: string;
-  email: string;
   role: Role;
   cityId: string;
 }
@@ -41,15 +39,12 @@ export class UserService {
 
   async update(id: string, Args: updateArgs): Promise<UserUpdateInput> {
     try {
-      console.log('Args ==========>', Args)
       const userToUpdate = await dataSource.getRepository(User).findOne({ where: { id } });
-      console.log('userToUpdate =======================>', userToUpdate)
+
       if (userToUpdate === null) throw new Error("User not found");
 
-      userToUpdate.name = Args.name ?? userToUpdate.name;
-      userToUpdate.email = Args.email ?? userToUpdate.email;
       userToUpdate.role = Args.role ?? userToUpdate.role;
-      userToUpdate.city = Args.cityId ? await dataSource.getRepository(City).findOneBy({ id: Args.cityId }) : userToUpdate.city;
+      userToUpdate.city = (Args.cityId !== undefined) ? await dataSource.getRepository(City).findOneBy({ id: Args.cityId }) : userToUpdate.city;
 
       const updatedUser = await dataSource.getRepository(User).save(userToUpdate);
       console.log('updatedUser =================>', updatedUser)
