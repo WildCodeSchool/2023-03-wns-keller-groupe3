@@ -1,9 +1,9 @@
 import { DeleteResult } from "typeorm";
+import { City } from "../entities/City";
 import { Role, User } from "../entities/User";
 import { UserUpdateInput } from "../resolvers/input_types/UserInputType";
 import dataSource from "../utils";
 import * as argon2 from "argon2";
-import { City } from "../entities/City";
 
 export interface updateArgs {
   name: string;
@@ -46,8 +46,8 @@ export class UserService {
     userToUpdate.name = Args.name;
     userToUpdate.email = Args.email;
     userToUpdate.role = Args.role;
-    userToUpdate.city = await dataSource.getRepository(City).findOneOrFail({ where: { id: Args.cityId } });
-    const updatedUser = await dataSource.getRepository(User).save(userToUpdate , { reload: true }) ;
+    userToUpdate.city = await dataSource.getRepository(City).findOneByOrFail({ id: Args.cityId });
+    const updatedUser = await dataSource.getRepository(User).save(userToUpdate) ;
     return updatedUser ;
   } catch {
     throw new Error("User not found");

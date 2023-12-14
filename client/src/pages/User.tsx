@@ -42,7 +42,7 @@ function UserPage() {
       });
       if (data) {
         console.log(
-          `Utilisateur mis à jour pour ${property} :`
+          `Utilisateur mis à jour pour ${property} : ${newValue}`
         );
       } else {
         console.error("La réponse de la mutation est null ou undefined.");

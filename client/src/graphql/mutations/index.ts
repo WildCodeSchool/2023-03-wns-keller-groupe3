@@ -70,7 +70,6 @@ export const UPDATE_USER = gql(`
       role
       city{
         id
-        name
       }
     }
   }

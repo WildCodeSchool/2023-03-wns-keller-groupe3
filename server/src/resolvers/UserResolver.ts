@@ -91,9 +91,8 @@ export class UserResolver {
   ): Promise<User> {
     try {
       await user.update(id, { name, email, role, cityId });
-      return await user.getUserBy(id);
+      return await user.getUserBy(email);
     } catch (error) {
-      console.error(`Failed to update user with ID : ${id}`);
       throw new Error(`Something went wrong when updating settings`);
     }
   }
