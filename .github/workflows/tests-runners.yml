@@ -3,7 +3,7 @@ name: tests
 on: pull_request
 
 jobs:
-  client-tests:
+  client-unit-tests:
     if: github.base_ref == 'dev'
     runs-on: ubuntu-latest
     defaults:
@@ -17,15 +17,3 @@ jobs:
         run: npm install
       - name: Launch unit tests
         run: npm run test
-
-  e2e-tests:
-    if: github.base_ref == 'dev'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: e2e
-    steps:
-      - name: Check out the code
-        uses: actions/checkout@v3
-      - name: Run e2e tests
-        uses: ./e2e/playwright.yml
