@@ -41,17 +41,22 @@ export class UserService {
 
   async update(id: string, Args: updateArgs): Promise<UserUpdateInput> {
     try {
-    const userToUpdate = await dataSource.getRepository(User).findOne({ where: { id } });
-    if (userToUpdate === null) throw new Error("User not found");
-    userToUpdate.name = Args.name;
-    userToUpdate.email = Args.email;
-    userToUpdate.role = Args.role;
-    userToUpdate.city = await dataSource.getRepository(City).findOneByOrFail({ id: Args.cityId });
-    const updatedUser = await dataSource.getRepository(User).save(userToUpdate) ;
-    return updatedUser ;
-  } catch {
-    throw new Error("User not found");
-  }
+      console.log('Args ==========>', Args)
+      const userToUpdate = await dataSource.getRepository(User).findOne({ where: { id } });
+      console.log('userToUpdate =======================>', userToUpdate)
+      if (userToUpdate === null) throw new Error("User not found");
+
+      userToUpdate.name = Args.name;
+      userToUpdate.email = Args.email;
+      userToUpdate.role = Args.role;
+      userToUpdate.city = await dataSource.getRepository(City).findOneBy({ id: Args.cityId });
+
+      const updatedUser = await dataSource.getRepository(User).save(userToUpdate);
+      console.log('updatedUser =================>', updatedUser)
+      return updatedUser;
+    } catch {
+      throw new Error("User not found");
+    }
   }
 
   async delete(id: string): Promise<DeleteResult> {

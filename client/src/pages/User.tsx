@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import pinkCity from "../assets/picture/pink.png";
 import greenCity from "../assets/picture/green.png";
 import snowCity from "../assets/picture/snow.png";
+import { toast } from "react-toastify";
+import CustomToast from "../components/CustomToast";
 
 function UserPage() {
   const navigate = useNavigate();
@@ -23,7 +25,21 @@ function UserPage() {
   } = useGetUser();
   const { users, loading: usersLoading } = useGetUsers();
   const [isRegisterMode, setIsRegisterMode] = useState(false);
-  const [updateUserMutation] = useMutation(UPDATE_USER);
+  const [updateUserMutation] = useMutation(UPDATE_USER, {
+    onCompleted: ({ updateUser }) => {
+      console.log('updateUser ============>', updateUser)
+      toast(
+        <CustomToast
+          message={`L'utilisateur "${updateUser.name}" a été modifié`}
+          color='text-success'
+        />
+      );
+    },
+    onError: (error) => {
+      toast(<CustomToast message={error.message} color='text-error' />);
+    },
+    refetchQueries: ['GetAllUsers']
+  });
   const { cities } = useGetCities();
   const isSuperAdmin = userRole === Role.SUPERADMIN;
 
@@ -46,7 +62,9 @@ function UserPage() {
         },
       });
       if (data) {
-        console.log(`Utilisateur mis à jour pour ${property} : ${newValue}`);
+        console.log(
+          `Utilisateur mis à jour pour ${property} : ${newValue}`
+        )
       } else {
         console.error("La réponse de la mutation est null ou undefined.");
       }
@@ -113,7 +131,7 @@ function UserPage() {
                       <td>
                         <select
                           className="select select-ghost w-full max-w-xs"
-                          value={user.role || ""}
+                          value={user.role}
                           name="role"
                           onChange={(e) =>
                             user &&
@@ -132,13 +150,15 @@ function UserPage() {
                       <td>
                         <select
                           className="select select-ghost w-full max-w-xs"
-                          value={user.city?.id || "Atribuer "}
+                          value={user.city?.id}
                           name="cityId"
                           onChange={(e) =>
                             handleChange(user.id, e.target.value, "cityId")
                           }
                         >
-                          <option disabled selected></option>
+                          <option disabled selected>
+                            Attribuer une ville
+                          </option>
                           {!userLoading &&
                             cities.map((city) => (
                               <option key={city.id} value={city.id}>

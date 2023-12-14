@@ -14,15 +14,12 @@ export class UserResolver {
   @Authorized([Role.SUPERADMIN])
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
-    console.log("in getAllUsers");
     try {
-      console.log("in try");
       const userRepository = dataSource.getRepository(User);
       const users = await userRepository.find({
         relations: ["city"], // Inclure la relation avec la ville
         order: { name: "ASC" },
       });
-      console.log("e", users);
       return users;
     } catch (error) {
       console.error("Something went wrong when fetching users");
