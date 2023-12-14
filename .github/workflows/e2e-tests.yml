@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   playwright:
-    timeout-minutes: 60
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,7 +22,7 @@ jobs:
       - name: Run Playwright tests with environment variable
         run: npm test
         env:
-          STAGING_URL: ${{ secrets.STAGING_URL }}
+          STAGING_URL: $STAGING_URL
       - uses: actions/upload-artifact@v3
         if: always()
         with:
