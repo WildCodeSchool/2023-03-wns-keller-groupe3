@@ -30,14 +30,14 @@ function UserPage() {
       toast(
         <CustomToast
           message={`L'utilisateur "${updateUser.name}" a été modifié`}
-          color='text-success'
+          color="text-success"
         />
       );
     },
     onError: (error) => {
-      toast(<CustomToast message={error.message} color='text-error' />);
+      toast(<CustomToast message={error.message} color="text-error" />);
     },
-    refetchQueries: ['GetAllUsers']
+    refetchQueries: ["GetAllUsers"],
   });
   const { cities } = useGetCities();
   const isSuperAdmin = userRole === Role.SUPERADMIN;
@@ -90,7 +90,7 @@ function UserPage() {
                 <p>Email: {currentUser.email}</p>
                 <p>Name: {currentUser.name}</p>
                 <p>Role: {userRole}</p>
-                {(userRole !== Role.SUPERADMIN) && (
+                {userRole !== Role.SUPERADMIN && (
                   <button
                     type="button"
                     className="btn btn-primary"
@@ -178,9 +178,9 @@ function UserPage() {
         </div>
       ) : (
         !isLogged && (
-          <div>
+          <div className="flex flex-col items-center w-full">
             <form
-              className="mt-8 xl:mt-0 max-w-sm flex flex-col w-full relative z-10"
+              className="mt-8 xl:mt-0 max-w-sm w-full relative z-10"
               onSubmit={async (e) => {
                 e.preventDefault();
               }}
