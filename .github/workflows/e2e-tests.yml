@@ -3,7 +3,7 @@ name: e2e tests
 on: pull_request
 
 jobs:
-  test:
+  playwright:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     defaults:
@@ -19,6 +19,8 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Set up environment variables
+        run: echo "STAGING_URL=${{ secrets.STAGING_URL }}" >> $GITHUB_ENV
       - name: Run Playwright tests
         run: npm test
       - uses: actions/upload-artifact@v3

@@ -1,10 +1,13 @@
 import { test } from "@playwright/test";
+import dotenv from "dotenv";
+dotenv.config();
 
 test("create account", async ({ page }) => {
+  const stagingUrl = process.env.STAGING_URL;
   const randomNum = Math.floor(Math.random() * 1000000);
   const email = `test${randomNum}@test.fr`;
 
-  await page.goto("https://staging.keller3.wns.wilders.dev/user");
+  await page.goto(`${stagingUrl}/user`);
   await page.getByText("Pas de compte ? S'inscrire").click();
   await page.getByPlaceholder("Entrez votre nom").click();
   await page.getByPlaceholder("Entrez votre nom").fill("test");
@@ -23,5 +26,7 @@ test("create account", async ({ page }) => {
   await page.getByPlaceholder("Entrez votre mot de passe").click();
   await page.getByPlaceholder("Entrez votre mot de passe").fill("Azer1234");
   await page.getByRole("button", { name: "Se connecter" }).click();
-  await page.getByRole("button", { name: "Explorez maintenant !" }).click();
+  await page
+    .getByRole("button", { name: "Explorez maintenant !" })
+    .click({ timeout: 10000 });
 });
