@@ -6,6 +6,7 @@ import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
 import "dotenv/config";
 import { Context } from "../context.type";
+import { UserUpdateInput } from "./input_types/UserInputType";
 
 const user = new UserService();
 
@@ -85,10 +86,9 @@ export class UserResolver {
     @Arg("email", { nullable: true }) email: string,
     @Arg("role", { nullable: true }) role: Role,
     @Arg("cityId", { nullable: true }) cityId: string
-  ): Promise<User> {
+  ): Promise<UserUpdateInput>{
     try {
-      await user.update(id, { name, email, role, cityId });
-      return await user.getUserBy(email);
+      return await user.update(id, { name, email, role, cityId });
     } catch (error) {
       throw new Error(`Something went wrong when updating settings`);
     }

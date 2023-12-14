@@ -5,18 +5,6 @@ import { Column, ManyToOne } from "typeorm";
 
 @InputType("UserUpdateInput")
 export class UserUpdateInput implements Partial<User> {
-  // @Field()
-  // @MaxLength(100)
-  // id: string;
-
-  // @Field()
-  // @Column("double precision")
-  // latitude?: number;
-
-  // @Field()
-  // @Column("double precision")
-  // longitude?: number;
-
   @Field()
   id: string;
 

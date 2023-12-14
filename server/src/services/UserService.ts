@@ -46,10 +46,10 @@ export class UserService {
       console.log('userToUpdate =======================>', userToUpdate)
       if (userToUpdate === null) throw new Error("User not found");
 
-      userToUpdate.name = Args.name;
-      userToUpdate.email = Args.email;
-      userToUpdate.role = Args.role;
-      userToUpdate.city = await dataSource.getRepository(City).findOneBy({ id: Args.cityId });
+      userToUpdate.name = Args.name ?? userToUpdate.name;
+      userToUpdate.email = Args.email ?? userToUpdate.email;
+      userToUpdate.role = Args.role ?? userToUpdate.role;
+      userToUpdate.city = Args.cityId ? await dataSource.getRepository(City).findOneBy({ id: Args.cityId }) : userToUpdate.city;
 
       const updatedUser = await dataSource.getRepository(User).save(userToUpdate);
       console.log('updatedUser =================>', updatedUser)

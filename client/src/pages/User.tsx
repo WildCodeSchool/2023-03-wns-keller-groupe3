@@ -62,6 +62,7 @@ function UserPage() {
         },
       });
       if (data) {
+        console.log('User.tsx data =================>', data)
         console.log(
           `Utilisateur mis à jour pour ${property} : ${newValue}`
         )
