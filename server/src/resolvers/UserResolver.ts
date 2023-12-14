@@ -64,7 +64,7 @@ export class UserResolver {
     @Arg("name") name: string,
     @Arg("password") password: string
   ): Promise<User> {
-    if (password.trim() === "") {
+    if (password.trim() === "" || password.length <= 10) {
       console.error(`Password can't be empty`);
       throw new Error("Password can't be empty");
     }

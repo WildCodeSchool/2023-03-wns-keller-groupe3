@@ -15,7 +15,8 @@ const start = async (): Promise<void> => {
 
   const typeGraphQLgeneratedSchema = await buildSchema({
     resolvers: [CategoryResolver, CityResolver, POIResolver, UserResolver],
-    authChecker: ({ context },  authorizedRoles: Role[]) => {
+    validate: true,
+    authChecker: ({ context }, authorizedRoles: Role[]) => {
       console.log("roles is", authorizedRoles);
       console.log("context from authchecker", context);
       if (
@@ -32,6 +33,7 @@ const start = async (): Promise<void> => {
   const server = new ApolloServer({
     schema: typeGraphQLgeneratedSchema,
     context: ({ req }) => {
+      console.log("request headers: ", req.headers);
       console.log("request of context : ", req.headers.authorization);
       if (
         req.headers.authorization !== undefined &&
