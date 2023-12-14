@@ -1,5 +1,6 @@
 import { Field, ObjectType } from "type-graphql";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Length } from "class-validator";
 import { City } from "./City";
 
 export enum Role {
@@ -31,6 +32,7 @@ export class User {
   })
   email: string;
 
+  @Length(8, 255)
   @Column({
     type: "varchar",
     length: 255,

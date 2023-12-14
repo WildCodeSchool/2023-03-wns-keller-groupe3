@@ -7,7 +7,7 @@ export function SecureEmail(input: string): string {
   if (input !== "" && emailRegex.test(input)) {
     return input.trim();
   } else {
-    throw new ApolloError("Mauvais format d'email");
+    throw new ApolloError("Bad email format");
   }
 }
 
@@ -17,7 +17,7 @@ export function SecurePassword(input: string): string {
   if (input !== "" && passwordRegex.test(input)) {
     return input.trim();
   } else {
-    throw new ApolloError("Mauvais format de mot de passe");
+    throw new ApolloError("Bad password format");
   }
 }
 
