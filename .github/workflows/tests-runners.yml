@@ -26,4 +26,4 @@ jobs:
         working-directory: e2e
     steps:
       - name: Run e2e tests
-        uses: ./.github/workflows/playwright.yml
+        uses: ./e2e/playwright.yml
