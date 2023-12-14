@@ -19,9 +19,9 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Set up environment variables
-        run: echo "STAGING_URL=${{ secrets.STAGING_URL }}" >> $GITHUB_ENV
-      - name: Run Playwright tests
+      - name: Run Playwright tests with environment variable
+        env:
+          STAGING_URL: ${{ secrets.STAGING_URL }}
         run: npm test
       - uses: actions/upload-artifact@v3
         if: always()
