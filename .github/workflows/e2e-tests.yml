@@ -22,7 +22,7 @@ jobs:
       - name: Run Playwright tests with environment variable
         run: npm test
         env:
-          STAGING_URL: $STAGING_URL
+          STAGING_URL: ${{ secrets.STAGING_URL }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
