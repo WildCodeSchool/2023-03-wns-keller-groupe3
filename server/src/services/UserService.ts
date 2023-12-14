@@ -1,7 +1,9 @@
 import { DeleteResult } from "typeorm";
 import { Role, User } from "../entities/User";
+import { UserUpdateInput } from "../resolvers/input_types/UserInputType";
 import dataSource from "../utils";
 import * as argon2 from "argon2";
+import { City } from "../entities/City";
 
 export interface updateArgs {
   name: string;
@@ -37,14 +39,19 @@ export class UserService {
     return userFromDB;
   }
 
-  async update(id: string, Args: updateArgs): Promise<User> {
-    await dataSource.getRepository(User).update(id, {
-      name: Args.name,
-      email: Args.email,
-      role: Args.role,
-      city: { id: Args.cityId },
-    });
-    return await this.getUserBy(id);
+  async update(id: string, Args: updateArgs): Promise<UserUpdateInput> {
+    try {
+    const userToUpdate = await dataSource.getRepository(User).findOne({ where: { id } });
+    if (userToUpdate === null) throw new Error("User not found");
+    userToUpdate.name = Args.name;
+    userToUpdate.email = Args.email;
+    userToUpdate.role = Args.role;
+    userToUpdate.city = await dataSource.getRepository(City).findOneOrFail({ where: { id: Args.cityId } });
+    const updatedUser = await dataSource.getRepository(User).save(userToUpdate , { reload: true }) ;
+    return updatedUser ;
+  } catch {
+    throw new Error("User not found");
+  }
   }
 
   async delete(id: string): Promise<DeleteResult> {
