@@ -20,9 +20,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests with environment variable
+        run: npm test
         env:
           STAGING_URL: ${{ secrets.STAGING_URL }}
-        run: npm test
       - uses: actions/upload-artifact@v3
         if: always()
         with:
