@@ -22,8 +22,7 @@ jobs:
     if: github.base_ref == 'dev'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
+      - name: Check out the code
+        uses: actions/checkout@v3
       - name: Run Playwright Tests
         uses: ./e2e/.github/workflows/playwright.yml
