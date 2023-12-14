@@ -4,6 +4,7 @@ dotenv.config();
 
 test("create account", async ({ page }) => {
   const stagingUrl = process.env.STAGING_URL;
+  console.log("==================>", process.env.STAGING_URL);
   const randomNum = Math.floor(Math.random() * 1000000);
   const email = `test${randomNum}@test.fr`;
 
