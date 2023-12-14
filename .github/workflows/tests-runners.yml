@@ -25,5 +25,7 @@ jobs:
       run:
         working-directory: e2e
     steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
       - name: Run e2e tests
         uses: ./e2e/playwright.yml
