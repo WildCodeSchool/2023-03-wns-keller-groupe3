@@ -15,7 +15,12 @@ import snowCity from "../assets/picture/snow.png";
 function UserPage() {
   const navigate = useNavigate();
   const client = useApolloClient();
-  const { isLogged, userRole, user : currentUser, loading : userLoading } = useGetUser();
+  const {
+    isLogged,
+    userRole,
+    user: currentUser,
+    loading: userLoading,
+  } = useGetUser();
   const { users, loading: usersLoading } = useGetUsers();
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [updateUserMutation] = useMutation(UPDATE_USER);
@@ -41,9 +46,7 @@ function UserPage() {
         },
       });
       if (data) {
-        console.log(
-          `Utilisateur mis à jour pour ${property} : ${newValue}`
-        );
+        console.log(`Utilisateur mis à jour pour ${property} : ${newValue}`);
       } else {
         console.error("La réponse de la mutation est null ou undefined.");
       }
@@ -67,27 +70,28 @@ function UserPage() {
       {isLogged && (
         <div>
           {userRole && (
-            <div>
-              <p>Email: {currentUser.email}</p>
-              <p>Name: {currentUser.name}</p>
-              <p>Role: {userRole}</p>
-              {(userRole === Role.ADMIN ||
-                userRole === Role.SUPERUSER ) && (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleLogout}
-                >
-                  Déconnexion
-                </button>
-              )}
+            <div className="card w-96 bg-white shadow-xl opacity-80 mb-5">
+              <div className="card-body items-center text-center text-black ">
+                <p>Email: {currentUser.email}</p>
+                <p>Name: {currentUser.name}</p>
+                <p>Role: {userRole}</p>
+                {(userRole === Role.ADMIN || userRole === Role.SUPERUSER) && (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleLogout}
+                  >
+                    Déconnexion
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>
       )}
       {isSuperAdmin ? (
         <div className="overflow-x-auto">
-          <table className="table">
+          <table className="table mb-8 mt-8">
             <thead>
               <tr>
                 <th></th>
@@ -112,7 +116,9 @@ function UserPage() {
                           value={user.role || ""}
                           name="role"
                           onChange={(e) =>
-                            user && user.id && handleChange(user.id, e.target.value, "role")
+                            user &&
+                            user.id &&
+                            handleChange(user.id, e.target.value, "role")
                           }
                         >
                           <option disabled selected>
@@ -126,7 +132,7 @@ function UserPage() {
                       <td>
                         <select
                           className="select select-ghost w-full max-w-xs"
-                          value={user.city?.id || ""}
+                          value={user.city?.id || "Atribuer "}
                           name="cityId"
                           onChange={(e) =>
                             handleChange(user.id, e.target.value, "cityId")
@@ -147,7 +153,7 @@ function UserPage() {
           </table>
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-primary mx-auto w-full"
             onClick={handleLogout}
           >
             Deconnexion
@@ -176,13 +182,13 @@ function UserPage() {
         )
       )}
       <div>
-        <div className="absolute right-0 bottom-0 h-auto hidden md:block md:w-[388px] lg:w-[341px] xl:w-[420px] 2xl:w-[510px] opacity-50 border border-[#ffffff59] rounded-[50%]">
+        <div className="absolute right-0 bottom-0 h-auto hidden md:block md:w-[388px] lg:w-[341px] xl:w-[420px] 2xl:w-[510px] opacity-50 border border-[#ffffff59] rounded-[50%] z-[-1]">
           <img src={snowCity} alt="" />
         </div>
-        <div className="absolute bottom-0 left-1/2 translate-x-[-50%] hidden lg:block lg:w-[341px] h-auto xl:w-[425px] 2xl:w-[512px] opacity-50">
+        <div className="absolute bottom-0 left-1/2 translate-x-[-50%] hidden lg:block lg:w-[341px] h-auto xl:w-[425px] 2xl:w-[512px] opacity-50 z-[-1]">
           <img src={greenCity} alt="" />
         </div>
-        <div className="absolute left-0 bottom-0 h-auto md:w-[388px] hidden md:block lg:w-[341px] xl:w-[420px] 2xl:w-[510px] opacity-50">
+        <div className="absolute left-0 bottom-0 h-auto md:w-[388px] hidden md:block lg:w-[341px] xl:w-[420px] 2xl:w-[510px] opacity-50 z-[-1]">
           <img src={pinkCity} alt="" />
         </div>
       </div>
