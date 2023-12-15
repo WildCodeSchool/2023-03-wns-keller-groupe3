@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Install npm dependencies
         run: npm install
-      - name: Launch tests
+      - name: Launch client tests
         run: npm run test
   server-tests:
     if: github.base_ref == 'dev'
