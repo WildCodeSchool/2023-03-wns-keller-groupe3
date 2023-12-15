@@ -27,6 +27,6 @@ test("create account", async ({ page }) => {
   await page.getByPlaceholder("Entrez votre mot de passe").fill("Azer1234");
   await page.getByRole("button", { name: "Se connecter" }).click();
   await page
-    .getByRole("button", { name: "Explorez maintenant !" })
+    .getByTestId("explore")
     .click({ timeout: 10000 });
 });
