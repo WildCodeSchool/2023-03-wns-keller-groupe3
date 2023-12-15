@@ -83,7 +83,7 @@ export default function Signup() {
 
   return (
     <>
-      <h2 className="text-3xl sm:text-4xl text-base-content font-bold mb-10 text">
+      <h2 className="text-3xl sm:text-4xl text-base-content font-bold mb-8 text">
         Inscription
       </h2>
       <div className="mb-4">
