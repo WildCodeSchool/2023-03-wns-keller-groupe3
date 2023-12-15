@@ -91,15 +91,7 @@ export class UserResolver {
     @Arg("cityId", { nullable: true }) cityId: string
   ): Promise<UserUpdateInput>{
     try {
-<<<<<<< HEAD
       return await user.update(id, { role, cityId });
-=======
-      await user.update(id, {
-        name: SecureInput(name),
-        email: SecureEmail(email),
-      });
-      return await user.getUserBy(id);
->>>>>>> 73af26913d2c95e632ebf21f94cefdd917fa3ded
     } catch (error) {
       throw new Error(`Something went wrong when updating settings`);
     }
