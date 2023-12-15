@@ -3,6 +3,7 @@ import { UserUpdateInput } from "./input_types/UserInputType";
 import { Role, User } from "../entities/User";
 import { UserService } from "../services/UserService";
 import { Context } from "../context.type";
+import SecureInput, { SecureEmail, SecurePassword, } from "../security/SecureInput";
 import dataSource from "../utils";
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
@@ -47,10 +48,10 @@ export class UserResolver {
   ): Promise<String | undefined> {
     const user = await dataSource
       .getRepository(User)
-      .findOneByOrFail({ email });
+      .findOneByOrFail({ email: SecureEmail(email) });
 
     try {
-      if (await argon2.verify(user.hashedPassword, password)) {
+      if (await argon2.verify(user.hashedPassword, SecurePassword(password))) {
         const token = jwt.sign(
           { email, role: user.role },
           process.env.JWT_SECRET_KEY as jwt.Secret
@@ -70,11 +71,15 @@ export class UserResolver {
     @Arg("name") name: string,
     @Arg("password") password: string
   ): Promise<User> {
-    if (password.trim() === "") {
+    if (SecurePassword(password) === "") {
       console.error(`Password can't be empty`);
       throw new Error("Password can't be empty");
     }
-    return await user.create(email, name, password);
+    return await user.create(
+      SecureEmail(email),
+      SecureInput(name),
+      SecurePassword(password)
+    );
   }
 
   // TODO make sure to restrict USER by ID (only this user can update himself)

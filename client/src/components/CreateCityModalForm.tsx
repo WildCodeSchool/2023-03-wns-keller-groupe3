@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { suggestedCities } from "../functions/suggestedCities";
-import AutoComplete from "./AutoComplete";
+import AutoComplete from "./AutoComplete/AutoComplete";
 
 interface CreatCityModalFormProps {
   createCitySubmit: (
