@@ -12,29 +12,30 @@ export default function Login() {
     variables: { email, password },
   });
 
+  const handleSubmitLogin = async () => {
+    try {
+      login();
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
+
   if (data) {
     console.log("I'm logged in : ", data);
     localStorage.setItem("token", data.login);
     return <Navigate to='/' />;
   }
+
   if (error) {
     console.log("Wrong credentials : ", data);
-    console.log("error", error);
+    console.error("Login error:", error);
+    toast(
+      <CustomToast
+        message={`Vos informations de connexion sont erronées`}
+        color='text-error'
+      />
+    );
   }
-
-  const handleSubmitLogin = async () => {
-    // TODO trouble of state on the login page (this function plays automatically on each state update, both email and password)
-    if (error) {
-      toast(
-        <CustomToast
-          message={`Vos informations de connexion sont erronées`}
-          color='text-error'
-        />
-      );
-    } else {
-      login();
-    }
-  };
 
   return (
     <>
