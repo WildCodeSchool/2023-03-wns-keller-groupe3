@@ -1,19 +1,21 @@
 import { Arg, Mutation, Resolver, Query, Ctx, Authorized } from "type-graphql";
-
 import { Role, User } from "../entities/User";
 import { UserService } from "../services/UserService";
-
 import dataSource from "../utils";
-
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
 import "dotenv/config";
 import { Context } from "../context.type";
+import SecureInput, {
+  SecureEmail,
+  SecurePassword,
+} from "../security/SecureInput";
 
 const user = new UserService();
 
 @Resolver(User)
 export class UserResolver {
+  @Authorized([Role.SUPERADMIN])
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
     try {
@@ -25,11 +27,13 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async getUserBy(@Ctx() context: Context): Promise<User> {
+  async getUserBy(@Ctx() context?: Context): Promise<User | {}> {
+    const userEmail = context?.email;
+    if (userEmail === undefined) return {};
     try {
-      return await user.getUserBy(context.user?.id);
+      return await user.getUserBy(userEmail);
     } catch (error) {
-      console.error(`User with ID : ${context.user.id} not found`);
+      console.error(`User ${userEmail} not found`);
       throw new Error(`User not found`);
     }
   }
@@ -41,10 +45,10 @@ export class UserResolver {
   ): Promise<String | undefined> {
     const user = await dataSource
       .getRepository(User)
-      .findOneByOrFail({ email });
+      .findOneByOrFail({ email: SecureEmail(email) });
 
     try {
-      if (await argon2.verify(user.hashedPassword, password)) {
+      if (await argon2.verify(user.hashedPassword, SecurePassword(password))) {
         const token = jwt.sign(
           { email, role: user.role },
           process.env.JWT_SECRET_KEY as jwt.Secret
@@ -64,11 +68,15 @@ export class UserResolver {
     @Arg("name") name: string,
     @Arg("password") password: string
   ): Promise<User> {
-    if (password.trim() === "") {
+    if (SecurePassword(password) === "") {
       console.error(`Password can't be empty`);
       throw new Error("Password can't be empty");
     }
-    return await user.create(email, name, password);
+    return await user.create(
+      SecureEmail(email),
+      SecureInput(name),
+      SecurePassword(password)
+    );
   }
 
   // TODO make sure to restrict USER by ID (only this user can update himself)
@@ -80,7 +88,10 @@ export class UserResolver {
     @Arg("email", { nullable: true }) email: string
   ): Promise<User> {
     try {
-      await user.update(id, { name, email });
+      await user.update(id, {
+        name: SecureInput(name),
+        email: SecureEmail(email),
+      });
       return await user.getUserBy(id);
     } catch (error) {
       console.error(`Failed to update user with ID : ${id}`);

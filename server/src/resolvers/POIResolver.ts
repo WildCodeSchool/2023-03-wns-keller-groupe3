@@ -7,6 +7,7 @@ import { CityInput } from "./input_types/CityInputType";
 import { CategoryInput } from "./input_types/CategoryInput";
 import { ApolloError } from "apollo-server";
 import { Role } from "../entities/User";
+import SecureInput from "../security/SecureInput";
 
 const pointOfInterest = new POIService();
 
@@ -22,11 +23,7 @@ export class POIResolver {
     return await pointOfInterest.getPOIBy(id);
   }
 
-  // TODO Queries "getAllPOIsByCategory" and "getAllPOIsByCity"
-
   // https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
-  // TODO Make class-validations
-  // TODO make sure to restrict SUPERUSER and ADMIN by city (i.e : ADMIN from Toulouse cannot create POI in Paris)
   @Authorized([Role.SUPERUSER, Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => POI)
   async createPOI(
@@ -40,6 +37,12 @@ export class POIResolver {
     @Arg("categories", () => [CategoryInput]) categories: Category[],
     @Arg("city", () => CityInput) city: City
   ): Promise<POI | string> {
+    const latitudeRange =
+      city.latitude + 0.05 > latitude && city.latitude - 0.05 < latitude;
+    const longitudeRange =
+      city.longitude + 0.05 > longitude && city.longitude - 0.05 < longitude;
+    if (!latitudeRange || !longitudeRange)
+      throw new ApolloError("Le point d'intêret est en dehors de la ville");
     if (
       name.length === 0 ||
       picture.length === 0 ||
@@ -62,9 +65,9 @@ export class POIResolver {
         longitude,
         gpsPin,
         address,
-        name,
-        description,
-        picture,
+        name: SecureInput(name),
+        description: SecureInput(description),
+        picture: SecureInput(picture),
         categories,
         city,
       });
@@ -73,8 +76,7 @@ export class POIResolver {
     }
   }
 
-  // TODO make sure to restrict SUPERUSER and ADMIN by city (i.e : ADMIN from Toulouse cannot update POI in Paris)
-  @Authorized([Role.SUPERUSER, Role.ADMIN, Role.SUPERADMIN])
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => POI)
   async updatePOI(
     @Arg("id") id: string,
@@ -95,9 +97,9 @@ export class POIResolver {
         longitude,
         gps_pin: gpsPin,
         address,
-        name,
-        description,
-        picture,
+        name: SecureInput(name),
+        description: SecureInput(description),
+        picture: SecureInput(picture),
         categories,
         city,
       });
@@ -106,11 +108,12 @@ export class POIResolver {
       throw new Error(`Something went wrong when updating the POI`);
     }
   }
-  
-  // TODO make sure to restrict SUPERUSER and ADMIN by city (i.e : ADMIN from Toulouse cannot delete POI in Paris)
-  @Authorized([Role.SUPERUSER, Role.ADMIN, Role.SUPERADMIN])
+
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => Boolean)
   async deletePOI(@Arg("id") id: string): Promise<boolean> {
     return await pointOfInterest.deletePOI(id);
   }
+
+  // TODO Queries "getAllPOIsByCategory"
 }
