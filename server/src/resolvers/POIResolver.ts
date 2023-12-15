@@ -7,6 +7,7 @@ import { CityInput } from "./input_types/CityInputType";
 import { CategoryInput } from "./input_types/CategoryInput";
 import { ApolloError } from "apollo-server";
 import { Role } from "../entities/User";
+import SecureInput from "../security/SecureInput";
 
 const pointOfInterest = new POIService();
 
@@ -64,9 +65,9 @@ export class POIResolver {
         longitude,
         gpsPin,
         address,
-        name,
-        description,
-        picture,
+        name: SecureInput(name),
+        description: SecureInput(description),
+        picture: SecureInput(picture),
         categories,
         city,
       });
@@ -96,9 +97,9 @@ export class POIResolver {
         longitude,
         gps_pin: gpsPin,
         address,
-        name,
-        description,
-        picture,
+        name: SecureInput(name),
+        description: SecureInput(description),
+        picture: SecureInput(picture),
         categories,
         city,
       });

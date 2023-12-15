@@ -13,6 +13,7 @@ import { CityService } from "../services/CityService";
 import { ApolloError } from "apollo-server-errors";
 import { Role } from "../entities/User";
 import { Context } from "../context.type";
+import SecureInput from "../security/SecureInput";
 
 const city = new CityService();
 
@@ -50,7 +51,12 @@ export class CityResolver {
       );
     }
     try {
-      return await city.createCity(name, picture, latitude, longitude);
+      return await city.createCity(
+        SecureInput(name),
+        SecureInput(picture),
+        latitude,
+        longitude
+      );
     } catch (error) {
       throw new ApolloError("Une erreur est survenue", "CITY_CREATION_ERROR");
     }
@@ -76,6 +82,12 @@ export class CityResolver {
     @Arg("latitude", { nullable: true }) latitude: number,
     @Arg("longitude", { nullable: true }) longitude: number
   ): Promise<City> {
-    return await city.updatedCity(id, name, picture, latitude, longitude);
+    return await city.updatedCity(
+      id,
+      SecureInput(name),
+      SecureInput(picture),
+      latitude,
+      longitude
+    );
   }
 }
