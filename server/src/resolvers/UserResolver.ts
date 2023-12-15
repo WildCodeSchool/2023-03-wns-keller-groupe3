@@ -1,11 +1,12 @@
 import { Arg, Mutation, Resolver, Query, Ctx, Authorized } from "type-graphql";
+import { UserUpdateInput } from "./input_types/UserInputType";
 import { Role, User } from "../entities/User";
 import { UserService } from "../services/UserService";
+import { Context } from "../context.type";
 import dataSource from "../utils";
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
 import "dotenv/config";
-import { Context } from "../context.type";
 
 const user = new UserService();
 
@@ -81,14 +82,11 @@ export class UserResolver {
   @Mutation(() => User)
   async updateUser(
     @Arg("id") id: string,
-    @Arg("name", { nullable: true }) name: string,
-    @Arg("email", { nullable: true }) email: string,
     @Arg("role", { nullable: true }) role: Role,
     @Arg("cityId", { nullable: true }) cityId: string
-  ): Promise<User> {
+  ): Promise<UserUpdateInput>{
     try {
-      await user.update(id, { name, email, role, cityId });
-      return await user.getUserBy(email);
+      return await user.update(id, { role, cityId });
     } catch (error) {
       throw new Error(`Something went wrong when updating settings`);
     }
