@@ -8,8 +8,10 @@ services:
       - 5432:5432
     env_file:
       - vars.env
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}"]
       interval: 5s
       timeout: 15s
       retries: 100
@@ -29,7 +31,7 @@ services:
 
   client:
     build: ./client
-    env_file: vars.env
+    env_file: .env.e2e
     healthcheck:
       test: "curl --fail --request GET --url 'http://localhost:3000' || exit 1"
       interval: 5s
