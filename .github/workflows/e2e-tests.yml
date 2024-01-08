@@ -8,10 +8,6 @@ jobs:
   playwright:
     timeout-minutes: 30
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: e2e
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
