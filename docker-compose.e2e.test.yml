@@ -8,10 +8,6 @@ services:
       - 5432:5432
     env_file:
       - vars.env
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL", "cat vars.env", "CMD-SHELL", "pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}"]
       interval: 5s
@@ -33,7 +29,8 @@ services:
 
   client:
     build: ./client
-    env_file: vars.env
+    env_file:
+      - vars.env
     healthcheck:
       test: "curl --fail --request GET --url 'http://localhost:3000' || exit 1"
       interval: 5s
@@ -45,6 +42,8 @@ services:
 
   e2e:
     build: ./e2e
+    env_file:
+      - vars.env
     volumes:
       - ./e2e/playwright-report:/app/playwright-report
       - ./e2e/test-results:/app/test-results

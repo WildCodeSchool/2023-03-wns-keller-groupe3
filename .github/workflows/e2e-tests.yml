@@ -8,33 +8,38 @@ jobs:
   playwright:
     timeout-minutes: 30
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node 18
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: display_variables
-        run: |
-          echo "secrets"
-          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY}}"
-          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD}}"
-          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER}}"
-          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB}}"
-      - name: create env file
+
+      - name: Set up environment variables
+        env:
+          JWT_SECRET_KEY: testjwt
+          POSTGRES_PASSWORD: testpostgrespwd
+          POSTGRES_USER: postgresusr
+          POSTGRES_DB: postgres
         run: |
           touch vars.env
-          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY}}" >> vars.env
-          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD}}" >> vars.env
-          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER}}" >> vars.env
-          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB}}" >> vars.env
-          echo "test=test" >> vars.env
-          cat vars.env
-      - name: Install dependencies
+          echo "JWT_SECRET_KEY=${JWT_SECRET_KEY}" >> vars.env
+          echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> vars.env
+          echo "POSTGRES_USER=${POSTGRES_USER}" >> vars.env
+          echo "POSTGRES_DB=${POSTGRES_DB}" >> vars.env
+
+      - name: Install dependencies with clean install
         run: npm ci
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
       - name: Run Playwright tests
         run: npm run e2e-test
+
       - uses: actions/upload-artifact@v3
         if: always()
         with:
