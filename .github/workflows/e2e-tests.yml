@@ -15,12 +15,7 @@ jobs:
           node-version: 18
       - name: display_variables
         run: |
-          echo "vars"
-          echo "JWT_SECRET_KEY=${{ vars.JWT_SECRET_KEY}}"
-          echo "POSTGRES_PASSWORD=${{ vars.POSTGRES_PASSWORD}}"
-          echo "POSTGRES_USER=${{ vars.POSTGRES_USER}}"
-          echo "POSTGRES_DB=${{ vars.POSTGRES_DB}}"
-          | echo "secrets"
+          echo "secrets"
           echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY}}"
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD}}"
           echo "POSTGRES_USER=${{ secrets.POSTGRES_USER}}"
