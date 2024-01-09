@@ -22,7 +22,7 @@ jobs:
         env:
           JWT_SECRET_KEY: testjwt
           POSTGRES_PASSWORD: testpostgrespwd
-          POSTGRES_USER: postgresusr
+          POSTGRES_USER: postgres
           POSTGRES_DB: postgres
         run: |
           touch vars.env
