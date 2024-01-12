@@ -27,11 +27,10 @@ services:
     ports:
       - 4000:4000
     healthcheck:
-      test: ["CMD", "curl", "http://localhost:4000/"]
+      test: 'curl --fail --request POST --header ''content-type: application/json'' --url ''http://localhost:4000'' --data ''{"query":"query { __typename }"}'' || exit 1'
       interval: 5s
       timeout: 5s
       retries: 10
-      start_period: 10s
     depends_on:
       db:
         condition: service_healthy
