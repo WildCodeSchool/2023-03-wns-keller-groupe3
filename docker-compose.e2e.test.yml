@@ -7,6 +7,7 @@ services:
     ports:
       - 5432:5432
     environment:
+      JWT_SECRET_KEY: testjwt
       POSTGRES_PASSWORD: example
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
@@ -18,8 +19,11 @@ services:
 
   server:
     build: ./server
-    env_file:
-      - e2e.env
+    environment:
+      JWT_SECRET_KEY: testjwt
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
     ports:
       - 4000:4000
     healthcheck:
@@ -34,8 +38,11 @@ services:
 
   client:
     build: ./client
-    env_file:
-      - e2e.env
+    environment:
+      JWT_SECRET_KEY: testjwt
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
     healthcheck:
       test: "curl --fail --request GET --url 'http://localhost:3000' || exit 1"
       interval: 5s
@@ -47,8 +54,11 @@ services:
 
   e2e:
     build: ./e2e
-    env_file:
-      - e2e.env
+    environment:
+      JWT_SECRET_KEY: testjwt
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
     volumes:
       - ./e2e/playwright-report:/app/playwright-report
       - ./e2e/test-results:/app/test-results
