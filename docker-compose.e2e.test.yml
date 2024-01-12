@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -d postgres -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
       interval: 5s
       timeout: 15s
       retries: 100
@@ -19,7 +19,7 @@ services:
   server:
     build: ./server
     env_file:
-      - vars.env
+      - e2e.env
     ports:
       - 4000:4000
     healthcheck:
@@ -35,7 +35,7 @@ services:
   client:
     build: ./client
     env_file:
-      - vars.env
+      - e2e.env
     healthcheck:
       test: "curl --fail --request GET --url 'http://localhost:3000' || exit 1"
       interval: 5s
@@ -48,7 +48,7 @@ services:
   e2e:
     build: ./e2e
     env_file:
-      - vars.env
+      - e2e.env
     volumes:
       - ./e2e/playwright-report:/app/playwright-report
       - ./e2e/test-results:/app/test-results
