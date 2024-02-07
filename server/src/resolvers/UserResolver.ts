@@ -1,15 +1,13 @@
 import { Arg, Mutation, Resolver, Query, Ctx, Authorized } from "type-graphql";
+import { UserUpdateInput } from "./input_types/UserInputType";
 import { Role, User } from "../entities/User";
 import { UserService } from "../services/UserService";
+import { Context } from "../context.type";
+import SecureInput, { SecureEmail, SecurePassword, } from "../security/SecureInput";
 import dataSource from "../utils";
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
 import "dotenv/config";
-import { Context } from "../context.type";
-import SecureInput, {
-  SecureEmail,
-  SecurePassword,
-} from "../security/SecureInput";
 
 const user = new UserService();
 
@@ -19,7 +17,12 @@ export class UserResolver {
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
     try {
-      return await user.getAllUsers();
+      const userRepository = dataSource.getRepository(User);
+      const users = await userRepository.find({
+        relations: ["city"], // Inclure la relation avec la ville
+        order: { name: "ASC" },
+      });
+      return users;
     } catch (error) {
       console.error("Something went wrong when fetching users");
       throw new Error("Something went wrong when fetching users");
@@ -80,27 +83,22 @@ export class UserResolver {
   }
 
   // TODO make sure to restrict USER by ID (only this user can update himself)
-  @Authorized([Role.USER, Role.SUPERADMIN])
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => User)
   async updateUser(
     @Arg("id") id: string,
-    @Arg("name", { nullable: true }) name: string,
-    @Arg("email", { nullable: true }) email: string
-  ): Promise<User> {
+    @Arg("role", { nullable: true }) role: Role,
+    @Arg("cityId", { nullable: true }) cityId: string
+  ): Promise<UserUpdateInput>{
     try {
-      await user.update(id, {
-        name: SecureInput(name),
-        email: SecureEmail(email),
-      });
-      return await user.getUserBy(id);
+      return await user.update(id, { role, cityId });
     } catch (error) {
-      console.error(`Failed to update user with ID : ${id}`);
       throw new Error(`Something went wrong when updating settings`);
     }
   }
 
   // TODO make sure to restrict USER by ID (only this user can delete himself)
-  @Authorized([Role.USER, Role.SUPERADMIN])
+  @Authorized([Role.ADMIN, Role.SUPERADMIN])
   @Mutation(() => String)
   async deleteUser(@Arg("id") id: string): Promise<string> {
     try {

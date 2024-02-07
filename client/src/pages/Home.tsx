@@ -80,7 +80,7 @@ function Home() {
       </div>
       <div className="pb-[140px] pt-[80px] md:pb-[80px] xl:h-[33vh] flex justify-center items-center">
         <Link to="/cities">
-          <button className="btn btn-primary">Explorez maintenant !</button>
+          <button className="btn btn-primary" data-testid="explore">Explorez maintenant !</button>
         </Link>
       </div>
     </div>

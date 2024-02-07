@@ -60,3 +60,16 @@ export const CREATE_USER = gql(`
     }
   }
 `);
+
+export const UPDATE_USER = gql(`
+  mutation UpdateUser($id: String!, $role: String, $cityId: String) {
+    updateUser(id: $id, role: $role, cityId: $cityId) {
+      id
+      name
+      role
+      city{
+        id
+      }
+    }
+  }
+`);
