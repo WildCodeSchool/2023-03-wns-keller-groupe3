@@ -59,6 +59,21 @@ export const GET_USER = gql(`
   }
 `);
 
+export const GET_ALL_USERS = gql(`
+  query GetAllUsers {
+    getAllUsers {
+      id
+      name
+      email
+      role
+      city {
+        id
+        name
+      }
+    }
+  }
+`);
+
 export const LOGIN = gql(`
   query Login($password: String!, $email: String!) {
     login(password: $password, email: $email)

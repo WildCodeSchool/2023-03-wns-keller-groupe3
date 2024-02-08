@@ -16,10 +16,12 @@ const documents = {
     "\n  mutation CreateCity(\n    $name: String!\n    $picture: String!\n    $latitude: Float\n    $longitude: Float\n  ) {\n    createCity(\n      name: $name\n      picture: $picture\n      latitude: $latitude\n      longitude: $longitude\n    ) {\n      id\n      name\n      picture\n      latitude\n      longitude\n    }\n  }\n": types.CreateCityDocument,
     "\n  mutation CreatePOI(\n    $address: String!\n    $categories: [CategoryInput!]!\n    $description: String!\n    $gpsPin: String!\n    $name: String!\n    $picture: String!\n    $city: CityInput!\n    $latitude: Float!\n    $longitude: Float!\n  ) {\n    createPOI(\n      address: $address\n      categories: $categories\n      description: $description\n      gpsPin: $gpsPin\n      name: $name\n      picture: $picture\n      city: $city\n      latitude: $latitude\n      longitude: $longitude\n    ) {\n      id\n      name\n    }\n  }\n": types.CreatePoiDocument,
     "\n  mutation CreateUser($email: String!, $name: String!, $password: String!) {\n    createUser(email: $email, name: $name, password: $password) {\n      id\n      email\n      name\n    }\n  }\n": types.CreateUserDocument,
+    "\n  mutation UpdateUser($id: String!, $role: String, $cityId: String) {\n    updateUser(id: $id, role: $role, cityId: $cityId) {\n      id\n      name\n      role\n      city{\n        id\n      }\n    }\n  }\n": types.UpdateUserDocument,
     "\n  query GetAllCities {\n    getAllCities {\n      id\n      name\n      picture\n    }\n  }\n": types.GetAllCitiesDocument,
     "\n  query GetCityBy($getCityById: String!) {\n    getCityBy(id: $getCityById) {\n      id\n      name\n      picture\n      latitude\n      longitude\n      pointsOfInterest {\n        id\n        name\n        picture\n        description\n        address\n        latitude\n        longitude\n        gps_pin\n        categories {\n          id\n          name\n        }\n      }\n    }\n  }\n": types.GetCityByDocument,
     "\n  query GetAllCategories {\n    getAllCategories {\n      id\n      name\n    }\n  }\n": types.GetAllCategoriesDocument,
     "\n  query GetUserBy {\n    getUserBy {\n      id\n      name\n      email\n      role\n      city {\n        id\n      }\n    }\n  }\n": types.GetUserByDocument,
+    "\n  query GetAllUsers {\n    getAllUsers {\n      id\n      name\n      email\n      role\n      city {\n        id\n        name\n      }\n    }\n  }\n": types.GetAllUsersDocument,
     "\n  query Login($password: String!, $email: String!) {\n    login(password: $password, email: $email)\n  }\n": types.LoginDocument,
 };
 
@@ -52,6 +54,10 @@ export function gql(source: "\n  mutation CreateUser($email: String!, $name: Str
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  mutation UpdateUser($id: String!, $role: String, $cityId: String) {\n    updateUser(id: $id, role: $role, cityId: $cityId) {\n      id\n      name\n      role\n      city{\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateUser($id: String!, $role: String, $cityId: String) {\n    updateUser(id: $id, role: $role, cityId: $cityId) {\n      id\n      name\n      role\n      city{\n        id\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  query GetAllCities {\n    getAllCities {\n      id\n      name\n      picture\n    }\n  }\n"): (typeof documents)["\n  query GetAllCities {\n    getAllCities {\n      id\n      name\n      picture\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -65,6 +71,10 @@ export function gql(source: "\n  query GetAllCategories {\n    getAllCategories 
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query GetUserBy {\n    getUserBy {\n      id\n      name\n      email\n      role\n      city {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetUserBy {\n    getUserBy {\n      id\n      name\n      email\n      role\n      city {\n        id\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetAllUsers {\n    getAllUsers {\n      id\n      name\n      email\n      role\n      city {\n        id\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetAllUsers {\n    getAllUsers {\n      id\n      name\n      email\n      role\n      city {\n        id\n        name\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

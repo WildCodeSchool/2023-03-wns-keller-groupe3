@@ -1,21 +1,71 @@
 import { useState } from "react";
 import Signup from "../components/Signup";
 import Login from "../components/Login";
+import useGetUser from "../graphql/hook/useGetUser";
+import useGetUsers from "../graphql/hook/useGetUsers";
+import { UPDATE_USER } from "../graphql/mutations";
+import useGetCities from "../graphql/hook/useGetCities";
+import { ApolloError, useApolloClient, useMutation } from "@apollo/client";
+import { Role } from "../utils/RoleEnum";
+import { useNavigate } from "react-router-dom";
 import pinkCity from "../assets/picture/pink.png";
 import greenCity from "../assets/picture/green.png";
 import snowCity from "../assets/picture/snow.png";
-import { useApolloClient } from "@apollo/client";
-import useGetUser from "../graphql/hook/useGetUser";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import CustomToast from "../components/CustomToast";
 
 function UserPage() {
   const navigate = useNavigate();
   const client = useApolloClient();
-  const { isLogged, userRole } = useGetUser();
+  const {
+    isLogged,
+    userRole,
+    user: currentUser,
+    loading: userLoading,
+  } = useGetUser();
+  const { users, loading: usersLoading } = useGetUsers();
   const [isRegisterMode, setIsRegisterMode] = useState(false);
+  const [updateUserMutation] = useMutation(UPDATE_USER, {
+    onCompleted: ({ updateUser }) => {
+      toast(
+        <CustomToast
+          message={`L'utilisateur "${updateUser.name}" a été modifié`}
+          color="text-success"
+        />
+      );
+    },
+    onError: (error) => {
+      toast(<CustomToast message={error.message} color="text-error" />);
+    },
+    refetchQueries: ["GetAllUsers"],
+  });
+  const { cities } = useGetCities();
+  const isSuperAdmin = userRole === Role.SUPERADMIN;
 
   const toggleMode = () => {
     setIsRegisterMode(!isRegisterMode);
+  };
+
+  const handleChange = async (
+    id: string,
+    newValue: string,
+    property: string
+  ) => {
+    try {
+      const { data } = await updateUserMutation({
+        variables: {
+          id: id,
+          [property]: newValue,
+        },
+      });
+      if (data) {
+        console.log(`Utilisateur mis à jour pour ${property} : ${newValue}`);
+      } else {
+        console.error("La réponse de la mutation est null ou undefined.");
+      }
+    } catch (error: ApolloError | any) {
+      console.error(`Failed to update user for ${property}:`, error);
+    }
   };
 
   const handleLogout = async () => {
@@ -26,52 +76,145 @@ function UserPage() {
 
   return (
     <div
-      className={`container relative flex flex-col items-center xl:justify-center md:h-screen w-full px-9 md:pt-10 md:pl-16 md:pr-0 xl:pl-0 2xl:pb-[120px] xl:pt-0 2xl:pt-16 mx-auto
-     ${isRegisterMode ? "mb-[160px] md:pb-8 md:mb-0" : ""}`}
+      className={`container relative flex flex-col items-center xl:justify-center md:h-screen w-full px-9 md:pt-10 md:pl-16 md:pr-0 xl:pl-0 2xl:pb-[120px] xl:pt-8 2xl:pt-16 mx-auto ${
+        isRegisterMode ? "mb-[160px] md:pb-8 md:mb-0" : ""
+      }`}
     >
-      {isLogged && (
-        <>
-          {userRole}
-          <button
-            type='button'
-            className='btn btn-primary'
-            onClick={handleLogout}
-          >
-            Deconnexion
-          </button>
-        </>
-      )}
-      {!isLogged && (
-        <>
-          <form
-            className='mt-8 xl:mt-0 max-w-sm flex flex-col w-full relative z-10'
-            onSubmit={async (e) => {
-              e.preventDefault();
-            }}
-          >
-            {isRegisterMode ? <Signup /> : <Login />}
-          </form>
-          <p
-            className='text-center text-base-content cursor-pointer justify-center items-center mt-4 relative z-10 hover:text-[#ed9986]'
-            onClick={toggleMode}
-          >
-            {isRegisterMode
-              ? "Déjà un compte ? Se connecter"
-              : "Pas de compte ? S'inscrire"}
-          </p>
-          <div>
-            <div className='absolute right-0 bottom-0 h-auto hidden md:block md:w-[388px] lg:w-[341px] xl:w-[420px] 2xl:w-[510px] opacity-50'>
-              <img src={snowCity} alt='' />
-            </div>
-            <div className='absolute bottom-0 left-1/2 translate-x-[-50%] hidden lg:block lg:w-[341px] h-auto xl:w-[425px] 2xl:w-[512px] opacity-50'>
-              <img src={greenCity} alt='' />
-            </div>
-            <div className='absolute left-0 bottom-0 h-auto md:w-[388px] hidden md:block lg:w-[341px] xl:w-[420px] 2xl:w-[510px] opacity-50'>
-              <img src={pinkCity} alt='' />
-            </div>
+      <div className="h-full w-full">
+        {isLogged && (
+          <div className="flex justify-center">
+            {userRole && (
+              <div className="card w-96 bg-white shadow-xl opacity-80 mb-5">
+                <div className="card-body items-center text-center text-black ">
+                  <p>Email: {currentUser.email}</p>
+                  <p>Name: {currentUser.name}</p>
+                  <p>Role: {userRole}</p>
+                  {userRole !== Role.SUPERADMIN && (
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={handleLogout}
+                    >
+                      Déconnexion
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
-        </>
-      )}
+        )}
+        {isSuperAdmin ? (
+          <div className="h-[73%] xl:w-[45rem] xl:m-auto">
+            <div
+              className="overflow-x-auto"
+              style={{ height: `calc(100% - 110px)` }}
+            >
+              <table className="table mb-8 mt-8">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Ville</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {!usersLoading &&
+                    users
+                      .filter((user) => user.role !== "superadmin")
+                      .map((user, index) => (
+                        <tr key={index}>
+                          <th>{index + 1}</th>
+                          <td>{user.name}</td>
+                          <td>{user.email}</td>
+                          <td>
+                            <select
+                              className="select select-ghost w-full max-w-xs"
+                              value={user.role}
+                              name="role"
+                              onChange={(e) =>
+                                user &&
+                                user.id &&
+                                handleChange(user.id, e.target.value, "role")
+                              }
+                            >
+                              <option disabled selected>
+                                Attribuer un rôle
+                              </option>
+                              <option value="user">user</option>
+                              <option value="superuser">superuser</option>
+                              <option value="admin">admin</option>
+                            </select>
+                          </td>
+                          <td>
+                            <select
+                              className="select select-ghost w-full max-w-xs"
+                              value={user.city?.id}
+                              name="cityId"
+                              onChange={(e) =>
+                                handleChange(user.id, e.target.value, "cityId")
+                              }
+                            >
+                              <option disabled selected>
+                                Attribuer une ville
+                              </option>
+                              {!userLoading &&
+                                cities.map((city) => (
+                                  <option key={city.id} value={city.id}>
+                                    {city.name}
+                                  </option>
+                                ))}
+                            </select>
+                          </td>
+                        </tr>
+                      ))}
+                </tbody>
+              </table>
+            </div>
+            <button
+              type="button"
+              className="btn btn-primary mx-auto w-full xl:mt-8"
+              onClick={handleLogout}
+            >
+              Deconnexion
+            </button>
+          </div>
+        ) : (
+          !isLogged && (
+            <div className="flex-col items-center w-full">
+              <form
+                className="mt-8 xl:mt-0 xl:m-auto max-w-sm w-full relative z-10"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                }}
+              >
+                {isRegisterMode ? <Signup /> : <Login />}
+              </form>
+              <p
+                className="text-center text-base-content cursor-pointer justify-center items-center mt-4 relative z-10 hover:text-[#ed9986]"
+                onClick={toggleMode}
+              >
+                {isRegisterMode
+                  ? "Déjà un compte ? Se connecter"
+                  : "Pas de compte ? S'inscrire"}
+              </p>
+            </div>
+          )
+        )}
+      </div>
+
+      <div>
+        <div className="absolute right-0 bottom-0 h-auto hidden md:block md:w-[388px] lg:w-[341px] xl:w-[420px] 2xl:w-[510px] opacity-50 border border-[#ffffff59] rounded-[50%] z-[-1]">
+          <img src={snowCity} alt="" />
+        </div>
+        <div className="absolute bottom-0 left-1/2 translate-x-[-50%] hidden lg:block lg:w-[341px] h-auto xl:w-[425px] 2xl:w-[512px] opacity-50 z-[-1]">
+          <img src={greenCity} alt="" />
+        </div>
+        <div className="absolute left-0 bottom-0 h-auto md:w-[388px] hidden md:block lg:w-[341px] xl:w-[420px] 2xl:w-[510px] opacity-50 z-[-1]">
+          <img src={pinkCity} alt="" />
+        </div>
+      </div>
     </div>
   );
 }
