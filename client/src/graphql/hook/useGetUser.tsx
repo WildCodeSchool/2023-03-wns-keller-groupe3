@@ -15,14 +15,14 @@ export default function useGetUser(options: GetOneCityByArgs = {}) {
 
   const isLogged = data?.getUserBy?.email?.length! > 0;
   const userRole = data?.getUserBy.role;
-  const superUsercityId = data?.getUserBy.city?.id;
+  const userCityId = data?.getUserBy.city?.id;
 
   return {
     loading,
     error,
     isLogged,
     userRole,
-    superUsercityId,
+    userCityId,
     user: data?.getUserBy!,
   };
 }

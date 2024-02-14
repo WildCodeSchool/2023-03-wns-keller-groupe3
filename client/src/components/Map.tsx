@@ -29,13 +29,14 @@ interface MapProps {
 }
 
 export default function Map({ id, lat, long, allPoi }: MapProps) {
-  const { userRole, superUsercityId } = useGetUser();
+  const { userRole, userCityId } = useGetUser();
   const isSuperAdmin = userRole === Role.SUPERADMIN;
-  const isSuperUser = userRole === Role.SUPERUSER && id === superUsercityId;
+  const isSuperUser = userRole === Role.SUPERUSER && id === userCityId;
+  const isAdmin = userRole === Role.ADMIN && id === userCityId;
 
   const [showModal, setShowModal] = useState(false);
-  const [clickedLat, setClikedLat] = useState(lat);
-  const [clickedLong, setClikedLong] = useState(long);
+  const [clickedLat, setClickedLat] = useState(lat);
+  const [clickedLong, setClickedLong] = useState(long);
   const [name, setName] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [description, setDescription] = useState("");
@@ -48,7 +49,7 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
   const OpenModalWithPosition = () => {
     useMapEvents({
       dblclick: (e) => {
-        if (isSuperAdmin || isSuperUser) {
+        if (isSuperAdmin || isSuperUser || isAdmin) {
           if (!checkIfPositionIsInCity(lat, long, e.latlng.lat, e.latlng.lng)) {
             toast(
               <CustomToast
@@ -57,8 +58,8 @@ export default function Map({ id, lat, long, allPoi }: MapProps) {
               />
             );
           } else {
-            setClikedLat(e.latlng.lat);
-            setClikedLong(e.latlng.lng);
+            setClickedLat(e.latlng.lat);
+            setClickedLong(e.latlng.lng);
             setShowModal(!showModal);
           }
         }
