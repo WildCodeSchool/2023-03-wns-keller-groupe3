@@ -1,5 +1,6 @@
 import { test } from "@playwright/test";
 import dotenv from "dotenv";
+import '@testing-library/jest-dom';
 dotenv.config();
 
 test("create account", async ({ page }) => {
