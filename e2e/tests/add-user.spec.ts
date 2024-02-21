@@ -7,7 +7,9 @@ test("create account", async ({ page }) => {
   const email = `test${randomNum}@test.fr`;
 
   await page.goto("http://client:3000/user");
-  await page.getByRole("paragraph", { name: "Pas de compte ? S'inscrire" }).click();
+  await expect(page.getByText("Connexion")).toBeVisible();
+  await expect(page.getByText("Pas de compte ? S'inscrire")).toBeVisible();
+  await page.getByText("Pas de compte ? S'inscrire").click();
   await page.getByPlaceholder("Entrez votre nom").click();
   await page.getByPlaceholder("Entrez votre nom").fill("test");
   await page.getByPlaceholder("Entrez votre email").click();
