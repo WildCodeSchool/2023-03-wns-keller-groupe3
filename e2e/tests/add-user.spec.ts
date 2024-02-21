@@ -1,13 +1,15 @@
 import { test } from "@playwright/test";
 import dotenv from "dotenv";
+import '@testing-library/jest-dom';
 dotenv.config();
 
 test("create account", async ({ page }) => {
-  const stagingUrl = process.env.STAGING_URL;
   const randomNum = Math.floor(Math.random() * 1000000);
   const email = `test${randomNum}@test.fr`;
 
-  await page.goto(`${stagingUrl}/user`);
+  await page.goto("http://client:3000/user");
+  await expect(page.getByText("Connexion")).toBeVisible();
+  await expect(page.getByText("Pas de compte ? S'inscrire")).toBeVisible();
   await page.getByText("Pas de compte ? S'inscrire").click();
   await page.getByPlaceholder("Entrez votre nom").click();
   await page.getByPlaceholder("Entrez votre nom").fill("test");
