@@ -53,7 +53,7 @@ export class CityResolver {
     try {
       return await city.createCity(
         SecureInput(name),
-        SecureInput(picture),
+        picture,
         latitude,
         longitude
       );
