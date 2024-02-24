@@ -14,7 +14,7 @@ export function SecurePassword(input: string): string {
 }
 
 export default function SecureInput(input: string): string {
-  const regex = /^[^&$<>={}\\"*[\]]+$/gm;
+  const regex = /^[^&$<>{}\\"*[\]]+$/gm;
 
   return testRegex(input, regex, "text");
 }
