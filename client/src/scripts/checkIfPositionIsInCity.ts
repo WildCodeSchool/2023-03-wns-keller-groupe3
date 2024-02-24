@@ -1,10 +1,12 @@
-const checkIfPositionIsInCity = (
+import { range } from "../utils/range";
+
+  const checkIfPositionIsInCity = (
   cityLat: number,
   cityLong: number,
   poiLat: number,
   poiLong: number
 ) => {
-  const range = 0.2;
+
   if (
     (cityLat + range > poiLat && cityLat - range < poiLat) 
     &&

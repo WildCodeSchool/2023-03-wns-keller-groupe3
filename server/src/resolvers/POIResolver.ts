@@ -8,6 +8,7 @@ import { CategoryInput } from "./input_types/CategoryInput";
 import { ApolloError } from "apollo-server";
 import { Role } from "../entities/User";
 import SecureInput from "../security/SecureInput";
+import { range } from "../utils/range";
 
 const pointOfInterest = new POIService();
 
@@ -20,7 +21,11 @@ export class POIResolver {
 
   @Query(() => POI)
   async getPOIBy(@Arg("id") id: string): Promise<POI> {
-    return await pointOfInterest.getPOIBy(id);
+    try {
+      return await pointOfInterest.getPOIBy(id);
+    } catch (error) {
+      throw new ApolloError("Une erreur est survenue", "POI_READ_ERROR");
+    }
   }
 
   // https://typegraphql.com/docs/resolvers.html#:~:text=!%5D%0A%7D-,Input%20types,-GraphQL%20mutations%20can
@@ -38,9 +43,9 @@ export class POIResolver {
     @Arg("city", () => CityInput) city: City
   ): Promise<POI | string> {
     const latitudeRange =
-      city.latitude + 0.05 > latitude && city.latitude - 0.05 < latitude;
+      city.latitude + range > latitude && city.latitude - range < latitude;
     const longitudeRange =
-      city.longitude + 0.05 > longitude && city.longitude - 0.05 < longitude;
+      city.longitude + range > longitude && city.longitude - range < longitude;
     if (!latitudeRange || !longitudeRange)
       throw new ApolloError("Le point d'intêret est en dehors de la ville");
     if (
